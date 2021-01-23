@@ -1,0 +1,22 @@
+/* ##### Padding ##### */
+.pad-5 {
+  padding: 5px;
+}
+
+.pad-10 {
+  padding: 10px;
+}
+.pad-10-l {
+  padding-left: 10px;
+}
+
+/* ##### Flex ##### */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
