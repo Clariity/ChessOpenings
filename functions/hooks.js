@@ -7,7 +7,7 @@ export function useChessboardSize() {
 
   React.useEffect(() => {
     function handleResize() {
-      const display = document.getElementsByClassName('chessboard')[0];
+      const display = document.getElementsByClassName('chessboard-header')[0];
       setChessboardSize(display.offsetWidth);
     }
 

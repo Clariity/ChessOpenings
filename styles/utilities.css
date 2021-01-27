@@ -1,3 +1,8 @@
 .hover {
   cursor: pointer;
 }
+
+.hover-dim:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}

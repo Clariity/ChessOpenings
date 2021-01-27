@@ -12,7 +12,12 @@
   cursor: pointer;
   border-radius: 10px;
   margin: 5px;
+  align-items: center;
 }
 .sidebar-link:hover {
+  background-color: #0f0f0f;
+}
+
+.sidebar-selected {
   background-color: #0f0f0f;
 }

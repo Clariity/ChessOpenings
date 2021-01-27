@@ -24,6 +24,6 @@ export const formatGroupLabel = (data) => (
 );
 
 export const colourChoices = [
-  { label: 'White', value: 'white' },
-  { label: 'Black', value: 'black' }
+  { label: 'Play as White', value: 'white' },
+  { label: 'Play as Black', value: 'black' }
 ];

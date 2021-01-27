@@ -1,5 +1,7 @@
 @import './chessboard.css';
 @import './layout.css';
+@import './panel.css';
+@import './responsive.css';
 @import './sidebar.css';
 @import './utilities.css';
 
@@ -23,6 +25,7 @@ a {
   background-color: #383635;
   display: flex;
   flex-direction: row;
+  overflow-x: hidden;
 }
 
 .main {

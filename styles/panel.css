@@ -1,0 +1,98 @@
+.panel {
+  width: 500px;
+  height: calc(100vh - 20px);
+  max-height: calc(100vh - 20px);
+
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.panel-title {
+  text-align: center;
+  background-color: #0f0f0f;
+}
+
+.panel-title-text {
+  margin: 0px;
+  padding: 20px 0px;
+}
+
+.panel-body {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.panel-select {
+  color: black;
+  margin-bottom: 10px;
+}
+.panel-openings-select > div > div > div[class*='ValueContainer'] {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.panel-scroll-display {
+  flex-grow: 1;
+}
+
+.panel-start {
+  background-color: #779952;
+  color: white;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 30px;
+}
+.panel-start:hover {
+  opacity: 0.5;
+}
+.panel-start:active {
+  box-shadow: inset 0px 0px 5px #c1c1c1;
+}
+.panel-start.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.panel-board-controls {
+  padding: 20px;
+  text-align: center;
+  background-color: #0f0f0f;
+}
+
+.panel-board-control {
+  width: 25%;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.panel-board-control.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.panel-board-control-button {
+  appearance: none;
+  font-size: 40px;
+  background: unset;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.panel-board-control-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.panel-board-control-button:focus,
+.panel-start:focus {
+  outline: none;
+}

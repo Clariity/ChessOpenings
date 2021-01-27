@@ -2,146 +2,164 @@ import React from 'react';
 import Select from 'react-select';
 
 import openings from '../data/openings';
-import {
-  colourChoices,
-  formatGroupLabel
-} from '../data/selectOptionsAndStyles';
+import { start } from '../data/consts';
+import { colourChoices, formatGroupLabel } from '../data/selectOptionsAndStyles';
 
 // https://react-select.com/components -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
 // add default colour to each opening so we can switch to that on opening change
-// need to add unique id to each opening
+// Need to show current opening above the chess board
 
 export default function Panel({
-  start,
+  path,
   reset,
   boardOrientation,
   setBoardOrientation,
   redoStack,
   userColor,
   setUserColor,
-  variation,
-  setVariation,
+  opening,
+  setOpening,
   game,
   goBack,
-  goForward
+  goForward,
+  openingComplete,
+  setOpeningComplete
 }) {
-  const defaultOpening = openings[0].options[0];
-  const [variations, setVariations] = React.useState(defaultOpening.value);
+  const isTrain = path === '/train';
   const [selectedOpenings, setSelectedOpenings] = React.useState([]);
+  const [openingsCopy, setOpeningsCopy] = React.useState([]);
+  const [started, setStarted] = React.useState(false);
 
   React.useEffect(() => {
-    setVariation(variations[0]);
-  }, []);
+    if (openingComplete) {
+      // Wait half a second before moving on to next opening
+      setTimeout(() => {
+        setOpeningComplete(false);
+        handleTrainStart();
+      }, 500);
+    }
+  }, [openingComplete]);
 
-  function handleOpeningChange(change) {
-    setVariations(change.value);
-    setVariation(change.value[0]);
+  function handleLearnOpeningChange(change) {
+    setOpening(change);
     reset();
   }
 
-  function handleVariationChange(change) {
-    setVariation(change);
-    reset();
+  function handleTrainOpeningChange(change) {
+    setSelectedOpenings([...change] ?? []);
+    setOpeningsCopy([...change] ?? []);
   }
 
-  function handleColorChange(change) {
+  function handleUserColorChange(change) {
     setUserColor(change.value);
     setBoardOrientation(change.value); // once autoflipping setting is added, can optionally do this or not
     reset();
   }
 
-  const joinedOpenings = [...openings[0].options, ...openings[1].options];
-  const flattenedVariations = joinedOpenings.flatMap((o) => o.value);
-  const testVariations = flattenedVariations.filter((v) =>
-    selectedOpenings.includes(v.id)
-  );
-
-  function handleCheckbox(id) {
-    const index = selectedOpenings.findIndex((s) => s === id);
-    if (index > -1) {
-      const newSelectedOpenings = [...selectedOpenings];
-      newSelectedOpenings.splice(index, 1);
-      setSelectedOpenings(newSelectedOpenings);
-    } else setSelectedOpenings([...selectedOpenings, id]);
+  function handleTrainStart() {
+    setStarted(true);
+    const o = openingsCopy.shift();
+    if (o === undefined) {
+      // it is complete
+    } else {
+      setOpening(o);
+      reset();
+    }
   }
+
+  function handleTrainStop() {
+    setStarted(false);
+    setOpeningsCopy([...selectedOpenings]);
+  }
+
+  const flattenedVariations = openings.flatMap((o) => o.options);
+  const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black');
+  const forwardDisabled = redoStack.length === 0;
+  const startDisabled = selectedOpenings.length === 0;
+  // const testVariations = flattenedVariations.filter((v) => selectedOpenings.includes(v.id));
 
   return (
     <div className="panel">
-      Opening
-      <div style={{ color: 'black' }}>
-        <Select
-          options={openings}
-          isSearchable={true}
-          defaultValue={defaultOpening}
-          formatGroupLabel={formatGroupLabel}
-          onChange={handleOpeningChange}
-        />
+      <div className="panel-title">
+        <h1 className="panel-title-text">{isTrain ? 'Train Openings' : 'Learn Openings'}</h1>
       </div>
-      Variation
-      <div style={{ color: 'black' }}>
-        <Select
-          options={variations}
-          isSearchable={true}
-          value={variation || variations[0]}
-          onChange={handleVariationChange}
-        />
-      </div>
-      Play as:
-      <div style={{ color: 'black' }}>
-        <Select
-          options={colourChoices}
-          defaultValue={colourChoices[0]}
-          onChange={handleColorChange}
-        />
-      </div>
-      <button onClick={reset}>Reset</button>
-      <button
-        onClick={() =>
-          setBoardOrientation(boardOrientation === 'white' ? 'black' : 'white')
-        }
-      >
-        Flip
-      </button>
-      <button
-        disabled={
-          game?.fen() === start ||
-          (game?.history().length === 1 && userColor === 'black')
-        }
-        onClick={goBack}
-      >
-        Back
-      </button>
-      <button disabled={redoStack.length === 0} onClick={goForward}>
-        Next
-      </button>
-      <br />
-      Multi Test
-      {joinedOpenings.map((o) => {
-        return (
-          <div key={o.label}>
-            <b>{o.label}</b>
-            {o.value.map((v) => {
-              // on click, add v.id to selectedOpenings
-              return (
-                <div key={v.label}>
-                  <input
-                    onChange={() => handleCheckbox(v.id)}
-                    type="checkbox"
-                    id={`${v.id}-checkbox`}
-                    checked={selectedOpenings.includes(v.id)}
-                  />
-                  <label htmlFor={`${v.id}-checkbox`}>{v.label}</label>
-                </div>
-              );
-            })}
+      <div className="panel-body flex-column">
+        <div className="panel-select">
+          <Select
+            closeMenuOnSelect={!isTrain}
+            value={isTrain ? selectedOpenings : opening.value}
+            formatGroupLabel={formatGroupLabel}
+            isMulti={isTrain}
+            isSearchable={true}
+            onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
+            options={openings}
+            placeholder={isTrain ? 'Select Openings to Train' : 'Select Opening to Learn'}
+          />
+        </div>
+        <div className="panel-select">
+          <Select options={colourChoices} defaultValue={colourChoices[0]} onChange={handleUserColorChange} />
+        </div>
+        <button
+          onClick={() => {
+            setSelectedOpenings(selectedOpenings.length === flattenedVariations.length ? [] : [...flattenedVariations]);
+            setOpeningsCopy(selectedOpenings.length === flattenedVariations.length ? [] : [...flattenedVariations]);
+          }}
+        >
+          {`${selectedOpenings.length === flattenedVariations.length ? 'Deselect ' : 'Select '} All`}
+        </button>
+        <br />
+        <div className="panel-scroll-display">
+          <h1>Move history:</h1>
+          <div>
+            {game?.history({ verbose: true }).map((moveText, i) => (
+              <span key={i}>{moveText.to}</span>
+            ))}
           </div>
-        );
-      })}
-      <h1>Move history:</h1>
-      <div>
-        {game?.history().map((moveText, i) => (
-          <span key={i}>{moveText.to}</span>
-        ))}
+        </div>
+        <button
+          className={`panel-start ${startDisabled && 'disabled'}`}
+          disabled={startDisabled}
+          onClick={started ? handleTrainStop : handleTrainStart}
+        >
+          {started ? 'Finish' : 'Start'}
+        </button>
+      </div>
+      <div className="panel-board-controls flex-row">
+        <div className="panel-board-control flex-column hover-dim">
+          <button
+            className="material-icons panel-board-control-button"
+            onClick={() => setBoardOrientation(boardOrientation === 'white' ? 'black' : 'white')}
+          >
+            cached
+          </button>
+          Flip
+        </div>
+        <div className="panel-board-control flex-column hover-dim">
+          <button className="material-icons panel-board-control-button" onClick={reset}>
+            replay
+          </button>
+          Reset
+        </div>
+        <div className={`panel-board-control flex-column hover-dim ${backDisabled && 'disabled'}`}>
+          <button
+            className={`material-icons panel-board-control-button ${backDisabled && 'disabled'}`}
+            disabled={backDisabled}
+            onClick={goBack}
+          >
+            chevron_left
+          </button>
+          Back
+        </div>
+        <div className={`panel-board-control flex-column hover-dim ${forwardDisabled && 'disabled'}`}>
+          <button
+            className={`material-icons panel-board-control-button ${forwardDisabled && 'disabled'}`}
+            disabled={forwardDisabled}
+            onClick={goForward}
+          >
+            chevron_right
+          </button>
+          Forward
+        </div>
       </div>
     </div>
   );

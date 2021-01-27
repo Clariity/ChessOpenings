@@ -2,20 +2,22 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import Chess from 'chess.js';
-import { useChessboardSize } from '../functions/hooks';
 import Panel from './Panel';
+
+import { start } from '../data/consts';
+import { useChessboardSize } from '../functions/hooks';
 
 const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
 // Things to note: Pawn Captures that are undone are buggy, can't really be helped
 // Clicking forward too fast will break it
 
-export default function ChessBoard() {
+export default function ChessBoard({ path }) {
   const chessboardSize = useChessboardSize();
-  const start = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
   const [game, setGame] = React.useState();
-  const [variation, setVariation] = React.useState();
+  const [opening, setOpening] = React.useState();
+  const [openingComplete, setOpeningComplete] = React.useState(false);
 
   const [redoStack, setRedoStack] = React.useState([]);
   const [undoMade, setUndoMade] = React.useState(false);
@@ -43,12 +45,10 @@ export default function ChessBoard() {
 
   React.useEffect(() => {
     // if user is starting with black then CPU makes opening move
-    if (game?.fen() === start && userColor === 'black') {
+    console.log(opening);
+    if (game?.fen() === start && userColor === 'black' && opening !== undefined) {
       setTimeout(() => {
-        makeComputerMove(
-          variation.value[game.history().length].from,
-          variation.value[game.history().length].to
-        );
+        makeComputerMove(opening.value[game.history().length].from, opening.value[game.history().length].to);
       }, 500);
       return;
     }
@@ -56,20 +56,16 @@ export default function ChessBoard() {
     // if move is undone and its CPU turn next, make CPU move
     if (
       undoMade &&
-      game?.history({ verbose: true })[game.history().length - 1]?.color ===
-        userColor[0] &&
-      variation.value[game.history().length] !== undefined
+      game?.history({ verbose: true })[game.history().length - 1]?.color === userColor[0] &&
+      opening.value[game.history().length] !== undefined
     ) {
-      makeComputerMove(
-        variation.value[game.history().length].from,
-        variation.value[game.history().length].to
-      );
+      makeComputerMove(opening.value[game.history().length].from, opening.value[game.history().length].to);
       redoStack.pop();
     }
 
     setUndoMade(false);
     setClickedSquare({});
-  }, [game, undoMade, userColor]);
+  }, [game, undoMade, userColor, opening]);
 
   // safely update game in useState
   function safeGameMutate(modify) {
@@ -179,7 +175,7 @@ export default function ChessBoard() {
 
     if (
       redoStack.length > 0 &&
-      variation.value[game.history().length - 1] !== undefined &&
+      opening.value[game.history().length - 1] !== undefined &&
       redoStack[redoStack.length - 1].color !== userColor[0]
     ) {
       const move = redoStack.pop();
@@ -199,10 +195,14 @@ export default function ChessBoard() {
     });
     setTimeout(() => {
       playSound();
+      if (opening.value[game.history().length] === undefined) setOpeningComplete(true);
     }, 300);
   }
 
   function onDrop({ sourceSquare, targetSquare }) {
+    // No opening has been selected yet so prevent anything happening
+    if (!opening) return;
+
     const move = game.move({
       from: sourceSquare,
       to: targetSquare,
@@ -213,10 +213,10 @@ export default function ChessBoard() {
     const historyLength = game.history().length;
 
     // if still in opening
-    if (variation.value[game.history().length - 1] !== undefined) {
+    if (opening.value[game.history().length - 1] !== undefined) {
       if (
-        sourceSquare !== variation.value[historyLength - 1].from ||
-        targetSquare !== variation.value[historyLength - 1].to
+        sourceSquare !== opening.value[historyLength - 1].from ||
+        targetSquare !== opening.value[historyLength - 1].to
       ) {
         safeGameMutate((game) => {
           game.undo();
@@ -243,13 +243,10 @@ export default function ChessBoard() {
     // used for creating moves, later incorporate into some debug mode so can be switched to automatically
     // console.log(JSON.stringify(game.history({ verbose: true })));
 
-    if (variation.value[historyLength] !== undefined) {
+    if (opening.value[historyLength] !== undefined) {
       // removed the +1 from here index, check back later
-      makeComputerMove(
-        variation.value[historyLength].from,
-        variation.value[historyLength].to
-      );
-    }
+      makeComputerMove(opening.value[historyLength].from, opening.value[historyLength].to);
+    } else setOpeningComplete(true);
   }
 
   function onSquareClick(square) {
@@ -264,8 +261,7 @@ export default function ChessBoard() {
     setRightClickedSquares({
       ...rightClickedSquares,
       [square]:
-        rightClickedSquares[square] &&
-        rightClickedSquares[square].backgroundColor === colour
+        rightClickedSquares[square] && rightClickedSquares[square].backgroundColor === colour
           ? undefined
           : { backgroundColor: colour }
     });
@@ -282,8 +278,7 @@ export default function ChessBoard() {
     moves.map((move) => {
       newSquares[move.to] = {
         background:
-          game.get(move.to) &&
-          game.get(move.to).color !== game.get(square).color
+          game.get(move.to) && game.get(move.to).color !== game.get(square).color
             ? 'radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)'
             : 'radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)',
         borderRadius: '50%'
@@ -303,6 +298,13 @@ export default function ChessBoard() {
   return (
     <div className="chessboard-container">
       <div className="chessboard">
+        {opening && <p className="chessboard-header">{opening.label}</p>}
+        {!opening && (
+          <p className="chessboard-header">
+            <span className="chessboard-header-special">Select Opening</span> to Train and{' '}
+            <span className="chessboard-header-special">Press Start</span> to Begin
+          </p>
+        )}
         <Board
           id="board"
           position={game ? game.fen() : start}
@@ -323,7 +325,7 @@ export default function ChessBoard() {
           onSquareRightClick={onSquareRightClick}
           onMouseOverSquare={onMouseOverSquare}
           onMouseOutSquare={onMouseOutSquare}
-          width={chessboardSize - 20}
+          width={chessboardSize}
           transitionDuration={300}
           pieces={{
             bQ: ({ squareWidth }) => (
@@ -340,18 +342,20 @@ export default function ChessBoard() {
         />
       </div>
       <Panel
-        start={start}
+        path={path}
         reset={reset}
         boardOrientation={boardOrientation}
         setBoardOrientation={setBoardOrientation}
         redoStack={redoStack}
         userColor={userColor}
         setUserColor={setUserColor}
-        variation={variation}
-        setVariation={setVariation}
+        opening={opening}
+        setOpening={setOpening}
         game={game}
         goBack={goBack}
         goForward={goForward}
+        openingComplete={openingComplete}
+        setOpeningComplete={setOpeningComplete}
       />
     </div>
   );
