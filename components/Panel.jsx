@@ -87,7 +87,7 @@ export default function Panel({
         <div className="panel-select">
           <Select
             closeMenuOnSelect={!isTrain}
-            value={isTrain ? selectedOpenings : opening.value}
+            value={isTrain ? selectedOpenings : opening}
             formatGroupLabel={formatGroupLabel}
             isMulti={isTrain}
             isSearchable={true}
