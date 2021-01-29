@@ -12,6 +12,12 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // Things to note: Pawn Captures that are undone are buggy, can't really be helped
 // Clicking forward too fast will break it
 
+// Maybe add select all option for each section? might not be possible
+// Also consider not having opening name in variation to keep shorter, somehow fetch from other higher label, or add as additional field
+
+// get softer piece moving sound
+// much better take sound needed
+
 export default function ChessBoard({ path }) {
   const chessboardSize = useChessboardSize();
 
@@ -45,7 +51,6 @@ export default function ChessBoard({ path }) {
 
   React.useEffect(() => {
     // if user is starting with black then CPU makes opening move
-    console.log(opening);
     if (game?.fen() === start && userColor === 'black' && opening !== undefined) {
       setTimeout(() => {
         makeComputerMove(opening.value[game.history().length].from, opening.value[game.history().length].to);
@@ -173,9 +178,12 @@ export default function ChessBoard({ path }) {
       }
     });
 
+    // 2nd condition was previously: opening.value[game.history().length - 1]
+    // have removed the -1 and all still seems to work and bug has disappeared:
+    // Bug found: as white - italian, first move made, click back, then forward, and CPU won't make move when it should
     if (
       redoStack.length > 0 &&
-      opening.value[game.history().length - 1] !== undefined &&
+      opening.value[game.history().length] !== undefined &&
       redoStack[redoStack.length - 1].color !== userColor[0]
     ) {
       const move = redoStack.pop();
@@ -240,14 +248,27 @@ export default function ChessBoard({ path }) {
       [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
     });
 
-    // used for creating moves, later incorporate into some debug mode so can be switched to automatically
-    // console.log(JSON.stringify(game.history({ verbose: true })));
-
     if (opening.value[historyLength] !== undefined) {
       // removed the +1 from here index, check back later
       makeComputerMove(opening.value[historyLength].from, opening.value[historyLength].to);
     } else setOpeningComplete(true);
   }
+
+  // For recording moves
+  // function onDrop({ sourceSquare, targetSquare }) {
+  //   const move = game.move({
+  //     from: sourceSquare,
+  //     to: targetSquare,
+  //     promotion: 'q'
+  //   });
+  //   if (move === null) return;
+  //   playSound();
+  //   setMoveSquares({
+  //     [sourceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+  //     [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+  //   });
+  //   console.log(JSON.stringify(game.history({ verbose: true })));
+  // }
 
   function onSquareClick(square) {
     setRightClickedSquares({});
@@ -298,7 +319,7 @@ export default function ChessBoard({ path }) {
   return (
     <div className="chessboard-container">
       <div className="chessboard">
-        {opening && <p className="chessboard-header">{opening.label}</p>}
+        {opening && <p className="chessboard-header">{`${opening.name}: ${opening.label}`}</p>}
         {!opening && (
           <p className="chessboard-header">
             <span className="chessboard-header-special">Select Opening</span> to Train and{' '}

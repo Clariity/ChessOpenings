@@ -32,7 +32,8 @@
   color: black;
   margin-bottom: 10px;
 }
-.panel-openings-select > div > div > div[class*='ValueContainer'] {
+.panel-select > div > div > div[class*='ValueContainer'] {
+  min-height: 50px;
   max-height: 200px;
   overflow-y: auto;
 }
@@ -71,6 +72,7 @@
   width: 25%;
   margin: 5px;
   cursor: pointer;
+  align-items: center;
 }
 
 .panel-board-control.disabled {
@@ -85,6 +87,7 @@
   border: none;
   color: white;
   cursor: pointer;
+  margin: auto;
 }
 
 .panel-board-control-button.disabled {

@@ -9,6 +9,16 @@ import { colourChoices, formatGroupLabel } from '../data/selectOptionsAndStyles'
 // add default colour to each opening so we can switch to that on opening change
 // Need to show current opening above the chess board
 
+// on mobile select menu closes after each selection
+// on mobile its a bit slow to drop a piece
+// on mobile, should scroll to chessboard on start
+// on mobile, board controls need to be at top of panel
+// on some mobile chrome, buttons aren't centered in board controls
+// make a PWA
+
+// Start Button & Start Random button (or tick box?)
+// Select all options for each opening
+
 export default function Panel({
   path,
   reset,
@@ -46,8 +56,8 @@ export default function Panel({
   }
 
   function handleTrainOpeningChange(change) {
-    setSelectedOpenings([...change] ?? []);
-    setOpeningsCopy([...change] ?? []);
+    setSelectedOpenings(change ? [...change] : []);
+    setOpeningsCopy(change ? [...change] : []);
   }
 
   function handleUserColorChange(change) {
@@ -72,11 +82,30 @@ export default function Panel({
     setOpeningsCopy([...selectedOpenings]);
   }
 
+  function filterOptions({ label, value }, searchInput) {
+    const searchLower = searchInput.toLocaleLowerCase();
+    // default search
+    if (label.toLocaleLowerCase().includes(searchLower)) return true;
+
+    // check if a group as the filter string as label
+    const groupOptions = openings.filter((group) => group.label.toLocaleLowerCase().includes(searchLower));
+
+    if (groupOptions) {
+      for (const groupOption of groupOptions) {
+        // Check if current option is in group
+        const option = groupOption.options.find((opt) => opt.value === value);
+        if (option) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   const flattenedVariations = openings.flatMap((o) => o.options);
   const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black');
   const forwardDisabled = redoStack.length === 0;
   const startDisabled = selectedOpenings.length === 0;
-  // const testVariations = flattenedVariations.filter((v) => selectedOpenings.includes(v.id));
 
   return (
     <div className="panel">
@@ -88,9 +117,11 @@ export default function Panel({
           <Select
             closeMenuOnSelect={!isTrain}
             value={isTrain ? selectedOpenings : opening}
+            filterOption={filterOptions}
             formatGroupLabel={formatGroupLabel}
             isMulti={isTrain}
             isSearchable={true}
+            maxMenuHeight={600}
             onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
             options={openings}
             placeholder={isTrain ? 'Select Openings to Train' : 'Select Opening to Learn'}
