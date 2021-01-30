@@ -10,13 +10,31 @@ import { useChessboardSize } from '../functions/hooks';
 const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
 // Things to note: Pawn Captures that are undone are buggy, can't really be helped
-// Clicking forward too fast will break it
 
 // Maybe add select all option for each section? might not be possible
-// Also consider not having opening name in variation to keep shorter, somehow fetch from other higher label, or add as additional field
 
 // get softer piece moving sound
-// much better take sound needed
+// much better take sound needed (much better all sounds needed maybe)
+
+// need to replace black Rook pieces as they glitch out
+
+// https://react-select.com/components -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
+// add default colour to each opening so we can switch to that on opening change
+// Need to show current opening above the chess board
+
+// on mobile select menu closes after each selection
+// on mobile its a bit slow to drop a piece
+// on mobile, should scroll to chessboard on start
+// on mobile, board controls need to be at top of panel
+// on some mobile chrome, buttons aren't centered in board controls
+// make a PWA
+
+// Start Button & Start Random button (or tick box?)
+// Select all options for each opening
+
+// if in train mode and you get it wrong then it needs to move on to the next opening
+
+// dull the start button a bit, seems too cartooney
 
 export default function ChessBoard({ path }) {
   const chessboardSize = useChessboardSize();
@@ -24,9 +42,11 @@ export default function ChessBoard({ path }) {
   const [game, setGame] = React.useState();
   const [opening, setOpening] = React.useState();
   const [openingComplete, setOpeningComplete] = React.useState(false);
+  const [openingError, setOpeningError] = React.useState(false);
 
   const [redoStack, setRedoStack] = React.useState([]);
   const [undoMade, setUndoMade] = React.useState(false);
+  const [navDisabled, setNavDisabled] = React.useState(false);
 
   const [moveSounds, setMoveSounds] = React.useState([]);
   const [userColor, setUserColor] = React.useState('white');
@@ -162,6 +182,7 @@ export default function ChessBoard({ path }) {
   }
 
   function goForward() {
+    setNavDisabled(true);
     const redoMove = redoStack.pop();
     safeGameMutate((game) => {
       game.move(redoMove);
@@ -190,7 +211,7 @@ export default function ChessBoard({ path }) {
       setTimeout(() => {
         makeComputerMove(move.from, move.to);
       }, 300);
-    }
+    } else setNavDisabled(false);
   }
 
   function makeComputerMove(from, to) {
@@ -203,14 +224,16 @@ export default function ChessBoard({ path }) {
     });
     setTimeout(() => {
       playSound();
+      setNavDisabled(false);
       if (opening.value[game.history().length] === undefined) setOpeningComplete(true);
     }, 300);
   }
 
   function onDrop({ sourceSquare, targetSquare }) {
-    // No opening has been selected yet so prevent anything happening
+    // no opening has been selected yet so prevent anything happening
     if (!opening) return;
 
+    // make move if valid, otherwise do nothing and return
     const move = game.move({
       from: sourceSquare,
       to: targetSquare,
@@ -220,24 +243,23 @@ export default function ChessBoard({ path }) {
 
     const historyLength = game.history().length;
 
-    // if still in opening
-    if (opening.value[game.history().length - 1] !== undefined) {
-      if (
-        sourceSquare !== opening.value[historyLength - 1].from ||
-        targetSquare !== opening.value[historyLength - 1].to
-      ) {
-        safeGameMutate((game) => {
-          game.undo();
-        });
-        moveSounds[3].play();
-        setRightClickedSquares({});
-        setOptionSquares({});
-        setMoveSquares({
-          [sourceSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' },
-          [targetSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' }
-        });
-        return;
-      }
+    // if still in opening and incorrect move made
+    if (
+      opening.value[game.history().length - 1] !== undefined &&
+      (sourceSquare !== opening.value[historyLength - 1].from || targetSquare !== opening.value[historyLength - 1].to)
+    ) {
+      safeGameMutate((game) => {
+        game.undo();
+      });
+      moveSounds[3].play();
+      setRightClickedSquares({});
+      setOptionSquares({});
+      setOpeningError(true);
+      setMoveSquares({
+        [sourceSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' },
+        [targetSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' }
+      });
+      return;
     }
 
     playSound();
@@ -319,7 +341,7 @@ export default function ChessBoard({ path }) {
   return (
     <div className="chessboard-container">
       <div className="chessboard">
-        {opening && <p className="chessboard-header">{`${opening.name}: ${opening.label}`}</p>}
+        {opening && <p className="chessboard-header">{opening.label}</p>}
         {!opening && (
           <p className="chessboard-header">
             <span className="chessboard-header-special">Select Opening</span> to Train and{' '}
@@ -363,20 +385,23 @@ export default function ChessBoard({ path }) {
         />
       </div>
       <Panel
-        path={path}
-        reset={reset}
         boardOrientation={boardOrientation}
-        setBoardOrientation={setBoardOrientation}
-        redoStack={redoStack}
-        userColor={userColor}
-        setUserColor={setUserColor}
-        opening={opening}
-        setOpening={setOpening}
         game={game}
         goBack={goBack}
         goForward={goForward}
+        navDisabled={navDisabled}
+        opening={opening}
         openingComplete={openingComplete}
+        openingError={openingError}
+        path={path}
+        redoStack={redoStack}
+        reset={reset}
+        setBoardOrientation={setBoardOrientation}
+        setOpening={setOpening}
         setOpeningComplete={setOpeningComplete}
+        setOpeningError={setOpeningError}
+        setUserColor={setUserColor}
+        userColor={userColor}
       />
     </div>
   );

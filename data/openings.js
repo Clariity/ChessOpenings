@@ -1,7 +1,6 @@
 const italianOptions = [
   {
-    name: 'Italian Game',
-    label: 'Classical Variation, Giuco Pianissimo, d6',
+    label: 'Italian Game: Classical Variation, Giuco Pianissimo, d6',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -17,8 +16,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Classical Variation, Giuco Pianissimo, a6',
+    label: 'Italian Game: Classical Variation, Giuco Pianissimo, a6',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -36,8 +34,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Classical Variation, Greco Gambit, Traditional Line',
+    label: 'Italian Game: Classical Variation, Greco Gambit, Traditional Line',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -60,8 +57,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Classical Variation, Greco Gambit',
+    label: 'Italian Game: Classical Variation, Greco Gambit',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -81,8 +77,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: "Bird's Attack",
+    label: "Italian Game: Bird's Attack",
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -100,8 +95,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Giuoco Piano',
+    label: 'Italian Game: Giuoco Piano',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -117,8 +111,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Deutz Gambit',
+    label: 'Italian Game: Deutz Gambit',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -135,8 +128,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Two Knights Defense, Max Lange Attack',
+    label: 'Italian Game: Two Knights Defense, Max Lange Attack',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -155,8 +147,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Giuoco Pianissimo, Normal',
+    label: 'Italian Game: Giuoco Pianissimo, Normal',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -172,8 +163,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: "Two Knights Defense, Modern Bishop's Opening",
+    label: "Italian Game: Two Knights Defense, Modern Bishop's Opening",
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -190,8 +180,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Two Knights Defense, Polerio Defense, Bishop Check Line',
+    label: 'Italian Game: Two Knights Defense, Polerio Defense, Bishop Check Line',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -210,8 +199,7 @@ const italianOptions = [
     ]
   },
   {
-    name: 'Italian Game',
-    label: 'Two Knights Defense, Traxler Counterattack, Knight Sacrifice Line',
+    label: 'Italian Game: Two Knights Defense, Traxler Counterattack, Knight Sacrifice Line',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -230,13 +218,106 @@ const italianOptions = [
       { color: 'w', from: 'e4', to: 'd5', flags: 'c', piece: 'p', captured: 'p', san: 'exd5' },
       { color: 'b', from: 'c6', to: 'd4', flags: 'n', piece: 'n', san: 'Nd4' }
     ]
+  },
+  {
+    label: 'Italian Game: Evans Gambit, Pierce Defense',
+    value: [
+      { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
+      { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
+      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
+      { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
+      { color: 'w', from: 'f1', to: 'c4', flags: 'n', piece: 'b', san: 'Bc4' },
+      { color: 'b', from: 'f8', to: 'c5', flags: 'n', piece: 'b', san: 'Bc5' },
+      { color: 'w', from: 'b2', to: 'b4', flags: 'b', piece: 'p', san: 'b4' },
+      { color: 'b', from: 'c5', to: 'b4', flags: 'c', piece: 'b', captured: 'p', san: 'Bxb4' },
+      { color: 'w', from: 'c2', to: 'c3', flags: 'n', piece: 'p', san: 'c3' },
+      { color: 'b', from: 'b4', to: 'a5', flags: 'n', piece: 'b', san: 'Ba5' },
+      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
+      { color: 'b', from: 'e5', to: 'd4', flags: 'c', piece: 'p', captured: 'p', san: 'exd4' },
+      { color: 'w', from: 'd1', to: 'b3', flags: 'n', piece: 'q', san: 'Qb3' }
+    ]
+  },
+  {
+    label: 'Italian Game: Evans Gambit, Tartakower Attack',
+    value: [
+      { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
+      { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
+      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
+      { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
+      { color: 'w', from: 'f1', to: 'c4', flags: 'n', piece: 'b', san: 'Bc4' },
+      { color: 'b', from: 'f8', to: 'c5', flags: 'n', piece: 'b', san: 'Bc5' },
+      { color: 'w', from: 'b2', to: 'b4', flags: 'b', piece: 'p', san: 'b4' },
+      { color: 'b', from: 'c5', to: 'b4', flags: 'c', piece: 'b', captured: 'p', san: 'Bxb4' },
+      { color: 'w', from: 'c2', to: 'c3', flags: 'n', piece: 'p', san: 'c3' },
+      { color: 'b', from: 'b4', to: 'a5', flags: 'n', piece: 'b', san: 'Ba5' },
+      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
+      { color: 'b', from: 'd7', to: 'd6', flags: 'n', piece: 'p', san: 'd6' },
+      { color: 'w', from: 'd1', to: 'b3', flags: 'n', piece: 'q', san: 'Qb3' },
+      { color: 'b', from: 'd8', to: 'd7', flags: 'n', piece: 'q', san: 'Qd7' },
+      { color: 'w', from: 'd4', to: 'e5', flags: 'c', piece: 'p', captured: 'p', san: 'dxe5' },
+      { color: 'b', from: 'a5', to: 'b6', flags: 'n', piece: 'b', san: 'Bb6' }
+    ]
+  },
+  {
+    label: 'Italian Game: Evans Gambit, Anderssen Variation, Cordel Line',
+    value: [
+      { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
+      { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
+      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
+      { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
+      { color: 'w', from: 'f1', to: 'c4', flags: 'n', piece: 'b', san: 'Bc4' },
+      { color: 'b', from: 'f8', to: 'c5', flags: 'n', piece: 'b', san: 'Bc5' },
+      { color: 'w', from: 'b2', to: 'b4', flags: 'b', piece: 'p', san: 'b4' },
+      { color: 'b', from: 'c5', to: 'b4', flags: 'c', piece: 'b', captured: 'p', san: 'Bxb4' },
+      { color: 'w', from: 'c2', to: 'c3', flags: 'n', piece: 'p', san: 'c3' },
+      { color: 'b', from: 'b4', to: 'e7', flags: 'n', piece: 'b', san: 'Be7' },
+      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
+      { color: 'b', from: 'c6', to: 'a5', flags: 'n', piece: 'n', san: 'Na5' }
+    ]
   }
 ];
 
-const queensGambitOptions = [
+const queensGambitAcceptedOptions = [
   {
-    name: "Queen's Gambit",
-    label: 'Accepted',
+    label: "Queen's Gambit Accepted: Test",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 2",
     value: [
       {
         color: 'w',
@@ -275,13 +356,132 @@ const queensGambitOptions = [
   }
 ];
 
+const selectAllOptions = [
+  {
+    label: 'All Openings',
+    value: 'All'
+  },
+  {
+    label: "All Queen's Gambit Accepted",
+    value: "Queen's Gambit Accepted:"
+  }
+];
+
 export default [
+  {
+    label: 'Select All',
+    options: selectAllOptions
+  },
+  {
+    label: 'Caro-Kann',
+    options: []
+  },
+  {
+    label: 'Catalan',
+    options: []
+  },
+  {
+    label: 'English Opening',
+    options: []
+  },
+  {
+    label: 'Four Knights Game',
+    options: []
+  },
+  {
+    label: 'London System',
+    options: []
+  },
+  {
+    label: "Alekhine's Defence",
+    options: []
+  },
+  {
+    label: 'Benoni Defence',
+    options: []
+  },
+  {
+    label: 'Dutch Defence',
+    options: []
+  },
+  {
+    label: 'French Defence',
+    options: []
+  },
+  {
+    label: 'Grünfeld Defence',
+    options: []
+  },
+  {
+    label: 'Philidor Defense',
+    options: []
+  },
+  {
+    label: 'Pirc Defense',
+    options: []
+  },
+  {
+    label: 'Scandinavian Defense',
+    options: []
+  },
+  {
+    label: 'Sicillian Defense',
+    options: []
+  },
+  {
+    label: "King's Indian",
+    options: []
+  },
+  {
+    label: 'Nimzo-Indian',
+    options: []
+  },
+  {
+    label: "Queen's Indian",
+    options: []
+  },
+  {
+    label: 'Danish Gambit',
+    options: []
+  },
+  {
+    label: "Kings's Gambit Accepted",
+    options: []
+  },
+  {
+    label: "Kings's Gambit Declined",
+    options: []
+  },
+  {
+    label: "Queen's Gambit Accepted",
+    options: queensGambitAcceptedOptions
+  },
+  {
+    label: "Queen's Gambit Declined",
+    options: []
+  },
+  {
+    label: 'Ruy Lopez',
+    options: []
+  },
+  {
+    label: 'Center Game',
+    options: []
+  },
   {
     label: 'Italian Game',
     options: italianOptions
   },
   {
-    label: "Queen's Gambit",
-    options: queensGambitOptions
+    label: 'Russian Game',
+    options: []
+  },
+  {
+    label: 'Scotch Game',
+    options: []
+  },
+  {
+    label: 'Vienna Game',
+    options: []
   }
 ];

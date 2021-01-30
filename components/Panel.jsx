@@ -1,54 +1,64 @@
 import React from 'react';
 import Select from 'react-select';
 
+import BoardControls from './BoardControls';
 import openings from '../data/openings';
 import { start } from '../data/consts';
 import { colourChoices, formatGroupLabel } from '../data/selectOptionsAndStyles';
-
-// https://react-select.com/components -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
-// add default colour to each opening so we can switch to that on opening change
-// Need to show current opening above the chess board
-
-// on mobile select menu closes after each selection
-// on mobile its a bit slow to drop a piece
-// on mobile, should scroll to chessboard on start
-// on mobile, board controls need to be at top of panel
-// on some mobile chrome, buttons aren't centered in board controls
-// make a PWA
-
-// Start Button & Start Random button (or tick box?)
-// Select all options for each opening
+import LearnDisplay from './LearnDisplay';
+import TrainDisplay from './TrainDisplay';
 
 export default function Panel({
-  path,
-  reset,
   boardOrientation,
-  setBoardOrientation,
-  redoStack,
-  userColor,
-  setUserColor,
-  opening,
-  setOpening,
   game,
   goBack,
   goForward,
+  navDisabled,
+  opening,
   openingComplete,
-  setOpeningComplete
+  openingError,
+  path,
+  redoStack,
+  reset,
+  setBoardOrientation,
+  setOpening,
+  setOpeningComplete,
+  setOpeningError,
+  setUserColor,
+  userColor
 }) {
   const isTrain = path === '/train';
   const [selectedOpenings, setSelectedOpenings] = React.useState([]);
   const [openingsCopy, setOpeningsCopy] = React.useState([]);
+  const [openingsCompleted, setOpeningsCompleted] = React.useState([]);
+  const [openingsFailed, setOpeningsFailed] = React.useState([]);
   const [started, setStarted] = React.useState(false);
 
   React.useEffect(() => {
     if (openingComplete) {
       // Wait half a second before moving on to next opening
       setTimeout(() => {
+        const newCompleted = [...openingsCompleted];
+        newCompleted.push(opening.label);
+        setOpeningsCompleted(newCompleted);
         setOpeningComplete(false);
         handleTrainStart();
       }, 500);
     }
   }, [openingComplete]);
+
+  React.useEffect(() => {
+    if (openingError) {
+      // Wait half a second before moving on to next opening
+      setTimeout(() => {
+        const newFailed = [...openingsFailed];
+        newFailed.push(opening.label);
+        setOpeningsFailed(newFailed);
+        setOpeningError(false);
+        handleTrainStart();
+      }, 500);
+    }
+  }, [openingError]);
 
   function handleLearnOpeningChange(change) {
     setOpening(change);
@@ -56,8 +66,28 @@ export default function Panel({
   }
 
   function handleTrainOpeningChange(change) {
-    setSelectedOpenings(change ? [...change] : []);
-    setOpeningsCopy(change ? [...change] : []);
+    if (change && change.filter((c) => c.label.includes('All ')).length > 0) {
+      handleSelectAll(change.filter((c) => c.label.includes('All '))[0].value);
+    } else {
+      setSelectedOpenings(change ? [...change] : []);
+      setOpeningsCopy(change ? [...change] : []);
+    }
+  }
+
+  function handleSelectAll(value) {
+    // all openings selected
+    if (value === 'All') {
+      setSelectedOpenings([...flattenedVariations]);
+      setOpeningsCopy([...flattenedVariations]);
+    } else {
+      // all <opening> selected
+      // get current selected openings and remove the new selected ones so there are no duplicates
+      const oldListFiltered = [...selectedOpenings].filter((v) => !v.label.includes(value));
+      const filteredVariations = [...flattenedVariations].filter((v) => v.label.includes(value));
+      // append new openings
+      setSelectedOpenings([...oldListFiltered, ...filteredVariations]);
+      setOpeningsCopy([...oldListFiltered, ...filteredVariations]);
+    }
   }
 
   function handleUserColorChange(change) {
@@ -67,6 +97,10 @@ export default function Panel({
   }
 
   function handleTrainStart() {
+    if (!started) {
+      setOpeningsCompleted([]);
+      setOpeningsFailed([]);
+    }
     setStarted(true);
     const o = openingsCopy.shift();
     if (o === undefined) {
@@ -102,9 +136,9 @@ export default function Panel({
     return false;
   }
 
-  const flattenedVariations = openings.flatMap((o) => o.options);
-  const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black');
-  const forwardDisabled = redoStack.length === 0;
+  const flattenedVariations = openings.flatMap((o) => o.options).filter((o) => !o.label.includes('All '));
+  const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black') || navDisabled;
+  const forwardDisabled = redoStack.length === 0 || navDisabled;
   const startDisabled = selectedOpenings.length === 0;
 
   return (
@@ -119,6 +153,7 @@ export default function Panel({
             value={isTrain ? selectedOpenings : opening}
             filterOption={filterOptions}
             formatGroupLabel={formatGroupLabel}
+            isDisabled={started}
             isMulti={isTrain}
             isSearchable={true}
             maxMenuHeight={600}
@@ -130,68 +165,36 @@ export default function Panel({
         <div className="panel-select">
           <Select options={colourChoices} defaultValue={colourChoices[0]} onChange={handleUserColorChange} />
         </div>
-        <button
-          onClick={() => {
-            setSelectedOpenings(selectedOpenings.length === flattenedVariations.length ? [] : [...flattenedVariations]);
-            setOpeningsCopy(selectedOpenings.length === flattenedVariations.length ? [] : [...flattenedVariations]);
-          }}
-        >
-          {`${selectedOpenings.length === flattenedVariations.length ? 'Deselect ' : 'Select '} All`}
-        </button>
-        <br />
         <div className="panel-scroll-display">
-          <h1>Move history:</h1>
-          <div>
-            {game?.history({ verbose: true }).map((moveText, i) => (
-              <span key={i}>{moveText.to}</span>
-            ))}
-          </div>
+          {isTrain ? (
+            <TrainDisplay
+              selectedOpenings={selectedOpenings}
+              opening={opening}
+              openingsCompleted={openingsCompleted}
+              openingsFailed={openingsFailed}
+              started={started}
+            />
+          ) : (
+            <LearnDisplay game={game} />
+          )}
         </div>
         <button
-          className={`panel-start ${startDisabled && 'disabled'}`}
+          className={`panel-start ${startDisabled && 'disabled'} ${started && 'quit'}`}
           disabled={startDisabled}
           onClick={started ? handleTrainStop : handleTrainStart}
         >
-          {started ? 'Finish' : 'Start'}
+          {started ? 'Quit' : 'Start'}
         </button>
       </div>
-      <div className="panel-board-controls flex-row">
-        <div className="panel-board-control flex-column hover-dim">
-          <button
-            className="material-icons panel-board-control-button"
-            onClick={() => setBoardOrientation(boardOrientation === 'white' ? 'black' : 'white')}
-          >
-            cached
-          </button>
-          Flip
-        </div>
-        <div className="panel-board-control flex-column hover-dim">
-          <button className="material-icons panel-board-control-button" onClick={reset}>
-            replay
-          </button>
-          Reset
-        </div>
-        <div className={`panel-board-control flex-column hover-dim ${backDisabled && 'disabled'}`}>
-          <button
-            className={`material-icons panel-board-control-button ${backDisabled && 'disabled'}`}
-            disabled={backDisabled}
-            onClick={goBack}
-          >
-            chevron_left
-          </button>
-          Back
-        </div>
-        <div className={`panel-board-control flex-column hover-dim ${forwardDisabled && 'disabled'}`}>
-          <button
-            className={`material-icons panel-board-control-button ${forwardDisabled && 'disabled'}`}
-            disabled={forwardDisabled}
-            onClick={goForward}
-          >
-            chevron_right
-          </button>
-          Forward
-        </div>
-      </div>
+      <BoardControls
+        backDisabled={backDisabled}
+        boardOrientation={boardOrientation}
+        forwardDisabled={forwardDisabled}
+        goBack={goBack}
+        goForward={goForward}
+        reset={reset}
+        setBoardOrientation={setBoardOrientation}
+      />
     </div>
   );
 }

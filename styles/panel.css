@@ -39,7 +39,21 @@
 }
 
 .panel-scroll-display {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  overflow-y: auto;
+}
+.completed {
+  color: #779952;
+}
+.failed {
+  color: #b40000;
+}
+
+.panel-scroll-display-opening {
+  padding: 5px 0px;
+  display: flex;
 }
 
 .panel-start {
@@ -50,6 +64,9 @@
   border-radius: 10px;
   cursor: pointer;
   font-size: 30px;
+}
+.panel-start.quit {
+  background-color: #b40000;
 }
 .panel-start:hover {
   opacity: 0.5;
