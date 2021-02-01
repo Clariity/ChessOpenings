@@ -353,6 +353,576 @@ const queensGambitAcceptedOptions = [
         san: 'dxc4'
       }
     ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 3",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 4",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 5",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 6",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 7",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 8",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 9",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 10",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 11",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 12",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 13",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 14",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 15",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 16",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Test 17",
+    value: [
+      {
+        color: 'w',
+        from: 'd2',
+        to: 'd4',
+        flags: 'b',
+        piece: 'p',
+        san: 'd4'
+      },
+      {
+        color: 'b',
+        from: 'd7',
+        to: 'd5',
+        flags: 'b',
+        piece: 'p',
+        san: 'e5'
+      },
+      {
+        color: 'w',
+        from: 'c2',
+        to: 'c4',
+        flags: 'b',
+        piece: 'p',
+        san: 'c4'
+      },
+      {
+        color: 'b',
+        from: 'd5',
+        to: 'c4',
+        flags: 'c',
+        piece: 'p',
+        captured: 'p',
+        san: 'dxc4'
+      }
+    ]
   }
 ];
 

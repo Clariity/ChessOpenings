@@ -38,3 +38,13 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #3a3a3a;
+}

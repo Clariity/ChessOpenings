@@ -26,13 +26,14 @@
 .panel-body {
   padding: 20px;
   flex-grow: 1;
+  max-height: 1080px;
 }
 
 .panel-select {
   color: black;
   margin-bottom: 10px;
 }
-.panel-select > div > div > div[class*='ValueContainer'] {
+.panel-select > div > div > div:first-child {
   min-height: 50px;
   max-height: 200px;
   overflow-y: auto;
@@ -42,7 +43,10 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  min-height: 400px;
   overflow-y: auto;
+  margin-bottom: 15px;
+  padding-right: 10px;
 }
 .completed {
   color: #779952;
