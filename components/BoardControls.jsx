@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useKeyPress } from '../functions/hooks';
+
 export default function BoardControls({
   backDisabled,
   boardOrientation,
@@ -5,8 +8,17 @@ export default function BoardControls({
   goBack,
   goForward,
   reset,
+  resetDisabled,
   setBoardOrientation
 }) {
+  const leftPress = useKeyPress('ArrowLeft');
+  const rightPress = useKeyPress('ArrowRight');
+
+  useEffect(() => {
+    if (leftPress && !backDisabled) goBack();
+    if (rightPress && !forwardDisabled) goForward();
+  }, [leftPress, rightPress]);
+
   return (
     <div className="panel-board-controls flex-row">
       <div className="panel-board-control flex-column hover-dim">
@@ -18,8 +30,8 @@ export default function BoardControls({
         </button>
         Flip
       </div>
-      <div className="panel-board-control flex-column hover-dim">
-        <button className="material-icons panel-board-control-button" onClick={reset}>
+      <div className={`panel-board-control flex-column hover-dim ${resetDisabled && 'disabled'}`}>
+        <button className={`material-icons panel-board-control-button ${resetDisabled && 'disabled'}`} onClick={reset}>
           replay
         </button>
         Reset

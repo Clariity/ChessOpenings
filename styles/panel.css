@@ -33,7 +33,7 @@
   color: black;
   margin-bottom: 10px;
 }
-.panel-select > div > div > div:first-child {
+.panel-select > div > div:nth-of-type(1) > div:nth-of-type(1) {
   min-height: 50px;
   max-height: 200px;
   overflow-y: auto;
@@ -54,6 +54,11 @@
 .failed {
   color: #b40000;
 }
+.current {
+  background-color: #0f0f0f;
+  border-radius: 10px;
+  padding: 10px !important;
+}
 
 .panel-scroll-display-opening {
   padding: 5px 0px;
@@ -64,7 +69,8 @@
   background-color: #779952;
   color: white;
   width: 100%;
-  height: 50px;
+  min-height: 50px;
+  border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 30px;

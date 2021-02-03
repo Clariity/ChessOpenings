@@ -11,8 +11,6 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
 // Things to note: Pawn Captures that are undone are buggy, can't really be helped
 
-// Maybe add select all option for each section? might not be possible
-
 // get softer piece moving sound
 // much better take sound needed (much better all sounds needed maybe)
 
@@ -20,23 +18,19 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
 // https://react-select.com/components -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
 // add default colour to each opening so we can switch to that on opening change
-// Need to show current opening above the chess board
 
 // on mobile select menu closes after each selection
 // on mobile its a bit slow to drop a piece
-// on mobile, should scroll to chessboard on start
-// on mobile, board controls need to be at top of panel
-// on some mobile chrome, buttons aren't centered in board controls
 // make a PWA
 
 // Start Button & Start Random button (or tick box?)
-// Select all options for each opening
+// On learn, have button to show and hide moves
+// Move SEO out of component and to individual pages (including index) so error is removed
+// Contact/Suggest Opening fix page with links to message me on twitter or make a PR
+// Prettify debug mode
+// Add spell check vscode extensions
 
-// if in train mode and you get it wrong then it needs to move on to the next opening
-
-// dull the start button a bit, seems too cartooney
-
-export default function ChessBoard({ path }) {
+export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
 
   const [game, setGame] = React.useState();
@@ -52,7 +46,6 @@ export default function ChessBoard({ path }) {
   const [userColor, setUserColor] = React.useState('white');
   const [boardOrientation, setBoardOrientation] = React.useState(userColor);
 
-  const [clickedSquare, setClickedSquare] = React.useState({});
   const [rightClickedSquares, setRightClickedSquares] = React.useState({});
   const [moveSquares, setMoveSquares] = React.useState({});
   const [optionSquares, setOptionSquares] = React.useState({});
@@ -89,7 +82,6 @@ export default function ChessBoard({ path }) {
     }
 
     setUndoMade(false);
-    setClickedSquare({});
   }, [game, undoMade, userColor, opening]);
 
   // safely update game in useState
@@ -107,7 +99,6 @@ export default function ChessBoard({ path }) {
       game.reset();
     });
     setRedoStack([]);
-    setClickedSquare({});
     setRightClickedSquares({});
     setMoveSquares({});
     setOptionSquares({});
@@ -277,26 +268,23 @@ export default function ChessBoard({ path }) {
   }
 
   // For recording moves
-  // function onDrop({ sourceSquare, targetSquare }) {
-  //   const move = game.move({
-  //     from: sourceSquare,
-  //     to: targetSquare,
-  //     promotion: 'q'
-  //   });
-  //   if (move === null) return;
-  //   playSound();
-  //   setMoveSquares({
-  //     [sourceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-  //     [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
-  //   });
-  //   console.log(JSON.stringify(game.history({ verbose: true })));
-  // }
-
-  function onSquareClick(square) {
-    setRightClickedSquares({});
-    setClickedSquare({
-      [square]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+  function onDropDebug({ sourceSquare, targetSquare }) {
+    const move = game.move({
+      from: sourceSquare,
+      to: targetSquare,
+      promotion: 'q'
     });
+    if (move === null) return;
+    playSound();
+    setMoveSquares({
+      [sourceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+      [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+    });
+    console.log(JSON.stringify(game.history({ verbose: true })));
+  }
+
+  function onSquareClick() {
+    setRightClickedSquares({});
   }
 
   function onSquareRightClick(square) {
@@ -334,13 +322,14 @@ export default function ChessBoard({ path }) {
     setOptionSquares(newSquares);
   }
 
+  // Only set squares to {} if not already set to {}
   function onMouseOutSquare() {
-    setOptionSquares({});
+    if (Object.keys(optionSquares).length !== 0) setOptionSquares({});
   }
 
   return (
     <div className="chessboard-container">
-      <div className="chessboard">
+      <div id="chessboard" className="chessboard">
         {opening && <p className="chessboard-header">{opening.label}</p>}
         {!opening && (
           <p className="chessboard-header">
@@ -358,12 +347,11 @@ export default function ChessBoard({ path }) {
             boxShadow: 'inset 0 0 1px 6px rgba(255,255,255,0.75)'
           }}
           squareStyles={{
-            ...clickedSquare,
             ...rightClickedSquares,
             ...moveSquares,
             ...optionSquares
           }}
-          onDrop={onDrop}
+          onDrop={isDebug ? onDropDebug : onDrop}
           onSquareClick={onSquareClick}
           onSquareRightClick={onSquareRightClick}
           onMouseOverSquare={onMouseOverSquare}

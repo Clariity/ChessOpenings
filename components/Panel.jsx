@@ -33,9 +33,10 @@ export default function Panel({
   const [openingsCompleted, setOpeningsCompleted] = React.useState([]);
   const [openingsFailed, setOpeningsFailed] = React.useState([]);
   const [started, setStarted] = React.useState(false);
+  const [canRetry, setCanRetry] = React.useState(false);
 
   React.useEffect(() => {
-    if (openingComplete) {
+    if (isTrain && openingComplete) {
       // Wait half a second before moving on to next opening
       setTimeout(() => {
         const newCompleted = [...openingsCompleted];
@@ -48,7 +49,7 @@ export default function Panel({
   }, [openingComplete]);
 
   React.useEffect(() => {
-    if (openingError) {
+    if (isTrain && openingError) {
       // Wait half a second before moving on to next opening
       setTimeout(() => {
         const newFailed = [...openingsFailed];
@@ -59,6 +60,12 @@ export default function Panel({
       }, 500);
     }
   }, [openingError]);
+
+  React.useEffect(() => {
+    if (started) {
+      document.getElementById('chessboard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [started]);
 
   function handleLearnOpeningChange(change) {
     setOpening(change);
@@ -72,6 +79,7 @@ export default function Panel({
       setSelectedOpenings(change ? [...change] : []);
       setOpeningsCopy(change ? [...change] : []);
     }
+    setCanRetry(false);
   }
 
   function handleSelectAll(value) {
@@ -102,9 +110,13 @@ export default function Panel({
       setOpeningsFailed([]);
     }
     setStarted(true);
+    setCanRetry(true);
     const o = openingsCopy.shift();
     if (o === undefined) {
       // it is complete
+      setTimeout(() => {
+        handleTrainStop();
+      }, 500);
     } else {
       setOpening(o);
       reset();
@@ -113,6 +125,7 @@ export default function Panel({
 
   function handleTrainStop() {
     setStarted(false);
+    setOpening();
     setOpeningsCopy([...selectedOpenings]);
   }
 
@@ -137,7 +150,12 @@ export default function Panel({
   }
 
   const flattenedVariations = openings.flatMap((o) => o.options).filter((o) => !o.label.includes('All '));
-  const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black') || navDisabled;
+  const learnOpenings = openings.slice(1);
+  const backDisabled =
+    game?.fen() === start ||
+    (game?.history().length === 1 && userColor === 'black') ||
+    navDisabled ||
+    (isTrain && !started);
   const forwardDisabled = redoStack.length === 0 || navDisabled;
   const startDisabled = selectedOpenings.length === 0;
 
@@ -156,16 +174,16 @@ export default function Panel({
             isDisabled={started}
             isMulti={isTrain}
             isSearchable={true}
-            maxMenuHeight={600}
+            maxMenuHeight={800}
             onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
-            options={openings}
+            options={isTrain ? openings : learnOpenings}
             placeholder={isTrain ? 'Select Openings to Train' : 'Select Opening to Learn'}
           />
         </div>
         <div className="panel-select">
           <Select options={colourChoices} defaultValue={colourChoices[0]} onChange={handleUserColorChange} />
         </div>
-        <div className="panel-scroll-display">
+        <div id="panel-scroll-display" className="panel-scroll-display">
           {isTrain ? (
             <TrainDisplay
               selectedOpenings={selectedOpenings}
@@ -178,13 +196,15 @@ export default function Panel({
             <LearnDisplay game={game} />
           )}
         </div>
-        <button
-          className={`panel-start ${startDisabled && 'disabled'} ${started && 'quit'}`}
-          disabled={startDisabled}
-          onClick={started ? handleTrainStop : handleTrainStart}
-        >
-          {started ? 'Quit' : 'Start'}
-        </button>
+        {isTrain && (
+          <button
+            className={`panel-start ${startDisabled && 'disabled'} ${started && 'quit'}`}
+            disabled={startDisabled}
+            onClick={started ? handleTrainStop : handleTrainStart}
+          >
+            {started ? 'Quit' : canRetry ? 'Retry' : 'Start'}
+          </button>
+        )}
       </div>
       <BoardControls
         backDisabled={backDisabled}
@@ -193,6 +213,7 @@ export default function Panel({
         goBack={goBack}
         goForward={goForward}
         reset={reset}
+        resetDisabled={isTrain && !started}
         setBoardOrientation={setBoardOrientation}
       />
     </div>

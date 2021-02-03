@@ -37,6 +37,10 @@
   .panel-title-text {
     font-size: 24px;
   }
+
+  .panel-board-controls {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 1600px) {
@@ -56,5 +60,15 @@
   .panel {
     width: calc(100vw - 150px - 60px);
     height: 100%;
+  }
+
+  .panel-board-controls {
+    order: 0;
+  }
+  .panel-body {
+    order: 1;
+  }
+  .panel-title {
+    order: 2;
   }
 }
