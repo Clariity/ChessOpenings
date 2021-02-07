@@ -1,6 +1,8 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { useWindowSize } from '../functions/hooks';
+import TrainSummary from './TrainSummary';
 
 export default function TrainDisplay({ openingsCompleted, opening, openingsFailed, selectedOpenings, started }) {
   const window = useWindowSize();
@@ -23,7 +25,7 @@ export default function TrainDisplay({ openingsCompleted, opening, openingsFaile
   return (
     <>
       {started ? (
-        selectedOpenings.map((o, i) => (
+        selectedOpenings.map((o) => (
           <div
             key={o.label}
             id={`${o.label}-panel`}
@@ -39,15 +41,24 @@ export default function TrainDisplay({ openingsCompleted, opening, openingsFaile
           </div>
         ))
       ) : endReached ? (
-        <div>
-          <p>Openings Completed: {openingsCompleted.length}</p>
-          <p>Openings Failed: {openingsFailed.length}</p>
-        </div>
+        <TrainSummary openingsCompleted={openingsCompleted} openingsFailed={openingsFailed} />
       ) : (
-        <p className="chessboard-header">
-          <span className="chessboard-header-special">Select Opening</span> to Train and{' '}
-          <span className="chessboard-header-special">Press Start</span> to Begin
-        </p>
+        <>
+          <p className="chessboard-header pad-20-b">
+            <span className="chessboard-header-special">Select Opening</span> to Train and{' '}
+            <span className="chessboard-header-special">Press Start</span> to Begin
+          </p>
+          <p className="chessboard-header pad-20-b">
+            Test your openings knowledge and see how many openings you can complete without making a mistake.
+          </p>
+          <p className="chessboard-header pad-20-b">
+            Want to learn some more openings?{' '}
+            <Link href="/learn">
+              <span className="chessboard-header-special hover">Click here</span>
+            </Link>{' '}
+            to learn some.
+          </p>
+        </>
       )}
     </>
   );

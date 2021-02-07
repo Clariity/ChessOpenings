@@ -5,12 +5,31 @@
 .pad-5-r {
   padding-right: 5px;
 }
+.pad-5-tb {
+  padding: 5px 0px;
+}
 
 .pad-10 {
   padding: 10px;
 }
 .pad-10-l {
   padding-left: 10px;
+}
+
+.pad-20-t {
+  padding-top: 20px;
+}
+.pad-20-b {
+  padding-bottom: 20px;
+}
+
+/* ##### Text ##### */
+.text-align-center {
+  text-align: center;
+}
+
+.font-size-20 {
+  font-size: 20px;
 }
 
 /* ##### Flex ##### */

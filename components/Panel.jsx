@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+
 import Select from 'react-select';
 
 import BoardControls from './BoardControls';
@@ -28,6 +30,8 @@ export default function Panel({
   userColor
 }) {
   const isTrain = path === '/train';
+  const router = useRouter();
+  const { openingLink } = router.query;
   const [selectedOpenings, setSelectedOpenings] = React.useState([]);
   const [openingsCopy, setOpeningsCopy] = React.useState([]);
   const [openingsCompleted, setOpeningsCompleted] = React.useState([]);
@@ -60,6 +64,13 @@ export default function Panel({
       }, 500);
     }
   }, [openingError]);
+
+  React.useEffect(() => {
+    if (openingLink && !opening) {
+      const o = openings.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
+      setOpening(o);
+    }
+  }, [openingLink]);
 
   React.useEffect(() => {
     if (started) {
@@ -193,7 +204,7 @@ export default function Panel({
               started={started}
             />
           ) : (
-            <LearnDisplay game={game} />
+            <LearnDisplay history={game?.history({ verbose: true })} opening={opening} />
           )}
         </div>
         {isTrain && (

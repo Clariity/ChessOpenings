@@ -6,10 +6,11 @@ import Panel from './Panel';
 
 import { start } from '../data/consts';
 import { useChessboardSize } from '../functions/hooks';
+import ChessBoardHeader from './ChessBoardHeader';
 
 const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
-// Things to note: Pawn Captures that are undone are buggy, can't really be helped
+// Things to note: Pawn Captures that are undone are buggy, can't really be helped - try new pieces?
 
 // get softer piece moving sound
 // much better take sound needed (much better all sounds needed maybe)
@@ -17,18 +18,18 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // need to replace black Rook pieces as they glitch out
 
 // https://react-select.com/components -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
-// add default colour to each opening so we can switch to that on opening change
+// add default colour to each opening so we can switch to that on opening change - have option in settings to set auto switch on or off
 
 // on mobile select menu closes after each selection
 // on mobile its a bit slow to drop a piece
 // make a PWA
 
 // Start Button & Start Random button (or tick box?)
-// On learn, have button to show and hide moves
 // Move SEO out of component and to individual pages (including index) so error is removed
 // Contact/Suggest Opening fix page with links to message me on twitter or make a PR
 // Prettify debug mode
 // Add spell check vscode extensions
+// Suggestions and upcoming work/openings page
 
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
@@ -330,13 +331,7 @@ export default function ChessBoard({ path, isDebug }) {
   return (
     <div className="chessboard-container">
       <div id="chessboard" className="chessboard">
-        {opening && <p className="chessboard-header">{opening.label}</p>}
-        {!opening && (
-          <p className="chessboard-header">
-            <span className="chessboard-header-special">Select Opening</span> to Train and{' '}
-            <span className="chessboard-header-special">Press Start</span> to Begin
-          </p>
-        )}
+        <ChessBoardHeader path={path} opening={opening} />
         <Board
           id="board"
           position={game ? game.fen() : start}

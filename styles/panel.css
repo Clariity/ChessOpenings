@@ -126,3 +126,19 @@
 .panel-start:focus {
   outline: none;
 }
+
+.panel-summary-opening {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.panel-summary-opening-link {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+.panel-summary-opening-link:hover {
+  cursor: pointer;
+  background-color: #0f0f0f;
+}

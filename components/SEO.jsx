@@ -6,9 +6,7 @@ export default function SEO({ description, title, image, path }) {
 
   const metaDescription = description || defaultDescription;
   const metaImage = image || defaultImageURL;
-  const url = path
-    ? 'https://chessopenings.co.uk' + path
-    : 'https://chessopenings.co.uk';
+  const url = path ? 'https://chessopenings.co.uk' + path : 'https://chessopenings.co.uk';
 
   return (
     <Head>
@@ -42,15 +40,13 @@ export default function SEO({ description, title, image, path }) {
 
       <link rel="icon" href="/favicon.ico" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link
-        href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
-        rel="stylesheet"
-      />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
-        rel="stylesheet"
-      />
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
 
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="manifest" href="/site.webmanifest"></link>
       <html lang="en" />
     </Head>
   );
