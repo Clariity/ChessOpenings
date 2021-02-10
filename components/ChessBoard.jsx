@@ -30,6 +30,9 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // Prettify debug mode
 // Add spell check vscode extensions
 // Suggestions and upcoming work/openings page
+// Add more moves to current openings i.e Italian Game: Deutz Gambit
+// Show captured pieces on left of chessboard, vertically
+// Retry All, Retry Failed, Retry One
 
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
