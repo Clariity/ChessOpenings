@@ -37,8 +37,10 @@ export default function Panel({
   const [openingsCompleted, setOpeningsCompleted] = React.useState([]);
   const [openingsFailed, setOpeningsFailed] = React.useState([]);
   const [started, setStarted] = React.useState(false);
+  const [canStart, setCanStart] = React.useState(false);
   const [canRetry, setCanRetry] = React.useState(false);
 
+  // Act on opening complete
   React.useEffect(() => {
     if (isTrain && openingComplete) {
       // Wait half a second before moving on to next opening
@@ -52,6 +54,7 @@ export default function Panel({
     }
   }, [openingComplete]);
 
+  // Act on opening error
   React.useEffect(() => {
     if (isTrain && openingError) {
       // Wait half a second before moving on to next opening
@@ -65,6 +68,7 @@ export default function Panel({
     }
   }, [openingError]);
 
+  // Set opening on load with URL param
   React.useEffect(() => {
     if (openingLink && !opening) {
       const o = openings.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
@@ -72,11 +76,20 @@ export default function Panel({
     }
   }, [openingLink]);
 
+  // Scroll chessboard into view when train is started
   React.useEffect(() => {
     if (started) {
       document.getElementById('chessboard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [started]);
+
+  // Run train once shuffling is completed or once failed openings have been set
+  React.useEffect(() => {
+    if (canStart) {
+      setCanStart(false);
+      handleTrainStart();
+    }
+  }, [openingsCopy]);
 
   function handleLearnOpeningChange(change) {
     setOpening(change);
@@ -115,6 +128,20 @@ export default function Panel({
     reset();
   }
 
+  function handleTrainShuffle() {
+    const shuffledOpenings = selectedOpenings.sort(() => (Math.random() < 0.5 ? 1 : -1));
+    setSelectedOpenings([...shuffledOpenings]);
+    setOpeningsCopy([...shuffledOpenings]);
+    setCanStart(true);
+  }
+
+  function handleRetryFailed() {
+    const failedOpenings = selectedOpenings.filter((o) => openingsFailed.includes(o.label));
+    setSelectedOpenings([...failedOpenings]);
+    setOpeningsCopy([...failedOpenings]);
+    setCanStart(true);
+  }
+
   function handleTrainStart() {
     if (!started) {
       setOpeningsCompleted([]);
@@ -124,7 +151,7 @@ export default function Panel({
     setCanRetry(true);
     const o = openingsCopy.shift();
     if (o === undefined) {
-      // it is complete
+      // train complete
       setTimeout(() => {
         handleTrainStop();
       }, 500);
@@ -207,15 +234,30 @@ export default function Panel({
             <LearnDisplay history={game?.history({ verbose: true })} opening={opening} />
           )}
         </div>
-        {isTrain && (
-          <button
-            className={`panel-start ${startDisabled && 'disabled'} ${started && 'quit'}`}
-            disabled={startDisabled}
-            onClick={started ? handleTrainStop : handleTrainStart}
-          >
-            {started ? 'Quit' : canRetry ? 'Retry' : 'Start'}
-          </button>
-        )}
+        <div className="flex-row">
+          {isTrain && !started && (
+            <button
+              className={`panel-start margin-10-r ${
+                (startDisabled || (canRetry && openingsFailed.length === 0)) && 'disabled'
+              }`}
+              disabled={startDisabled || (canRetry && openingsFailed.length === 0)}
+              onClick={canRetry ? handleRetryFailed : handleTrainShuffle}
+            >
+              <span className="material-icons pad-5-r">{canRetry ? 'restart_alt' : 'shuffle'}</span>
+              {canRetry ? 'Failed' : ''}
+            </button>
+          )}
+          {isTrain && (
+            <button
+              className={`panel-start margin-10-l ${startDisabled && 'disabled'} ${started && 'quit'}`}
+              disabled={startDisabled}
+              onClick={started ? handleTrainStop : handleTrainStart}
+            >
+              <span className="material-icons pad-5-r">{started ? '' : canRetry ? 'restart_alt' : 'play_arrow'}</span>
+              {started ? 'Quit' : canRetry ? 'All' : ''}
+            </button>
+          )}
+        </div>
       </div>
       <BoardControls
         backDisabled={backDisabled}

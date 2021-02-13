@@ -74,6 +74,9 @@
   border-radius: 10px;
   cursor: pointer;
   font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .panel-start.quit {
   background-color: #b40000;

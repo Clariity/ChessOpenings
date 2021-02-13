@@ -1,5 +1,5 @@
 export const getServerSideProps = async ({ res }) => {
-  res.setHeader('location', '/train');
+  res.setHeader('location', '/learn');
   res.statusCode = 302;
   res.end();
 

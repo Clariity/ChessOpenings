@@ -37,7 +37,7 @@ const italianOptions = [
   },
   {
     label: 'Italian Game: Giuoco Pianissimo, Normal',
-    description: 'A variation on the Giuco Pianissimo, Classical Variation where d3 is played before c3',
+    description: 'A variation on the Giuoco Pianissimo, Classical Variation where d3 is played before c3',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -55,7 +55,7 @@ const italianOptions = [
   {
     label: 'Italian Game: Giuoco Piano',
     description:
-      'A variation on the Giuco Pianissimo, where earlier castles are made and pieces are trader in the center.',
+      'A variation on the Giuoco Pianissimo, where earlier castles are made and pieces are traded in the center.',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -155,7 +155,7 @@ const italianOptions = [
   {
     label: 'Italian Game: Deutz Gambit',
     description:
-      "An aggresive attack on the center by White that sacrifices a pawn and constantly threatens attacks on the center, delaying Black's ability to castle",
+      "An aggressive attack on the center by White that sacrifices a pawn and constantly threatens attacks on the center, delaying Black's ability to castle",
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },

@@ -22,17 +22,13 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
 // on mobile select menu closes after each selection
 // on mobile its a bit slow to drop a piece
-// make a PWA
+// make a PWA - https://github.com/shadowwalker/next-pwa - https://github.com/vercel/next.js/tree/canary/examples/progressive-web-app - https://www.creativebloq.com/how-to/build-a-progressive-web-app
 
-// Start Button & Start Random button (or tick box?)
-// Move SEO out of component and to individual pages (including index) so error is removed
 // Contact/Suggest Opening fix page with links to message me on twitter or make a PR
 // Prettify debug mode
-// Add spell check vscode extensions
 // Suggestions and upcoming work/openings page
-// Add more moves to current openings i.e Italian Game: Deutz Gambit
-// Show captured pieces on left of chessboard, vertically
-// Retry All, Retry Failed, Retry One
+// Show captured pieces on left of chessboard, vertically for desktop, underneath board for mobile
+// Analysis weighting for each opening at the end
 
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();

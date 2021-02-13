@@ -10,7 +10,7 @@ export default function TrainDisplay({ openingsCompleted, opening, openingsFaile
 
   React.useEffect(() => {
     if (window > 1599 && opening) {
-      document.getElementById(`${opening.label}-panel`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.getElementById(`${opening.label}-panel`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else if (opening) {
       document.getElementById('panel-scroll-display').scrollBy({ top: 34, behavior: 'smooth', block: 'center' });
     }
