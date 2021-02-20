@@ -22,8 +22,3 @@ export const formatGroupLabel = (data) => (
     <span style={groupBadgeStyles}>{data.options.length}</span>
   </div>
 );
-
-export const colourChoices = [
-  { label: 'Play as White', value: 'white' },
-  { label: 'Play as Black', value: 'black' }
-];

@@ -10,6 +10,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+  background-color: #383635;
 }
 
 a {
@@ -46,5 +47,5 @@ a {
 
 *::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: #3a3a3a;
+  background-color: #0f0f0f;
 }

@@ -4,17 +4,14 @@ import dynamic from 'next/dynamic';
 import Chess from 'chess.js';
 import Panel from './Panel';
 
-import { start } from '../data/consts';
-import { useChessboardSize } from '../functions/hooks';
 import ChessBoardHeader from './ChessBoardHeader';
+import { start, chessPieces } from '../data/consts';
+import { useChessboardSize } from '../functions/hooks';
+import { useStoreContext } from './Store';
 
 const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
 // Things to note: Pawn Captures that are undone are buggy, can't really be helped - try new pieces?
-
-// get softer piece moving sound
-// much better take sound needed (much better all sounds needed maybe)
-
 // need to replace black Rook pieces as they glitch out
 
 // https://react-select.com/components -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
@@ -27,11 +24,12 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // Contact/Suggest Opening fix page with links to message me on twitter or make a PR
 // Prettify debug mode
 // Suggestions and upcoming work/openings page
-// Show captured pieces on left of chessboard, vertically for desktop, underneath board for mobile
-// Analysis weighting for each opening at the end
+// Show captured pieces on underneath board
+// Analysis weighting at all points, display somewhere
 
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
+  const { state } = useStoreContext();
 
   const [game, setGame] = React.useState();
   const [opening, setOpening] = React.useState();
@@ -41,6 +39,7 @@ export default function ChessBoard({ path, isDebug }) {
   const [redoStack, setRedoStack] = React.useState([]);
   const [undoMade, setUndoMade] = React.useState(false);
   const [navDisabled, setNavDisabled] = React.useState(false);
+  const [showBoard, setShowBoard] = React.useState(true);
 
   const [moveSounds, setMoveSounds] = React.useState([]);
   const [userColor, setUserColor] = React.useState('white');
@@ -53,14 +52,17 @@ export default function ChessBoard({ path, isDebug }) {
   // initialise
   React.useEffect(() => {
     setGame(new Chess());
-    setMoveSounds([
-      new Audio('/media/sounds/move1.mp3'),
-      new Audio('/media/sounds/move2.mp3'),
-      new Audio('/media/sounds/check.wav'),
-      new Audio('/media/sounds/error.flac'),
-      new Audio('/media/sounds/take.wav')
-    ]);
+    setSounds();
   }, []);
+
+  // handle theme change
+  React.useEffect(() => {
+    setShowBoard(false);
+    setSounds();
+    setTimeout(() => {
+      setShowBoard(true);
+    }, 10);
+  }, [state.theme]);
 
   React.useEffect(() => {
     // if user is starting with black then CPU makes opening move
@@ -104,26 +106,36 @@ export default function ChessBoard({ path, isDebug }) {
     setOptionSquares({});
   }
 
+  function setSounds() {
+    setMoveSounds({
+      move: new Audio(`/media/themes/${state.theme.value}/move.mp3`),
+      capture: new Audio(`/media/themes/${state.theme.value}/capture.mp3`),
+      check: new Audio(`/media/themes/${state.theme.value}/check.mp3`),
+      castle: new Audio(`/media/themes/${state.theme.value}/castle.mp3`),
+      error: new Audio(`/media/themes/${state.theme.value}/error.flac`)
+    });
+  }
+
   // play sound on moves
   function playSound() {
-    if (game.in_checkmate()) {
+    const move = game.history({ verbose: true })[game.history().length - 1];
+    if (game.in_check() || game.in_checkmate()) {
+      moveSounds.check.play();
       return;
     }
-    if (game.in_check()) {
-      moveSounds[2].play();
+    if (move.captured) {
+      moveSounds.capture.play();
       return;
     }
-    if (game.history({ verbose: true })[game.history().length - 1].captured) {
-      moveSounds[1].play();
-      setTimeout(() => {
-        moveSounds[4].play();
-      }, 10);
+    if (
+      (move.from === 'e1' && (move.to === 'g1' || move.to === 'c1')) ||
+      (move.from === 'e8' && (move.to === 'g8' || move.to === 'c8'))
+    ) {
+      moveSounds.castle.play();
       return;
     }
 
-    // check for castling and make unique castling sound (if color white and e1 to g1 or e1 to c1 ...)
-
-    moveSounds[1].play();
+    moveSounds.move.play();
   }
 
   function goBack() {
@@ -154,7 +166,7 @@ export default function ChessBoard({ path, isDebug }) {
       game.undo();
       game.undo();
     });
-    moveSounds[0].play();
+    moveSounds.move.play();
 
     // colour move squares of move made prior to 2 moves ago
     const priorMoveIndex = history.length - 3;
@@ -200,6 +212,7 @@ export default function ChessBoard({ path, isDebug }) {
     ) {
       const move = redoStack.pop();
       setTimeout(() => {
+        // TODO: why the timeout?
         makeComputerMove(move.from, move.to);
       }, 300);
     } else setNavDisabled(false);
@@ -242,7 +255,7 @@ export default function ChessBoard({ path, isDebug }) {
       safeGameMutate((game) => {
         game.undo();
       });
-      moveSounds[3].play();
+      moveSounds.error.play();
       setRightClickedSquares({});
       setOptionSquares({});
       setOpeningError(true);
@@ -262,7 +275,6 @@ export default function ChessBoard({ path, isDebug }) {
     });
 
     if (opening.value[historyLength] !== undefined) {
-      // removed the +1 from here index, check back later
       makeComputerMove(opening.value[historyLength].from, opening.value[historyLength].to);
     } else setOpeningComplete(true);
   }
@@ -331,40 +343,31 @@ export default function ChessBoard({ path, isDebug }) {
     <div className="chessboard-container">
       <div id="chessboard" className="chessboard">
         <ChessBoardHeader path={path} opening={opening} />
-        <Board
-          id="board"
-          position={game ? game.fen() : start}
-          orientation={boardOrientation}
-          darkSquareStyle={{ backgroundColor: '#779952' }}
-          lightSquareStyle={{ backgroundColor: '#edeed1' }}
-          dropSquareStyle={{
-            boxShadow: 'inset 0 0 1px 6px rgba(255,255,255,0.75)'
-          }}
-          squareStyles={{
-            ...rightClickedSquares,
-            ...moveSquares,
-            ...optionSquares
-          }}
-          onDrop={isDebug ? onDropDebug : onDrop}
-          onSquareClick={onSquareClick}
-          onSquareRightClick={onSquareRightClick}
-          onMouseOverSquare={onMouseOverSquare}
-          onMouseOutSquare={onMouseOutSquare}
-          width={chessboardSize}
-          transitionDuration={300}
-          pieces={{
-            bQ: ({ squareWidth }) => (
-              <img
-                style={{ width: squareWidth, height: squareWidth }}
-                src={
-                  // https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Chess_qdt45.svg/1280px-Chess_qdt45.svg.png'
-                }
-                alt={'b Queen'}
-              />
-            )
-          }}
-        />
+        {showBoard && (
+          <Board
+            id="board"
+            position={game ? game.fen() : start}
+            orientation={boardOrientation}
+            darkSquareStyle={state.theme.darkSquareStyle}
+            lightSquareStyle={state.theme.lightSquareStyle}
+            dropSquareStyle={{
+              boxShadow: 'inset 0 0 1px 6px rgba(255,255,255,0.75)'
+            }}
+            squareStyles={{
+              ...rightClickedSquares,
+              ...moveSquares,
+              ...optionSquares
+            }}
+            onDrop={isDebug ? onDropDebug : onDrop}
+            onSquareClick={onSquareClick}
+            onSquareRightClick={onSquareRightClick}
+            onMouseOverSquare={onMouseOverSquare}
+            onMouseOutSquare={onMouseOutSquare}
+            width={chessboardSize}
+            transitionDuration={300}
+            pieces={chessPieces(state.theme.value)}
+          />
+        )}
       </div>
       <Panel
         boardOrientation={boardOrientation}

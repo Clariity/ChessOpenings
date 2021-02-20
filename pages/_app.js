@@ -1,14 +1,17 @@
-import '../styles/globals.css';
 import Sidebar from '../components/Sidebar';
+import '../styles/globals.css';
+import { StateProvider } from '../components/Store';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div className="app">
-      <Sidebar />
-      <div className="main">
-        <Component {...pageProps} />
+    <StateProvider>
+      <div className="app">
+        <Sidebar />
+        <div className="main">
+          <Component {...pageProps} />
+        </div>
       </div>
-    </div>
+    </StateProvider>
   );
 }
 

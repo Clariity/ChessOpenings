@@ -5,10 +5,9 @@ import Select from 'react-select';
 
 import BoardControls from './BoardControls';
 import openings from '../data/openings';
-import { start } from '../data/consts';
-import { colourChoices, formatGroupLabel } from '../data/selectOptionsAndStyles';
 import LearnDisplay from './LearnDisplay';
 import TrainDisplay from './TrainDisplay';
+import { start, colourChoices, formatGroupLabel } from '../data/consts';
 
 export default function Panel({
   boardOrientation,

@@ -1,49 +1,35 @@
 @media (max-width: 850px) {
-  .app {
-    flex-direction: column !important;
-  }
-
-  .chessboard {
-    width: calc(100vw - 20px) !important;
-  }
-
   .chessboard-header {
     font-size: 16px;
   }
 
-  .panel {
-    width: calc(100vw - 20px) !important;
-  }
-
-  .sidebar {
-    flex-direction: row !important;
-    max-width: unset !important;
-    width: 100vw !important;
-    height: 110px;
-  }
-
   .sidebar-link {
     flex-direction: column;
-    margin-top: auto !important;
-    margin-bottom: auto !important;
     width: 70px;
-    height: 70px;
   }
-
   .sidebar-label {
     padding-left: 0;
+  }
+  .sidebar-spacer-800 {
+    width: calc(100% - 425px);
+  }
+  .sidebar-spacer {
+    display: none;
   }
 
   .panel-title-text {
     font-size: 24px;
   }
-
   .panel-board-controls {
     font-size: 12px;
   }
 }
 
 @media (max-width: 1600px) {
+  .app {
+    flex-direction: column !important;
+  }
+
   .main {
     align-items: unset !important;
   }
@@ -54,14 +40,32 @@
   }
 
   .chessboard {
-    width: calc(100vw - 150px - 40px);
+    width: calc(100vw - 40px);
+    max-width: calc(100vh - 200px);
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .sidebar {
+    flex-direction: row !important;
+    max-width: unset !important;
+    width: 100vw !important;
+    height: 110px;
+  }
+  .sidebar-link {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+    height: 70px;
+  }
+  .sidebar-spacer {
+    width: calc(100% - 525px);
   }
 
   .panel {
-    width: calc(100vw - 150px - 60px);
+    width: calc(100vw - 40px) !important;
+    max-width: calc(100vh - 200px);
     height: 100%;
   }
-
   .panel-board-controls {
     order: 0;
   }
