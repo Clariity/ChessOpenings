@@ -37,7 +37,7 @@ export default function Sidebar() {
             </span>
           </button>
         ) : (
-          <SidebarOptions setMenuOpen={setMenuOpen} />
+          <SidebarOptions setMenuOpen={setMenuOpen} setShowModal={setShowModal} />
         )}
       </div>
 
