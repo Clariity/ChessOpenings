@@ -178,6 +178,8 @@ const italianOptions = [
   },
   {
     label: 'Italian Game: Evans Gambit, Pierce Defense',
+    description:
+      'White gives up a pawn for a positional advantage and early development, delaying or even preventing Black from castling.',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -196,6 +198,7 @@ const italianOptions = [
   },
   {
     label: 'Italian Game: Evans Gambit, Tartakower Attack',
+    description: 'Black declines to take on d4, giving White an opportunity to build up an attack on f7.',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -216,7 +219,8 @@ const italianOptions = [
     ]
   },
   {
-    label: 'Italian Game: Evans Gambit, Anderssen Variation, Cordel Line',
+    label: 'Italian Game: Evans Gambit, Anderssen Variation',
+    description: 'A variation of the Evans Gambit where Black retreats their Bishop back to e7.',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -229,30 +233,14 @@ const italianOptions = [
       { color: 'w', from: 'c2', to: 'c3', flags: 'n', piece: 'p', san: 'c3' },
       { color: 'b', from: 'b4', to: 'e7', flags: 'n', piece: 'b', san: 'Be7' },
       { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
-      { color: 'b', from: 'c6', to: 'a5', flags: 'n', piece: 'n', san: 'Na5' }
-    ]
-  },
-  {
-    label: 'Italian Game: Two Knights Defense, Max Lange Attack',
-    value: [
-      { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
-      { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
-      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
-      { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
-      { color: 'w', from: 'f1', to: 'c4', flags: 'n', piece: 'b', san: 'Bc4' },
-      { color: 'b', from: 'f8', to: 'c5', flags: 'n', piece: 'b', san: 'Bc5' },
-      { color: 'w', from: 'e1', to: 'g1', flags: 'k', piece: 'k', san: 'O-O' },
-      { color: 'b', from: 'g8', to: 'f6', flags: 'n', piece: 'n', san: 'Nf6' },
-      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
-      { color: 'b', from: 'e5', to: 'd4', flags: 'c', piece: 'p', captured: 'p', san: 'exd4' },
-      { color: 'w', from: 'e4', to: 'e5', flags: 'n', piece: 'p', san: 'e5' },
-      { color: 'b', from: 'd7', to: 'd5', flags: 'b', piece: 'p', san: 'd5' },
-      { color: 'w', from: 'e5', to: 'f6', flags: 'c', piece: 'p', captured: 'n', san: 'exf6' },
-      { color: 'b', from: 'd5', to: 'c4', flags: 'c', piece: 'p', captured: 'b', san: 'dxc4' }
+      { color: 'b', from: 'c6', to: 'a5', flags: 'n', piece: 'n', san: 'Na5' },
+      { color: 'w', from: 'c4', to: 'e2', flags: 'n', piece: 'b', san: 'Be2' }
     ]
   },
   {
     label: "Italian Game: Two Knights Defense, Modern Bishop's Opening",
+    description:
+      'Black attacks the e4 Pawn early forcing White to respond with d3. Black then places their Bishop on e7 to prevent the f6 Knight from being pinned to the Queen.',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -269,7 +257,34 @@ const italianOptions = [
     ]
   },
   {
-    label: 'Italian Game: Two Knights Defense, Polerio Defense, Bishop Check Line',
+    label: 'Italian Game: Two Knights Defense, Fried Liver Attack',
+    description:
+      "An early attack by White that threatens a fork of Black's Rook and Queen on f7 if Black doesn't respond correctly.",
+    value: [
+      { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
+      { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
+      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
+      { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
+      { color: 'w', from: 'f1', to: 'c4', flags: 'n', piece: 'b', san: 'Bc4' },
+      { color: 'b', from: 'g8', to: 'f6', flags: 'n', piece: 'n', san: 'Nf6' },
+      { color: 'w', from: 'f3', to: 'g5', flags: 'n', piece: 'n', san: 'Ng5' },
+      { color: 'b', from: 'd7', to: 'd5', flags: 'b', piece: 'p', san: 'd5' },
+      { color: 'w', from: 'e4', to: 'd5', flags: 'c', piece: 'p', captured: 'p', san: 'exd5' },
+      { color: 'b', from: 'f6', to: 'd5', flags: 'c', piece: 'n', captured: 'p', san: 'Nxd5' },
+      { color: 'w', from: 'g5', to: 'f7', flags: 'c', piece: 'n', captured: 'p', san: 'Nxf7' },
+      { color: 'b', from: 'e8', to: 'f7', flags: 'c', piece: 'k', captured: 'n', san: 'Kxf7' },
+      { color: 'w', from: 'd1', to: 'f3', flags: 'n', piece: 'q', san: 'Qf3+' },
+      { color: 'b', from: 'f7', to: 'e6', flags: 'n', piece: 'k', san: 'Ke6' },
+      { color: 'w', from: 'b1', to: 'c3', flags: 'n', piece: 'n', san: 'Nc3' },
+      { color: 'b', from: 'c6', to: 'b4', flags: 'n', piece: 'n', san: 'Nb4' },
+      { color: 'w', from: 'e1', to: 'g1', flags: 'k', piece: 'k', san: 'O-O' },
+      { color: 'b', from: 'c7', to: 'c6', flags: 'n', piece: 'p', san: 'c6' },
+      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' }
+    ]
+  },
+  {
+    label: 'Italian Game: Two Knights Defense, Fried Liver Attack, Polerio Defense',
+    description: 'The main line defense to the Fried Liver Attack that puts pressure on the c4 Bishop.',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -288,7 +303,9 @@ const italianOptions = [
     ]
   },
   {
-    label: 'Italian Game: Two Knights Defense, Traxler Counterattack, Knight Sacrifice Line',
+    label: 'Italian Game: Two Knights Defense, Fried Liver Attack, Traxler Counterattack',
+    description:
+      'A potentially devastating counter to the Fried Liver attack that could lead to White being quickly mated if they are not able to correctly deal with it.',
     value: [
       { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
       { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
@@ -443,3 +460,6 @@ export default [
     options: []
   }
 ];
+
+// Alapin?
+// Wayward Queen? + Wayward queen, queen trap line as a mistake

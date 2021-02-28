@@ -26,6 +26,12 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // Suggestions and upcoming work/openings page
 // Show captured pieces on underneath board
 // Analysis weighting at all points, display somewhere
+// Make top nav thinner (thinner logo)
+// Openings Mistakes, Take advantage
+// Known Mistakes:
+//  Evans Gambit: 5. c3, bc5
+//  Two Knights Defence: 6. d5
+//  Traxler: 6. xf2 && 8. bxd5 -> bg4 queen trap
 
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
