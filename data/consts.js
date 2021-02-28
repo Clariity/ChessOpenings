@@ -34,6 +34,17 @@ export const themeChoices = [
   }
 ];
 
+export const animationChoices = [
+  {
+    label: 'On',
+    value: true
+  },
+  {
+    label: 'Off',
+    value: false
+  }
+];
+
 const groupStyles = {
   display: 'flex',
   alignItems: 'center',

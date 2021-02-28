@@ -1,43 +1,49 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import SettingsModal from './SettingsModal';
 
-export default function SideBar() {
-  const { pathname } = useRouter();
+import SmoothCollapse from 'react-smooth-collapse';
+
+import SettingsModal from './SettingsModal';
+import SidebarOptions from './SidebarOptions';
+import { useWindowSize } from '../functions/hooks';
+
+export default function Sidebar() {
+  const window = useWindowSize();
+  const [menuOpen, setMenuOpen] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
 
   return (
     <div className="sidebar">
-      <Link href="/train">
-        <div className="pad-5 hover">
-          <Image src="/media/images/logoSmall.png" alt="logo small" width={150} height={100} />
-        </div>
-      </Link>
+      <div className="sidebar-display">
+        <Link href="/train">
+          <div className="pad-5 hover sidebar-logo">
+            <img
+              src={`/media/images/logo${window < 1600 ? 'Thin' : 'Small'}.png`}
+              alt="Chess Openings Logo"
+              width={window <= 1600 ? 230 : 140}
+              height={window <= 1600 ? 75 : 100}
+            />
+          </div>
+        </Link>
 
-      <div className="sidebar-spacer-800" />
-
-      <Link href="/learn">
-        <div className={`pad-10 flex-row sidebar-link ${pathname === '/learn' && 'sidebar-selected'}`}>
-          <img src="/media/images/learn.png" alt="learn" width={30} height={30} />
-          <div className="pad-10-l sidebar-label">Learn</div>
-        </div>
-      </Link>
-
-      <Link href="/train">
-        <div className={`pad-10 flex-row sidebar-link ${pathname === '/train' && 'sidebar-selected'}`}>
-          <img src="/media/images/train.png" alt="learn" width={30} height={30} />
-          <div className="pad-10-l sidebar-label">Train</div>
-        </div>
-      </Link>
-
-      <div className="sidebar-spacer" />
-
-      <div className="pad-10 flex-row sidebar-link" onClick={() => setShowModal(true)}>
-        <button className="material-icons sidebar-button">settings</button>
-        <div className="pad-10-l sidebar-label">Settings</div>
+        {window <= 840 ? (
+          <button
+            className={`hamburger hamburger--collapse ${menuOpen && 'is-active'}`}
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span className="hamburger-box">
+              <span className="hamburger-inner" />
+            </span>
+          </button>
+        ) : (
+          <SidebarOptions setMenuOpen={setMenuOpen} />
+        )}
       </div>
+
+      <SmoothCollapse expanded={menuOpen}>
+        <SidebarOptions setMenuOpen={setMenuOpen} setShowModal={setShowModal} />
+      </SmoothCollapse>
 
       <SettingsModal showModal={showModal} setShowModal={setShowModal} />
       <div className={`modal-background ${!showModal && 'fade-background'}`} onClick={() => setShowModal(false)} />

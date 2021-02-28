@@ -1,3 +1,61 @@
+/* ##### Padding ##### */
+.pad-5 {
+  padding: 5px;
+}
+.pad-5-r {
+  padding-right: 5px;
+}
+.pad-5-tb {
+  padding: 5px 0px;
+}
+
+.pad-10 {
+  padding: 10px;
+}
+.pad-10-l {
+  padding-left: 10px;
+}
+
+.pad-20-t {
+  padding-top: 20px;
+}
+.pad-20-b {
+  padding-bottom: 20px;
+}
+
+/* ##### Margin ##### */
+.margin-5-tb {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.margin-10-l {
+  margin-left: 10px;
+}
+.margin-10-r {
+  margin-right: 10px;
+}
+
+/* ##### Text ##### */
+.text-align-center {
+  text-align: center;
+}
+
+.font-size-20 {
+  font-size: 20px;
+}
+
+/* ##### Flex ##### */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ##### Hover ##### */
 .hover {
   cursor: pointer;
 }

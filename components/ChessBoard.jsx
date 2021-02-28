@@ -32,6 +32,7 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 //  Evans Gambit: 5. c3, bc5
 //  Two Knights Defence: 6. d5
 //  Traxler: 6. xf2 && 8. bxd5 -> bg4 queen trap
+// Displaying opening name on top moves board BUG
 
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
@@ -73,9 +74,12 @@ export default function ChessBoard({ path, isDebug }) {
   React.useEffect(() => {
     // if user is starting with black then CPU makes opening move
     if (game?.fen() === start && userColor === 'black' && opening !== undefined) {
-      setTimeout(() => {
-        makeComputerMove(opening.value[game.history().length].from, opening.value[game.history().length].to);
-      }, 500);
+      setTimeout(
+        () => {
+          makeComputerMove(opening.value[game.history().length].from, opening.value[game.history().length].to);
+        },
+        state.animationsOn.value ? 500 : 0
+      );
       return;
     }
 
@@ -196,9 +200,12 @@ export default function ChessBoard({ path, isDebug }) {
     safeGameMutate((game) => {
       game.move(redoMove);
     });
-    setTimeout(() => {
-      playSound();
-    }, 300);
+    setTimeout(
+      () => {
+        playSound();
+      },
+      state.animationsOn.value ? 300 : 0
+    );
     setMoveSquares({
       [redoMove.from]: {
         backgroundColor: 'rgba(255, 255, 0, 0.4)'
@@ -217,10 +224,13 @@ export default function ChessBoard({ path, isDebug }) {
       redoStack[redoStack.length - 1].color !== userColor[0]
     ) {
       const move = redoStack.pop();
-      setTimeout(() => {
-        // TODO: why the timeout?
-        makeComputerMove(move.from, move.to);
-      }, 300);
+      setTimeout(
+        () => {
+          // TODO: why the timeout?
+          makeComputerMove(move.from, move.to);
+        },
+        state.animationsOn.value ? 300 : 0
+      );
     } else setNavDisabled(false);
   }
 
@@ -232,11 +242,14 @@ export default function ChessBoard({ path, isDebug }) {
       [from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
       [to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
     });
-    setTimeout(() => {
-      playSound();
-      setNavDisabled(false);
-      if (opening.value[game.history().length] === undefined) setOpeningComplete(true);
-    }, 300);
+    setTimeout(
+      () => {
+        playSound();
+        setNavDisabled(false);
+        if (opening.value[game.history().length] === undefined) setOpeningComplete(true);
+      },
+      state.animationsOn.value ? 300 : 0
+    );
   }
 
   function onDrop({ sourceSquare, targetSquare }) {
@@ -370,7 +383,7 @@ export default function ChessBoard({ path, isDebug }) {
             onMouseOverSquare={onMouseOverSquare}
             onMouseOutSquare={onMouseOutSquare}
             width={chessboardSize}
-            transitionDuration={300}
+            transitionDuration={state.animationsOn.value ? 300 : 0}
             pieces={chessPieces(state.theme.value)}
           />
         )}

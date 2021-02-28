@@ -2,11 +2,18 @@ import React from 'react';
 
 import Select from 'react-select';
 
-import { themeChoices } from '../data/consts';
+import { animationChoices, themeChoices } from '../data/consts';
 import { ActionType, useStoreContext } from './Store';
 
 export default function SettingsModal({ showModal, setShowModal }) {
   const { state, dispatch } = useStoreContext();
+
+  function handleAnimationsOnChange(value) {
+    dispatch({
+      type: ActionType.SET_ANIMATIONS_ON,
+      payload: value
+    });
+  }
 
   function handleThemeChange(theme) {
     dispatch({
@@ -27,6 +34,10 @@ export default function SettingsModal({ showModal, setShowModal }) {
         </div>
       </div>
       <div className="modal-content">
+        <div className="panel-select">
+          <p className="modal-label">Animations:</p>
+          <Select options={animationChoices} value={state.animationsOn} onChange={handleAnimationsOnChange} />
+        </div>
         <div className="panel-select">
           <p className="modal-label">Theme (Chessboard and Sounds):</p>
           <Select options={themeChoices} value={state.theme} onChange={handleThemeChange} />
