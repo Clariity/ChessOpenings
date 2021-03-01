@@ -15,31 +15,33 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div className="sidebar-display">
-        <Link href="/train">
-          <div className="pad-5 hover sidebar-logo">
-            {window < 1600 ? (
-              <Image src="/media/images/logoThin.png" alt="Chess Openings Logo" width={230} height={75} />
-            ) : (
-              <Image src="/media/images/logoSmall.png" alt="Chess Openings Logo" width={140} height={100} />
-            )}
-          </div>
-        </Link>
+      {window && (
+        <div className="sidebar-display">
+          <Link href="/train">
+            <div className="pad-5 hover sidebar-logo">
+              {window < 1600 ? (
+                <Image src="/media/images/logoThin.png" alt="Chess Openings Logo" width={230} height={75} />
+              ) : (
+                <Image src="/media/images/logoSmall.png" alt="Chess Openings Logo" width={140} height={100} />
+              )}
+            </div>
+          </Link>
 
-        {window <= 840 ? (
-          <button
-            className={`hamburger hamburger--collapse ${menuOpen && 'is-active'}`}
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span className="hamburger-box">
-              <span className="hamburger-inner" />
-            </span>
-          </button>
-        ) : (
-          <SidebarOptions setMenuOpen={setMenuOpen} setShowModal={setShowModal} />
-        )}
-      </div>
+          {window <= 840 ? (
+            <button
+              className={`hamburger hamburger--collapse ${menuOpen && 'is-active'}`}
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <span className="hamburger-box">
+                <span className="hamburger-inner" />
+              </span>
+            </button>
+          ) : (
+            <SidebarOptions setMenuOpen={setMenuOpen} setShowModal={setShowModal} />
+          )}
+        </div>
+      )}
 
       <SmoothCollapse expanded={menuOpen}>
         <SidebarOptions setMenuOpen={setMenuOpen} setShowModal={setShowModal} />
