@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import SmoothCollapse from 'react-smooth-collapse';
@@ -17,12 +18,11 @@ export default function Sidebar() {
       <div className="sidebar-display">
         <Link href="/train">
           <div className="pad-5 hover sidebar-logo">
-            <img
-              src={`/media/images/logo${window < 1600 ? 'Thin' : 'Small'}.png`}
-              alt="Chess Openings Logo"
-              width={window <= 1600 ? 230 : 140}
-              height={window <= 1600 ? 75 : 100}
-            />
+            {window < 1600 ? (
+              <Image src="/media/images/logoThin.png" alt="Chess Openings Logo" width={230} height={75} />
+            ) : (
+              <Image src="/media/images/logoSmall.png" alt="Chess Openings Logo" width={140} height={100} />
+            )}
           </div>
         </Link>
 
