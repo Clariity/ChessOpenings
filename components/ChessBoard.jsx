@@ -32,7 +32,6 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 //  Evans Gambit: 5. c3, bc5
 //  Two Knights Defence: 6. d5
 //  Traxler: 6. xf2 && 8. bxd5 -> bg4 queen trap
-// Displaying opening name on top moves board BUG
 // On learn page, export pgn -> https://github.com/jhlywa/chess.js/blob/master/README.md#pgn-options-
 
 export default function ChessBoard({ path, isDebug }) {

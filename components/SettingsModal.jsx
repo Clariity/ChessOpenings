@@ -36,11 +36,16 @@ export default function SettingsModal({ showModal, setShowModal }) {
       <div className="modal-content">
         <div className="panel-select">
           <p className="modal-label">Animations:</p>
-          <Select options={animationChoices} value={state.animationsOn} onChange={handleAnimationsOnChange} />
+          <Select
+            options={animationChoices}
+            value={state.animationsOn}
+            onChange={handleAnimationsOnChange}
+            isSearchable={false}
+          />
         </div>
         <div className="panel-select">
           <p className="modal-label">Theme (Chessboard and Sounds):</p>
-          <Select options={themeChoices} value={state.theme} onChange={handleThemeChange} />
+          <Select options={themeChoices} value={state.theme} onChange={handleThemeChange} isSearchable={false} />
         </div>
       </div>
     </div>

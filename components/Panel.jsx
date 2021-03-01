@@ -8,6 +8,7 @@ import openings from '../data/openings';
 import LearnDisplay from './LearnDisplay';
 import TrainDisplay from './TrainDisplay';
 import { start, colourChoices, formatGroupLabel } from '../data/consts';
+import { useWindowSize } from '../functions/hooks';
 
 export default function Panel({
   boardOrientation,
@@ -30,7 +31,9 @@ export default function Panel({
 }) {
   const isTrain = path === '/train';
   const router = useRouter();
+  const window = useWindowSize();
   const { openingLink } = router.query;
+
   const [selectedOpenings, setSelectedOpenings] = React.useState([]);
   const [openingsCopy, setOpeningsCopy] = React.useState([]);
   const [openingsCompleted, setOpeningsCompleted] = React.useState([]);
@@ -210,7 +213,7 @@ export default function Panel({
             formatGroupLabel={formatGroupLabel}
             isDisabled={started}
             isMulti={isTrain}
-            isSearchable={true}
+            isSearchable={window > 850}
             maxMenuHeight={800}
             onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
             options={isTrain ? openings : learnOpenings}
@@ -218,7 +221,12 @@ export default function Panel({
           />
         </div>
         <div className="panel-select">
-          <Select options={colourChoices} defaultValue={colourChoices[0]} onChange={handleUserColorChange} />
+          <Select
+            options={colourChoices}
+            defaultValue={colourChoices[0]}
+            onChange={handleUserColorChange}
+            isSearchable={false}
+          />
         </div>
         <div id="panel-scroll-display" className="panel-scroll-display">
           {isTrain ? (
