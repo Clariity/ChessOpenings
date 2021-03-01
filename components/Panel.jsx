@@ -214,7 +214,7 @@ export default function Panel({
             isDisabled={started}
             isMulti={isTrain}
             isSearchable={window > 850}
-            maxMenuHeight={800}
+            maxMenuHeight={500}
             onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
             options={isTrain ? openings : learnOpenings}
             placeholder={isTrain ? 'Select Openings to Train' : 'Select Opening to Learn'}
