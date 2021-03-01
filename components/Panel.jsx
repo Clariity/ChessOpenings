@@ -205,29 +205,33 @@ export default function Panel({
         <h1 className="panel-title-text">{isTrain ? 'Train Openings' : 'Learn Openings'}</h1>
       </div>
       <div className="panel-body flex-column">
-        <div className="panel-select">
-          <Select
-            closeMenuOnSelect={!isTrain}
-            value={isTrain ? selectedOpenings : opening}
-            filterOption={filterOptions}
-            formatGroupLabel={formatGroupLabel}
-            isDisabled={started}
-            isMulti={isTrain}
-            isSearchable={window > 850}
-            maxMenuHeight={500}
-            onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
-            options={isTrain ? openings : learnOpenings}
-            placeholder={isTrain ? 'Select Openings to Train' : 'Select Opening to Learn'}
-          />
-        </div>
-        <div className="panel-select">
-          <Select
-            options={colourChoices}
-            defaultValue={colourChoices[0]}
-            onChange={handleUserColorChange}
-            isSearchable={false}
-          />
-        </div>
+        {!started && (
+          <div className="panel-select">
+            <Select
+              closeMenuOnSelect={!isTrain}
+              value={isTrain ? selectedOpenings : opening}
+              filterOption={filterOptions}
+              formatGroupLabel={formatGroupLabel}
+              isDisabled={started}
+              isMulti={isTrain}
+              isSearchable={window > 850}
+              maxMenuHeight={325}
+              onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
+              options={isTrain ? openings : learnOpenings}
+              placeholder={isTrain ? 'Select Openings to Train' : 'Select Opening to Learn'}
+            />
+          </div>
+        )}
+        {!started && (
+          <div className="panel-select">
+            <Select
+              options={colourChoices}
+              defaultValue={colourChoices[0]}
+              onChange={handleUserColorChange}
+              isSearchable={false}
+            />
+          </div>
+        )}
         <div id="panel-scroll-display" className="panel-scroll-display">
           {isTrain ? (
             <TrainDisplay

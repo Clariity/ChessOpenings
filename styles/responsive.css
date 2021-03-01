@@ -69,6 +69,7 @@
   .panel {
     width: calc(100vw - 40px) !important;
     max-width: calc(100vh - 200px);
+    height: 100%;
   }
   .panel-board-controls {
     order: 0;
