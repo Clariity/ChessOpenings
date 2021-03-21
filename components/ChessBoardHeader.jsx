@@ -12,7 +12,7 @@ export default function ChessBoardHeader({ path, opening }) {
           </p>
         ) : (
           <p className="chessboard-header">
-            <span className="chessboard-header-special">Select Opening</span> to Learn to Begin
+            <span className="chessboard-header-special">Select Opening</span> to Begin
           </p>
         ))}
     </>

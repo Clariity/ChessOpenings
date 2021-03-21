@@ -29,7 +29,27 @@ export default function SidebarOptions({ setMenuOpen, setShowModal }) {
         </div>
       </Link>
 
+      <Link href="/traps">
+        <div
+          className={`pad-10 margin-5-tb flex-row sidebar-link ${pathname === '/traps' && 'sidebar-selected'}`}
+          onClick={() => setMenuOpen(false)}
+        >
+          <img src="/media/images/traps.png" alt="learn" width={30} height={30} />
+          <div className="pad-10-l sidebar-label">Traps</div>
+        </div>
+      </Link>
+
       <div className="sidebar-spacer" />
+
+      <Link href="/debug">
+        <div
+          className={`pad-10 margin-5-tb flex-row sidebar-link ${pathname === '/debug' && 'sidebar-selected'}`}
+          onClick={() => setMenuOpen(false)}
+        >
+          <img src="/media/images/contribute.png" alt="learn" width={30} height={30} />
+          <div className="pad-10-l sidebar-label">Contribute</div>
+        </div>
+      </Link>
 
       <div
         className="pad-10 margin-5-tb flex-row sidebar-link"

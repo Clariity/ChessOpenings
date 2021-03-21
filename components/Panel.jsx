@@ -190,7 +190,7 @@ export default function Panel({
   }
 
   const flattenedVariations = openings.flatMap((o) => o.options).filter((o) => !o.label.includes('All '));
-  const learnOpenings = openings.slice(1);
+  const learnOpenings = openings.slice(1); // remove the select all options
   const backDisabled =
     game?.fen() === start ||
     (game?.history().length === 1 && userColor === 'black') ||

@@ -327,6 +327,86 @@ const italianOptions = [
   }
 ];
 
+const queensGambitAcceptedOptions = [
+  {
+    label: "Queen's Gambit Accepted: Main Line",
+    description:
+      "The traditional main line sequence of moves for the Queen's Gambit accepted. White gambits one of their pawns early on for a quicker development, but can quickly win back material.",
+    value: [
+      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
+      { color: 'b', from: 'd7', to: 'd5', flags: 'b', piece: 'p', san: 'd5' },
+      { color: 'w', from: 'c2', to: 'c4', flags: 'b', piece: 'p', san: 'c4' },
+      { color: 'b', from: 'd5', to: 'c4', flags: 'c', piece: 'p', captured: 'p', san: 'dxc4' },
+      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
+      { color: 'b', from: 'g8', to: 'f6', flags: 'n', piece: 'n', san: 'Nf6' },
+      { color: 'w', from: 'e2', to: 'e3', flags: 'n', piece: 'p', san: 'e3' },
+      { color: 'b', from: 'e7', to: 'e6', flags: 'n', piece: 'p', san: 'e6' },
+      { color: 'w', from: 'f1', to: 'c4', flags: 'c', piece: 'b', captured: 'p', san: 'Bxc4' },
+      { color: 'b', from: 'c7', to: 'c5', flags: 'b', piece: 'p', san: 'c5' },
+      { color: 'w', from: 'e1', to: 'g1', flags: 'k', piece: 'k', san: 'O-O' },
+      { color: 'b', from: 'a7', to: 'a6', flags: 'n', piece: 'p', san: 'a6' },
+      { color: 'w', from: 'c4', to: 'b3', flags: 'n', piece: 'b', san: 'Bb3' },
+      { color: 'b', from: 'c5', to: 'd4', flags: 'c', piece: 'p', captured: 'p', san: 'cxd4' },
+      { color: 'w', from: 'e3', to: 'd4', flags: 'c', piece: 'p', captured: 'p', san: 'exd4' },
+      { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
+      { color: 'w', from: 'b1', to: 'c3', flags: 'n', piece: 'n', san: 'Nc3' },
+      { color: 'b', from: 'f8', to: 'e7', flags: 'n', piece: 'b', san: 'Be7' },
+      { color: 'w', from: 'f1', to: 'e1', flags: 'n', piece: 'r', san: 'Re1' },
+      { color: 'b', from: 'e8', to: 'g8', flags: 'k', piece: 'k', san: 'O-O' },
+      { color: 'w', from: 'a2', to: 'a3', flags: 'n', piece: 'p', san: 'a3' }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Central Variation",
+    description:
+      'White takes control over the center and castles early but Black is able to put pressure on the center to break it up.',
+    value: [
+      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
+      { color: 'b', from: 'd7', to: 'd5', flags: 'b', piece: 'p', san: 'd5' },
+      { color: 'w', from: 'c2', to: 'c4', flags: 'b', piece: 'p', san: 'c4' },
+      { color: 'b', from: 'd5', to: 'c4', flags: 'c', piece: 'p', captured: 'p', san: 'dxc4' },
+      { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
+      { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
+      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
+      { color: 'b', from: 'e5', to: 'd4', flags: 'c', piece: 'p', captured: 'p', san: 'exd4' },
+      { color: 'w', from: 'f1', to: 'c4', flags: 'c', piece: 'b', captured: 'p', san: 'Bxc4' },
+      { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
+      { color: 'w', from: 'e1', to: 'g1', flags: 'k', piece: 'k', san: 'O-O' },
+      { color: 'b', from: 'c8', to: 'e6', flags: 'n', piece: 'b', san: 'Be6' },
+      { color: 'w', from: 'c4', to: 'b5', flags: 'n', piece: 'b', san: 'Bb5' }
+    ]
+  },
+  {
+    label: "Queen's Gambit Accepted: Classical Defense",
+    description: "White goes for early control of the center and a fast castle but Black closes down the Queen's side",
+    value: [
+      { color: 'w', from: 'd2', to: 'd4', flags: 'b', piece: 'p', san: 'd4' },
+      { color: 'b', from: 'd7', to: 'd5', flags: 'b', piece: 'p', san: 'd5' },
+      { color: 'w', from: 'c2', to: 'c4', flags: 'b', piece: 'p', san: 'c4' },
+      { color: 'b', from: 'd5', to: 'c4', flags: 'c', piece: 'p', captured: 'p', san: 'dxc4' },
+      { color: 'w', from: 'e2', to: 'e3', flags: 'n', piece: 'p', san: 'e3' },
+      { color: 'b', from: 'g8', to: 'f6', flags: 'n', piece: 'n', san: 'Nf6' },
+      { color: 'w', from: 'f1', to: 'c4', flags: 'c', piece: 'b', captured: 'p', san: 'Bxc4' },
+      { color: 'b', from: 'e7', to: 'e6', flags: 'n', piece: 'p', san: 'e6' },
+      { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
+      { color: 'b', from: 'c7', to: 'c5', flags: 'b', piece: 'p', san: 'c5' },
+      { color: 'w', from: 'e1', to: 'g1', flags: 'k', piece: 'k', san: 'O-O' },
+      { color: 'b', from: 'a7', to: 'a6', flags: 'n', piece: 'p', san: 'a6' },
+      { color: 'w', from: 'b2', to: 'b3', flags: 'n', piece: 'p', san: 'b3' },
+      { color: 'b', from: 'b7', to: 'b5', flags: 'b', piece: 'p', san: 'b5' },
+      { color: 'w', from: 'c4', to: 'e2', flags: 'n', piece: 'b', san: 'Be2' }
+    ]
+  }
+];
+
+const queensGambitDeclinedOptions = [
+  // slav defense
+  //  modern, exchange, traditional
+  // chigorin defense
+  // three knights variation
+  // normal defense
+];
+
 const selectAllOptions = [
   {
     label: 'All Openings',
@@ -335,6 +415,10 @@ const selectAllOptions = [
   {
     label: 'All Italian Game',
     value: 'Italian Game:'
+  },
+  {
+    label: "All Queen's Gambit Accepted",
+    value: "Queen's Gambit Accepted:"
   }
 ];
 
@@ -425,11 +509,11 @@ export default [
   },
   {
     label: "Queen's Gambit Accepted",
-    options: []
+    options: queensGambitAcceptedOptions
   },
   {
     label: "Queen's Gambit Declined",
-    options: []
+    options: queensGambitDeclinedOptions
   },
   {
     label: 'Ruy Lopez',

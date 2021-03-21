@@ -2,17 +2,15 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import Chess from 'chess.js';
-import Panel from './Panel';
 
 import ChessBoardHeader from './ChessBoardHeader';
-import { start, chessPieces } from '../data/consts';
+import Panel from './Panel';
+import TrapsPanel from './TrapsPanel';
+import { chessPieces, start } from '../data/consts';
 import { useChessboardSize } from '../functions/hooks';
 import { useStoreContext } from './Store';
 
 const Board = dynamic(import('chessboardjsx'), { ssr: false });
-
-// Things to note: Pawn Captures that are undone are buggy, can't really be helped - try new pieces?
-// need to replace black Rook pieces as they glitch out
 
 // https://react-select.com/components -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
 // add default colour to each opening so we can switch to that on opening change - have option in settings to set auto switch on or off
@@ -24,15 +22,15 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // Contact/Suggest Opening fix page with links to message me on twitter or make a PR
 // Prettify debug mode
 // Suggestions and upcoming work/openings page
-// Show captured pieces on underneath board
+// Show captured pieces underneath board
 // Analysis weighting at all points, display somewhere
-// Make top nav thinner (thinner logo)
 // Openings Mistakes, Take advantage
 // Known Mistakes:
 //  Evans Gambit: 5. c3, bc5
 //  Two Knights Defence: 6. d5
 //  Traxler: 6. xf2 && 8. bxd5 -> bg4 queen trap
 // On learn page, export pgn -> https://github.com/jhlywa/chess.js/blob/master/README.md#pgn-options-
+//  Link on each trap to theory way to play
 
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
@@ -78,7 +76,7 @@ export default function ChessBoard({ path, isDebug }) {
         () => {
           makeComputerMove(opening.value[game.history().length].from, opening.value[game.history().length].to);
         },
-        state.animationsOn.value ? 500 : 0
+        state.animationsOn.value ? 500 : 50
       );
       return;
     }
@@ -204,7 +202,7 @@ export default function ChessBoard({ path, isDebug }) {
       () => {
         playSound();
       },
-      state.animationsOn.value ? 300 : 0
+      state.animationsOn.value ? 300 : 100
     );
     setMoveSquares({
       [redoMove.from]: {
@@ -229,7 +227,7 @@ export default function ChessBoard({ path, isDebug }) {
           // TODO: why the timeout?
           makeComputerMove(move.from, move.to);
         },
-        state.animationsOn.value ? 300 : 0
+        state.animationsOn.value ? 300 : 100
       );
     } else setNavDisabled(false);
   }
@@ -248,7 +246,7 @@ export default function ChessBoard({ path, isDebug }) {
         setNavDisabled(false);
         if (opening.value[game.history().length] === undefined) setOpeningComplete(true);
       },
-      state.animationsOn.value ? 300 : 0
+      state.animationsOn.value ? 300 : 100
     );
   }
 
@@ -358,6 +356,50 @@ export default function ChessBoard({ path, isDebug }) {
     if (Object.keys(optionSquares).length !== 0) setOptionSquares({});
   }
 
+  function getSidePanel() {
+    switch (path) {
+      case '/traps':
+        return (
+          <TrapsPanel
+            boardOrientation={boardOrientation}
+            game={game}
+            goBack={goBack}
+            goForward={goForward}
+            navDisabled={navDisabled}
+            opening={opening}
+            redoStack={redoStack}
+            reset={reset}
+            setBoardOrientation={setBoardOrientation}
+            setOpening={setOpening}
+            setUserColor={setUserColor}
+            userColor={userColor}
+          />
+        );
+      default:
+        return (
+          <Panel
+            boardOrientation={boardOrientation}
+            game={game}
+            goBack={goBack}
+            goForward={goForward}
+            navDisabled={navDisabled}
+            opening={opening}
+            openingComplete={openingComplete}
+            openingError={openingError}
+            path={path}
+            redoStack={redoStack}
+            reset={reset}
+            setBoardOrientation={setBoardOrientation}
+            setOpening={setOpening}
+            setOpeningComplete={setOpeningComplete}
+            setOpeningError={setOpeningError}
+            setUserColor={setUserColor}
+            userColor={userColor}
+          />
+        );
+    }
+  }
+
   return (
     <div className="chessboard-container">
       <div id="chessboard" className="chessboard">
@@ -388,25 +430,7 @@ export default function ChessBoard({ path, isDebug }) {
           />
         )}
       </div>
-      <Panel
-        boardOrientation={boardOrientation}
-        game={game}
-        goBack={goBack}
-        goForward={goForward}
-        navDisabled={navDisabled}
-        opening={opening}
-        openingComplete={openingComplete}
-        openingError={openingError}
-        path={path}
-        redoStack={redoStack}
-        reset={reset}
-        setBoardOrientation={setBoardOrientation}
-        setOpening={setOpening}
-        setOpeningComplete={setOpeningComplete}
-        setOpeningError={setOpeningError}
-        setUserColor={setUserColor}
-        userColor={userColor}
-      />
+      {getSidePanel()}
     </div>
   );
 }
