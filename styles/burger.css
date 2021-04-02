@@ -53,7 +53,7 @@
 .hamburger-inner::after {
   width: 40px;
   height: 4px;
-  background-color: #779952;
+  background-color: #e0e0e0;
   border-radius: 4px;
   position: absolute;
   transition-property: transform;

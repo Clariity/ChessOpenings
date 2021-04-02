@@ -24,6 +24,9 @@
 }
 
 /* ##### Margin ##### */
+.margin-5-b {
+  margin-bottom: 5px;
+}
 .margin-5-tb {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -34,6 +37,9 @@
 .margin-10-r {
   margin-right: 10px;
 }
+.margin-10-t {
+  margin-top: 10px;
+}
 
 /* ##### Text ##### */
 .text-align-center {
@@ -42,6 +48,11 @@
 
 .font-size-20 {
   font-size: 20px;
+}
+
+.page-title {
+  font-size: 60px;
+  margin-bottom: 20px;
 }
 
 /* ##### Flex ##### */

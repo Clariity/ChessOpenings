@@ -10,7 +10,7 @@ export default function SEO({ description, title, image, path }) {
 
   return (
     <Head>
-      <title> {title} | ChessOpenings.co.uk</title>
+      <title> {title} • ChessOpenings</title>
 
       <meta name="title" content={`${title} | ChessOpenings.co.uk`} />
       <meta name="description" content={metaDescription} />
@@ -39,9 +39,14 @@ export default function SEO({ description, title, image, path }) {
       <meta charSet="utf-8" />
 
       <link rel="icon" href="/favicon.ico" />
+      <link
+        rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+      ></link>
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400&display=swap" rel="stylesheet" />
 
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

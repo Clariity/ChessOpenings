@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { useWindowSize } from '../functions/hooks';
-import TrainSummary from './TrainSummary';
+import { useWindowSize } from '../../functions/hooks';
+import TrainSummary from '../TrainSummary';
 
 export default function TrainDisplay({ openingsCompleted, opening, openingsFailed, selectedOpenings, started }) {
   const window = useWindowSize();

@@ -45,6 +45,25 @@ export const animationChoices = [
   }
 ];
 
+export const contributeTypeChoices = [
+  {
+    label: 'Opening',
+    value: 'Opening'
+  },
+  {
+    label: 'Trap',
+    value: 'Trap'
+  },
+  {
+    label: 'Opening Alteration',
+    value: 'Opening Alteration'
+  },
+  {
+    label: 'Trap Alteration',
+    value: 'Trap Alteration'
+  }
+];
+
 const groupStyles = {
   display: 'flex',
   alignItems: 'center',

@@ -1,7 +1,7 @@
 .panel {
   width: 500px;
-  height: calc(100vh - 20px);
-  max-height: calc(100vh - 20px);
+  /* viewport-height - navbar - padding */
+  height: calc(100vh - 80px - 20px);
 
   display: flex;
   flex-direction: column;
@@ -66,33 +66,6 @@
   display: flex;
 }
 
-.panel-start {
-  background-color: #779952;
-  color: white;
-  width: 100%;
-  min-height: 50px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.panel-start.quit {
-  background-color: #b40000;
-}
-.panel-start:hover {
-  opacity: 0.5;
-}
-.panel-start:active {
-  box-shadow: inset 0px 0px 5px #c1c1c1;
-}
-.panel-start.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .panel-board-controls {
   padding: 20px;
   text-align: center;
@@ -127,7 +100,7 @@
 }
 
 .panel-board-control-button:focus,
-.panel-start:focus {
+.button-component:focus {
   outline: none;
 }
 

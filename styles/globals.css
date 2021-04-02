@@ -1,16 +1,20 @@
 @import './burger.css';
 @import './chessboard.css';
+@import './components.css';
+@import './contribute.css';
+@import './navbar.css';
 @import './panel.css';
 @import './responsive.css';
-@import './sidebar.css';
 @import './utilities.css';
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
   background-color: #383635;
+  color: white;
 }
 
 a {
@@ -25,19 +29,18 @@ a {
 .app {
   background-color: #383635;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   overflow-x: hidden;
 }
 
 .main {
   width: 100%;
-  min-height: 100vh;
-  padding: 10px;
+  min-height: calc(100vh - 80px);
   display: flex;
-  flex: 1;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 
 *::-webkit-scrollbar {

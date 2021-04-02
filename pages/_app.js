@@ -1,12 +1,12 @@
-import Sidebar from '../components/Sidebar';
-import '../styles/globals.css';
+import Navbar from '../components/navbar/Navbar';
 import { StateProvider } from '../components/Store';
+import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   return (
     <StateProvider>
       <div className="app">
-        <Sidebar />
+        <Navbar />
         <div className="main">
           <Component {...pageProps} />
         </div>

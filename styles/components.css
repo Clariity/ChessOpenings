@@ -1,0 +1,36 @@
+.button-component {
+  background-color: #779952;
+  color: white;
+  width: 100%;
+  min-height: 50px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Lexend', sans-serif;
+}
+.button-component.quit {
+  background-color: #b40000;
+}
+.button-component:hover {
+  opacity: 0.5;
+}
+.button-component:active {
+  box-shadow: inset 0px 0px 5px #c1c1c1;
+}
+.button-component.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-component {
+  min-height: 50px;
+  border: 1px solid white;
+  border-radius: 4px;
+  text-indent: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+}

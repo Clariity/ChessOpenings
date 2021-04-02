@@ -1,16 +1,20 @@
-.chessboard-container {
+.board-panel-container {
   display: flex;
   flex-direction: row;
+
   margin-left: auto;
   margin-right: auto;
 }
 
 .chessboard {
-  width: calc(100vw - 150px - 40px - 500px);
-  max-width: calc(100vh - 80px);
+  /* viewport-height - navbar - heading - padding */
+  width: calc(100vh - 80px - 25px - 10px);
+
+  /* viewport-height - panel - padding */
+  max-width: calc(100vw - 500px - 10px);
 
   margin-bottom: auto;
-  padding: 10px;
+  padding: 0px 10px;
 
   color: white;
 }
@@ -19,7 +23,6 @@
   text-align: center;
   margin: 0px 0px 10px 0px;
   font-size: 20px;
-  display: block;
 }
 
 .chessboard-header-special {

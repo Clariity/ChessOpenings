@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 
 import Select from 'react-select';
 
-import BoardControls from './BoardControls';
-import traps from '../data/traps';
-import LearnDisplay from './LearnDisplay';
-import { start, formatGroupLabel } from '../data/consts';
-import { useWindowSize } from '../functions/hooks';
+import BoardControls from '../BoardControls';
+import traps from '../../data/traps';
+import LearnDisplay from '../panel-displays/LearnDisplay';
+import { start, formatGroupLabel } from '../../data/consts';
+import { useWindowSize } from '../../functions/hooks';
 
 export default function TrapsPanel({
   boardOrientation,
@@ -43,7 +43,6 @@ export default function TrapsPanel({
   }, [opening]);
 
   function handleLearnOpeningChange(change) {
-    console.log(change);
     setOpening(change);
     setUserColor(change.colour);
     setBoardOrientation(change.colour);

@@ -5,8 +5,8 @@ import Select from 'react-select';
 
 import BoardControls from './BoardControls';
 import openings from '../data/openings';
-import LearnDisplay from './LearnDisplay';
-import TrainDisplay from './TrainDisplay';
+import LearnDisplay from './panel-displays/LearnDisplay';
+import TrainDisplay from './panel-displays/TrainDisplay';
 import { start, colourChoices, formatGroupLabel } from '../data/consts';
 import { useWindowSize } from '../functions/hooks';
 
@@ -248,7 +248,7 @@ export default function Panel({
         <div className="flex-row">
           {isTrain && !started && (
             <button
-              className={`panel-start margin-10-r ${
+              className={`button-component margin-10-r ${
                 (startDisabled || (canRetry && openingsFailed.length === 0)) && 'disabled'
               }`}
               disabled={startDisabled || (canRetry && openingsFailed.length === 0)}
@@ -260,7 +260,7 @@ export default function Panel({
           )}
           {isTrain && (
             <button
-              className={`panel-start margin-10-l ${startDisabled && 'disabled'} ${started && 'quit'}`}
+              className={`button-component margin-10-l ${startDisabled && 'disabled'} ${started && 'quit'}`}
               disabled={startDisabled}
               onClick={started ? handleTrainStop : handleTrainStart}
             >
