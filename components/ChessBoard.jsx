@@ -43,6 +43,7 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // On navbar, have Learn Train and Traps links in larger font
 // store debug moves in Store instead of local storage? argument for storage is that they can leave and come back and it will still be there
 // analytics https://nextjs.org/docs/advanced-features/measuring-performance
+// Chessboard headings
 
 // https://kumarabhirup.me/writings/google-recaptcha-react-node-js
 // move everything over to firebase?

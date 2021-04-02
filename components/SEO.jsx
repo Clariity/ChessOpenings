@@ -1,8 +1,8 @@
 import Head from 'next/head';
 
 export default function SEO({ description, title, image, path }) {
-  const defaultDescription = 'Practise and Learn Chess Openings.';
-  const defaultImageURL = '/media/images/logoSmall.png';
+  const defaultDescription = 'Practise and Learn Chess Openings for Free.';
+  const defaultImageURL = '/media/images/seo.png';
 
   const metaDescription = description || defaultDescription;
   const metaImage = image || defaultImageURL;
