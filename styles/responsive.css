@@ -1,9 +1,19 @@
 @media (max-width: 550px) {
   .navbar-logo-text {
-    font-size: 25px;
+    font-size: 18px;
   }
   .navbar-logo-text-subtitle {
-    font-size: 16px;
+    font-size: 14px;
+    padding-left: 6px;
+  }
+  .navbar-menu-link {
+    font-size: 24px;
+    -webkit-text-stroke: 0px #2a2a2a;
+  }
+
+  .page-title {
+    font-size: 32px !important;
+    margin-bottom: 10px !important;
   }
 }
 

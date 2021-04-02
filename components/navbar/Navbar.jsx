@@ -33,8 +33,8 @@ export default function Navbar() {
                   className="navbar-logo-image"
                   src="/media/images/logo.png"
                   alt="Chess Openings Logo"
-                  width={60}
-                  height={60}
+                  width={window <= 550 ? 30 : 60}
+                  height={window <= 550 ? 30 : 60}
                 />
                 <h1 className="navbar-logo-text">ChessOpenings • {getSubTitle()}</h1>
               </div>
