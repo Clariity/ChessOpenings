@@ -1,12 +1,12 @@
 import Head from 'next/head';
 
 export default function SEO({ description, title, image, path }) {
+  const url = path ? 'https://chessopenings.co.uk' + path : 'https://chessopenings.co.uk';
   const defaultDescription = 'Practise and Learn Chess Openings for Free.';
-  const defaultImageURL = '/media/images/seo.png';
+  const defaultImageURL = 'https://chessopenings.co.uk/media/images/seo.png';
 
   const metaDescription = description || defaultDescription;
   const metaImage = image || defaultImageURL;
-  const url = path ? 'https://chessopenings.co.uk' + path : 'https://chessopenings.co.uk';
 
   return (
     <Head>
@@ -16,6 +16,7 @@ export default function SEO({ description, title, image, path }) {
       <meta name="description" content={metaDescription} />
 
       <link rel="canonical" href={url} />
+      <html lang="en" />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
