@@ -12,20 +12,20 @@ export default function SEO({ description, title, image, path }) {
     <Head>
       <title> {title} • ChessOpenings</title>
 
-      <meta name="title" content={`${title} | ChessOpenings.co.uk`} />
+      <meta name="title" content={`${title} • ChessOpenings.co.uk`} />
       <meta name="description" content={metaDescription} />
 
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
-      <meta property="og:title" content={`${title} | ChessOpenings.co.uk`} />
+      <meta property="og:title" content={`${title} • ChessOpenings.co.uk`} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:image" content={metaImage} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:creator" content="ChessOpenings.co.uk" />
-      <meta name="twitter:title" content={`${title} | ChessOpenings.co.uk`} />
+      <meta name="twitter:title" content={`${title} • ChessOpenings.co.uk`} />
       <meta property="twitter:url" content={url} />
       <meta name="twitter:description" content={metaDescription} />
       <meta property="twitter:image" content={metaImage} />

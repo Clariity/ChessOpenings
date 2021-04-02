@@ -42,6 +42,7 @@ export default function Contribute() {
       body: JSON.stringify(submission)
     });
     // after submission reset moves/form so they cannot spam submit
+    // window.grecaptcha.reset();
     // limit size too https://nextjs.org/docs/api-routes/api-middlewares
   }
 
