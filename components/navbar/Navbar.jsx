@@ -31,7 +31,7 @@ export default function Navbar() {
               <div className="navbar-logo">
                 <Image
                   className="navbar-logo-image"
-                  src="/media/images/logo2.png"
+                  src="/media/images/logo.png"
                   alt="Chess Openings Logo"
                   width={60}
                   height={60}
