@@ -6,6 +6,7 @@ import Chess from 'chess.js';
 import ChessBoardHeader from './ChessBoardHeader';
 import DebugPanel from '../components/panels/DebugPanel';
 import Panel from './Panel';
+import SubmissionPanel from './panels/SubmissionPanel';
 import TrapsPanel from './panels/TrapsPanel';
 import { chessPieces, start } from '../data/consts';
 import { useChessboardSize } from '../functions/hooks';
@@ -35,6 +36,8 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // Split ChessBoard and Panel
 // Change Font and colours
 // Make repo public
+// Start/End sounds + checkmate sound
+// Chess24/chessable themes
 // Cookie/Storage warning
 // Contribute page -> gives explanation etc, then link to debug page that when you click done on, returns to contribute page with object in local storage that fills the form out
 // Submitting contribution posts to api which adds suggestion as new issue in GitHub, return link to user so they can follow any updates
@@ -44,6 +47,8 @@ const Board = dynamic(import('chessboardjsx'), { ssr: false });
 // store debug moves in Store instead of local storage? argument for storage is that they can leave and come back and it will still be there
 // analytics https://nextjs.org/docs/advanced-features/measuring-performance
 // Chessboard headings
+// get side panel should be a component which you pass all props to, and inside it is the switch case, just to shorten the length of this file
+// Contribute form should have userColour option for traps
 
 // https://kumarabhirup.me/writings/google-recaptcha-react-node-js
 // move everything over to firebase?
@@ -57,6 +62,7 @@ export default function ChessBoard({ path, isDebug }) {
 
   const [game, setGame] = React.useState();
   const [opening, setOpening] = React.useState();
+  const [loadingGame, setLoadingGame] = React.useState(false);
   const [openingComplete, setOpeningComplete] = React.useState(false);
   const [openingError, setOpeningError] = React.useState(false);
 
@@ -110,8 +116,22 @@ export default function ChessBoard({ path, isDebug }) {
       redoStack.pop();
     }
 
+    // if move is undone and its CPU turn next, make CPU move
+    if (opening && path === '/submission' && !loadingGame) {
+      setLoadingGame(true);
+      loadGame();
+    }
+
     setUndoMade(false);
   }, [game, undoMade, userColor, opening]);
+
+  function loadGame() {
+    opening.value.forEach((move) => {
+      safeGameMutate((game) => {
+        game.move({ from: move.from, to: move.to });
+      });
+    });
+  }
 
   // safely update game in useState
   function safeGameMutate(modify) {
@@ -390,6 +410,28 @@ export default function ChessBoard({ path, isDebug }) {
             reset={reset}
             setBoardOrientation={setBoardOrientation}
             setOpening={setOpening}
+            setUserColor={setUserColor}
+            userColor={userColor}
+          />
+        );
+      case '/submission':
+        return (
+          <SubmissionPanel
+            boardOrientation={boardOrientation}
+            game={game}
+            goBack={goBack}
+            goForward={goForward}
+            navDisabled={navDisabled}
+            opening={opening}
+            openingComplete={openingComplete}
+            openingError={openingError}
+            path={path}
+            redoStack={redoStack}
+            reset={reset}
+            setBoardOrientation={setBoardOrientation}
+            setOpening={setOpening}
+            setOpeningComplete={setOpeningComplete}
+            setOpeningError={setOpeningError}
             setUserColor={setUserColor}
             userColor={userColor}
           />

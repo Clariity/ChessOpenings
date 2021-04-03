@@ -1,6 +1,5 @@
-import SEO from '../components/SEO';
-
 import ChessBoard from '../components/ChessBoard';
+import SEO from '../components/SEO';
 
 export default function Debug() {
   return (

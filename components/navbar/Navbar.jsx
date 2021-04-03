@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import SmoothCollapse from 'react-smooth-collapse';
 
-import SettingsModal from '../SettingsModal';
+import SettingsModal from '../modals/SettingsModal';
 import NavbarDisplayLinks from './NavbarDisplayLinks';
 import NavbarMenuLinks from './NavbarMenuLinks';
 import { useWindowSize } from '../../functions/hooks';
@@ -56,7 +56,6 @@ export default function Navbar() {
       </SmoothCollapse>
 
       <SettingsModal showModal={showModal} setShowModal={setShowModal} />
-      <div className={`modal-background ${!showModal && 'fade-background'}`} onClick={() => setShowModal(false)} />
     </div>
   );
 }

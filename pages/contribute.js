@@ -3,20 +3,29 @@ import Link from 'next/link';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 import Select from 'react-select';
+import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../components/utils/Button';
 import Input from '../components/utils/Input';
 import SEO from '../components/SEO';
 import { contributeTypeChoices } from '../data/consts';
+import { ActionType, useStoreContext } from '../components/Store';
+import ResultModal from '../components/modals/ResultModal';
 
 export default function Contribute() {
+  const { dispatch, state } = useStoreContext();
+
   const [moves, setMoves] = useState();
   const [contributionType, setContributionType] = useState(contributeTypeChoices[0]);
-  const [name, setName] = useState();
-  const [variation, setVariation] = useState();
-  const [description, setDescription] = useState();
-  const [username, setUsername] = useState();
+  const [name, setName] = useState('');
+  const [variation, setVariation] = useState('');
+  const [description, setDescription] = useState('');
+  const [username, setUsername] = useState('');
   const [captchaToken, setCaptchaToken] = useState();
+
+  const [showResultModal, setShowResultModal] = useState();
+  const [result, setResult] = useState();
+  const [reset, setReset] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && !moves) {
@@ -24,26 +33,64 @@ export default function Contribute() {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && reset) {
+      window.grecaptcha.reset();
+      setReset(false);
+    }
+  }, [reset]);
+
   async function handleSubmit() {
+    const id = uuidv4();
     const submission = {
+      id,
+      status: 'OPEN',
       type: contributionType.value,
+      comments: [],
+      contributor: username || 'anonymous contributor',
       data: {
         label: `${name}: ${variation}`,
         description,
-        value: moves,
-        contributor: username || 'anonymous contributor'
+        value: moves
       }
     };
-    await fetch('/api/submit', {
-      method: 'POST',
-      headers: {
-        Authorization: captchaToken
-      },
-      body: JSON.stringify(submission)
-    });
-    // after submission reset moves/form so they cannot spam submit
-    // window.grecaptcha.reset();
+
+    try {
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: {
+          Authorization: captchaToken
+        },
+        body: JSON.stringify(submission)
+      });
+      const responseJSON = await response.json();
+
+      if (response.status === 200) {
+        dispatch({
+          type: ActionType.SET_SUBMISSIONS,
+          payload: [...state.submissions, submission]
+        });
+        setResult({
+          ...responseJSON,
+          id
+        });
+      } else {
+        setResult(responseJSON);
+      }
+    } catch (error) {
+      setResult(error);
+    }
+    setShowResultModal(true);
+    resetForm();
     // limit size too https://nextjs.org/docs/api-routes/api-middlewares
+  }
+
+  function resetForm() {
+    setName('');
+    setVariation('');
+    setDescription('');
+    setCaptchaToken(null);
+    setReset(true);
   }
 
   return (
@@ -141,13 +188,14 @@ export default function Contribute() {
       <Button
         onClick={handleSubmit}
         text="Submit"
-        icon="play_arrow"
         customStyles={{ marginBottom: '40px', marginTop: '20px' }}
         disabled={!moves || !name || !variation || !description || !captchaToken}
       />
       <div className="flex-column">
         <h1>Top Contributors</h1>
       </div>
+
+      <ResultModal showResultModal={showResultModal} setShowResultModal={setShowResultModal} result={result} />
     </div>
   );
 }

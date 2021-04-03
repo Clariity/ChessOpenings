@@ -41,6 +41,8 @@ export default async (req, res) => {
 
   if (captchaVerified) {
     console.log('Verified!', req.body);
+    statusCode = 200;
+    responseBody = { title: 'Success' };
   } else {
     res.statusCode = 401;
     res.json({ error: 'Unauthorized: Unsuccessful ReCAPTCHA verification.' });
@@ -62,7 +64,7 @@ export default async (req, res) => {
   //   const responseJSON = await response.json();
   //   if (response.status === 200) {
   //     const data = await responseJSON.url;
-  //     statusCode = 200;
+  //     status = 200;
   //     responseBody = { title: 'Success', body: data };
   //   } else throw responseJSON;
   // } catch (err) {

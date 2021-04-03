@@ -16,7 +16,6 @@ export default function SEO({ description, title, image, path }) {
       <meta name="description" content={metaDescription} />
 
       <link rel="canonical" href={url} />
-      <html lang="en" />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
