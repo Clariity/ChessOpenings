@@ -3,7 +3,11 @@ import React from 'react';
 const ActionType = {
   SET_THEME: 'SET_THEME',
   SET_ANIMATIONS_ON: 'SET_ANIMATIONS_ON',
-  SET_SUBMISSIONS: 'SET_SUBMISSIONS'
+  SET_SUBMISSIONS: 'SET_SUBMISSIONS',
+  SET_OPENINGS: 'SET_OPENINGS',
+  SET_OPENINGS_ERROR: 'SET_OPENINGS_ERROR',
+  SET_TRAPS: 'SET_TRAPS',
+  SET_TRAPS_ERROR: 'SET_TRAPS_ERROR'
 };
 
 const initialState = {
@@ -15,35 +19,11 @@ const initialState = {
     label: 'On',
     value: true
   },
-  submissions: [
-    {
-      id: 'd63828ac-931b-4eb4-9154-17037f48be6f',
-      status: 'OPEN',
-      type: 'Opening',
-      comments: [],
-      contributor: 'anonymous contributor',
-      data: {
-        label: 'a: a',
-        description: 'a',
-        value: [
-          { color: 'w', from: 'e2', to: 'e4', flags: 'b', piece: 'p', san: 'e4' },
-          { color: 'b', from: 'e7', to: 'e5', flags: 'b', piece: 'p', san: 'e5' },
-          { color: 'w', from: 'g1', to: 'f3', flags: 'n', piece: 'n', san: 'Nf3' },
-          { color: 'b', from: 'b8', to: 'c6', flags: 'n', piece: 'n', san: 'Nc6' },
-          { color: 'w', from: 'f1', to: 'c4', flags: 'n', piece: 'b', san: 'Bc4' },
-          { color: 'b', from: 'g8', to: 'f6', flags: 'n', piece: 'n', san: 'Nf6' },
-          { color: 'w', from: 'f3', to: 'g5', flags: 'n', piece: 'n', san: 'Ng5' },
-          { color: 'b', from: 'f8', to: 'c5', flags: 'n', piece: 'b', san: 'Bc5' },
-          { color: 'w', from: 'g5', to: 'f7', flags: 'c', piece: 'n', captured: 'p', san: 'Nxf7' },
-          { color: 'b', from: 'c5', to: 'f2', flags: 'c', piece: 'b', captured: 'p', san: 'Bxf2+' },
-          { color: 'w', from: 'e1', to: 'f1', flags: 'n', piece: 'k', san: 'Kf1' },
-          { color: 'b', from: 'd7', to: 'd5', flags: 'b', piece: 'p', san: 'd5' },
-          { color: 'w', from: 'e4', to: 'd5', flags: 'c', piece: 'p', captured: 'p', san: 'exd5' },
-          { color: 'b', from: 'e8', to: 'f7', flags: 'c', piece: 'k', captured: 'n', san: 'Kxf7' }
-        ]
-      }
-    }
-  ]
+  submissions: null,
+  openings: null,
+  openingsError: null,
+  traps: null,
+  trapsError: null
 };
 
 const StoreContext = React.createContext(initialState);
@@ -64,6 +44,14 @@ const StateProvider = ({ children }) => {
         return { ...state, animationsOn: action.payload };
       case ActionType.SET_SUBMISSIONS:
         return { ...state, submissions: action.payload };
+      case ActionType.SET_OPENINGS:
+        return { ...state, openings: action.payload, openingsError: null };
+      case ActionType.SET_OPENINGS_ERROR:
+        return { ...state, openingsError: action.payload };
+      case ActionType.SET_TRAPS:
+        return { ...state, traps: action.payload };
+      case ActionType.SET_TRAPS_ERROR:
+        return { ...state, trapsError: action.payload, traps: null };
       default:
         throw new Error(`Unhandled ActionType ${action.type}`);
     }

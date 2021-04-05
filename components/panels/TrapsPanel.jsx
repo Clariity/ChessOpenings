@@ -1,12 +1,12 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import Select from 'react-select';
 
 import BoardControls from '../BoardControls';
-import traps from '../../data/traps';
 import LearnDisplay from '../panel-displays/LearnDisplay';
 import { start, formatGroupLabel } from '../../data/consts';
+import { ActionType, useStoreContext } from '../Store';
 import { useWindowSize } from '../../functions/hooks';
 
 export default function TrapsPanel({
@@ -26,21 +26,45 @@ export default function TrapsPanel({
   const router = useRouter();
   const window = useWindowSize();
   const { openingLink } = router.query;
+  const { dispatch, state } = useStoreContext();
+
+  useEffect(async () => {
+    if (!state.traps) {
+      const response = await fetch('/api/traps');
+      const traps = await response.json();
+      console.log(JSON.parse(traps.body));
+      if (response.status === 200) {
+        dispatch({
+          type: ActionType.SET_TRAPS,
+          payload: JSON.parse(traps.body)
+        });
+      } else {
+        dispatch({
+          type: ActionType.SET_TRAPS_ERROR,
+          payload: JSON.parse(traps.error)
+        });
+      }
+    }
+  }, [state.traps]);
 
   // Set opening on load with URL param
-  React.useEffect(() => {
+  useEffect(() => {
     if (openingLink && !opening) {
-      const o = traps.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
+      const o = state.traps.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
       setOpening(o);
     }
   }, [openingLink]);
 
   // Scroll chessboard into view when opening is selected
-  React.useEffect(() => {
+  useEffect(() => {
     if (opening) {
       document.getElementById('chessboard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [opening]);
+
+  if (state.trapsError) {
+    return <div>Error</div>;
+  }
 
   function handleLearnOpeningChange(change) {
     setOpening(change);
@@ -55,7 +79,7 @@ export default function TrapsPanel({
     if (label.toLocaleLowerCase().includes(searchLower)) return true;
 
     // check if a group as the filter string as label
-    const groupOptions = traps.filter((group) => group.label.toLocaleLowerCase().includes(searchLower));
+    const groupOptions = state.traps.filter((group) => group.label.toLocaleLowerCase().includes(searchLower));
 
     if (groupOptions) {
       for (const groupOption of groupOptions) {
@@ -72,7 +96,7 @@ export default function TrapsPanel({
   const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black') || navDisabled;
   const forwardDisabled = redoStack.length === 0 || navDisabled;
 
-  return (
+  return state.traps ? (
     <div className="panel">
       <div className="panel-title">
         <h1 className="panel-title-text">Learn Opening Traps</h1>
@@ -86,7 +110,7 @@ export default function TrapsPanel({
             isSearchable={window > 850}
             maxMenuHeight={325}
             onChange={handleLearnOpeningChange}
-            options={traps}
+            options={state.traps}
             placeholder={'Select Opening Trap to Learn'}
           />
         </div>
@@ -105,5 +129,7 @@ export default function TrapsPanel({
         setBoardOrientation={setBoardOrientation}
       />
     </div>
+  ) : (
+    <div>Loading</div>
   );
 }

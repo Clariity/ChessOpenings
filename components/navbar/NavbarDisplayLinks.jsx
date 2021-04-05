@@ -11,6 +11,12 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
     <>
       <ReactTooltip place="bottom" effect="solid" />
       <div className="navbar-display-links">
+        <Link href="/">
+          <div className={`navbar-display-link ${pathname === '/' && 'navbar-display-link-selected'}`} data-tip="Home">
+            <i className="las la-home navbar-display-link-icon" />
+          </div>
+        </Link>
+
         <Link href="/learn">
           <div
             className={`navbar-display-link ${pathname === '/learn' && 'navbar-display-link-selected'}`}
@@ -39,7 +45,9 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
         </Link>
         <Link href="/contribute">
           <div
-            className={`navbar-display-link ${pathname === '/contribute' && 'navbar-display-link-selected'}`}
+            className={`navbar-display-link ${
+              (pathname === '/contribute' || pathname === '/debug') && 'navbar-display-link-selected'
+            }`}
             data-tip="Contribute"
           >
             <i className="las la-plus navbar-display-link-icon" />
@@ -47,6 +55,15 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
         </Link>
       </div>
       <div className="navbar-display-settings">
+        <Link href="/help">
+          <div
+            className={`navbar-display-link ${pathname === '/help' && 'navbar-display-link-selected'}`}
+            style={{ marginRight: '20px' }}
+            data-tip="Help & Contact"
+          >
+            <i className="las la-question-circle navbar-display-link-icon" />
+          </div>
+        </Link>
         <div
           className={`navbar-display-link ${showModal && 'navbar-display-link-selected'}`}
           data-tip="Settings"

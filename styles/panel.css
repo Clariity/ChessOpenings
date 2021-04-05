@@ -58,7 +58,7 @@
 .current {
   background-color: #0f0f0f;
   border-radius: 10px;
-  padding: 10px !important;
+  padding-left: 10px !important;
 }
 
 .panel-scroll-display-opening {

@@ -1,13 +1,13 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Select from 'react-select';
 
 import BoardControls from './BoardControls';
-import openings from '../data/openings';
 import LearnDisplay from './panel-displays/LearnDisplay';
 import TrainDisplay from './panel-displays/TrainDisplay';
 import { start, colourChoices, formatGroupLabel } from '../data/consts';
+import { ActionType, useStoreContext } from './Store';
 import { useWindowSize } from '../functions/hooks';
 
 export default function Panel({
@@ -33,17 +33,36 @@ export default function Panel({
   const router = useRouter();
   const window = useWindowSize();
   const { openingLink } = router.query;
+  const { dispatch, state } = useStoreContext();
 
-  const [selectedOpenings, setSelectedOpenings] = React.useState([]);
-  const [openingsCopy, setOpeningsCopy] = React.useState([]);
-  const [openingsCompleted, setOpeningsCompleted] = React.useState([]);
-  const [openingsFailed, setOpeningsFailed] = React.useState([]);
-  const [started, setStarted] = React.useState(false);
-  const [canStart, setCanStart] = React.useState(false);
-  const [canRetry, setCanRetry] = React.useState(false);
+  const [selectedOpenings, setSelectedOpenings] = useState([]);
+  const [openingsCopy, setOpeningsCopy] = useState([]);
+  const [openingsCompleted, setOpeningsCompleted] = useState([]);
+  const [openingsFailed, setOpeningsFailed] = useState([]);
+  const [started, setStarted] = useState(false);
+  const [canStart, setCanStart] = useState(false);
+  const [canRetry, setCanRetry] = useState(false);
+
+  useEffect(async () => {
+    if (!state.openings) {
+      const response = await fetch('/api/openings');
+      const openings = await response.json();
+      if (response.status === 200) {
+        dispatch({
+          type: ActionType.SET_OPENINGS,
+          payload: JSON.parse(openings.body)
+        });
+      } else {
+        dispatch({
+          type: ActionType.SET_OPENINGS_ERROR,
+          payload: JSON.parse(openings.error)
+        });
+      }
+    }
+  }, [state.openings]);
 
   // Act on opening complete
-  React.useEffect(() => {
+  useEffect(() => {
     if (isTrain && openingComplete) {
       // Wait half a second before moving on to next opening
       setTimeout(() => {
@@ -57,7 +76,7 @@ export default function Panel({
   }, [openingComplete]);
 
   // Act on opening error
-  React.useEffect(() => {
+  useEffect(() => {
     if (isTrain && openingError) {
       // Wait half a second before moving on to next opening
       setTimeout(() => {
@@ -71,27 +90,31 @@ export default function Panel({
   }, [openingError]);
 
   // Set opening on load with URL param
-  React.useEffect(() => {
+  useEffect(() => {
     if (openingLink && !opening) {
-      const o = openings.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
+      const o = state.openings.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
       setOpening(o);
     }
   }, [openingLink]);
 
   // Scroll chessboard into view when train is started
-  React.useEffect(() => {
+  useEffect(() => {
     if (started) {
       document.getElementById('chessboard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [started]);
 
   // Run train once shuffling is completed or once failed openings have been set
-  React.useEffect(() => {
+  useEffect(() => {
     if (canStart) {
       setCanStart(false);
       handleTrainStart();
     }
   }, [openingsCopy]);
+
+  if (state.openingsError) {
+    return <div>Error</div>;
+  }
 
   function handleLearnOpeningChange(change) {
     setOpening(change);
@@ -175,7 +198,7 @@ export default function Panel({
     if (label.toLocaleLowerCase().includes(searchLower)) return true;
 
     // check if a group as the filter string as label
-    const groupOptions = openings.filter((group) => group.label.toLocaleLowerCase().includes(searchLower));
+    const groupOptions = state.openings.filter((group) => group.label.toLocaleLowerCase().includes(searchLower));
 
     if (groupOptions) {
       for (const groupOption of groupOptions) {
@@ -189,8 +212,8 @@ export default function Panel({
     return false;
   }
 
-  const flattenedVariations = openings.flatMap((o) => o.options).filter((o) => !o.label.includes('All '));
-  const learnOpenings = openings.slice(1); // remove the select all options
+  const flattenedVariations = state.openings?.flatMap((o) => o.options).filter((o) => !o.label.includes('All '));
+  const learnOpenings = state.openings ? [...state.openings.slice(1)] : []; // remove the select all options
   const backDisabled =
     game?.fen() === start ||
     (game?.history().length === 1 && userColor === 'black') ||
@@ -199,7 +222,7 @@ export default function Panel({
   const forwardDisabled = redoStack.length === 0 || navDisabled;
   const startDisabled = selectedOpenings.length === 0;
 
-  return (
+  return state.openings ? (
     <div className="panel">
       <div className="panel-title">
         <h1 className="panel-title-text">{isTrain ? 'Train Openings' : 'Learn Openings'}</h1>
@@ -217,7 +240,7 @@ export default function Panel({
               isSearchable={window > 850}
               maxMenuHeight={325}
               onChange={isTrain ? handleTrainOpeningChange : handleLearnOpeningChange}
-              options={isTrain ? openings : learnOpenings}
+              options={isTrain ? state.openings : learnOpenings}
               placeholder={isTrain ? 'Select Openings to Train' : 'Select Opening to Learn'}
             />
           </div>
@@ -281,5 +304,7 @@ export default function Panel({
         setBoardOrientation={setBoardOrientation}
       />
     </div>
+  ) : (
+    <div>Loading</div>
   );
 }

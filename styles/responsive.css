@@ -30,6 +30,12 @@
   }
 }
 
+@media (max-width: 1260px) {
+  .navbar-menu-link {
+    height: 60px;
+  }
+}
+
 @media (max-width: 1600px) {
   .app {
     flex-direction: column !important;

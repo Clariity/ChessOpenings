@@ -8,6 +8,16 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
   return (
     <>
       <div className="navbar-menu-links">
+        <Link href="/">
+          <div
+            className={`navbar-menu-link ${pathname === '/' && 'navbar-menu-link-selected'}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <i className="las la-home navbar-menu-link-icon" />
+            <p className="navbar-menu-link-text">Home</p>
+          </div>
+        </Link>
+
         <Link href="/learn">
           <div
             className={`navbar-menu-link ${pathname === '/learn' && 'navbar-menu-link-selected'}`}
@@ -39,11 +49,22 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
         </Link>
         <Link href="/contribute">
           <div
-            className={`navbar-menu-link ${pathname === '/contribute' && 'navbar-menu-link-selected'}`}
+            className={`navbar-menu-link ${
+              (pathname === '/contribute' || pathname === '/debug') && 'navbar-menu-link-selected'
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             <i className="las la-plus navbar-menu-link-icon" />
             <p className="navbar-menu-link-text">Contribute</p>
+          </div>
+        </Link>
+        <Link href="/help">
+          <div
+            className={`navbar-menu-link ${pathname === '/help' && 'navbar-menu-link-selected'}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <i className="las la-question-circle navbar-menu-link-icon" />
+            <p className="navbar-menu-link-text">Help & Contact</p>
           </div>
         </Link>
         <div

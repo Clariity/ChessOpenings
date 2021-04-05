@@ -14,48 +14,6 @@ import { useStoreContext } from './Store';
 
 const Board = dynamic(import('chessboardjsx'), { ssr: false });
 
-// https://react-select.com/components#option -> custom option example, on hover show tooltip that contains final opening layout, add final fen into data structure so it can read that
-
-// on mobile select menu closes after each selection
-// on mobile its a bit slow to drop a piece
-// make a PWA - https://github.com/shadowwalker/next-pwa - https://github.com/vercel/next.js/tree/canary/examples/progressive-web-app - https://www.creativebloq.com/how-to/build-a-progressive-web-app
-
-// Contact/Suggest Opening fix page with links to message me on twitter or make a PR
-// Prettify debug mode
-// Suggestions and upcoming work/openings page
-// Show captured pieces underneath board
-// Analysis weighting at all points, display somewhere
-// Openings Mistakes, Take advantage
-// Known Mistakes:
-//  Evans Gambit: 5. c3, bc5
-//  Two Knights Defence: 6. d5
-//  Traxler: 6. xf2 && 8. bxd5 -> bg4 queen trap
-// On learn page, export pgn -> https://github.com/jhlywa/chess.js/blob/master/README.md#pgn-options-
-//  Link on each trap to theory way to play
-// Home Page, Contribute Page, 404 Page
-// Split ChessBoard and Panel
-// Change Font and colours
-// Make repo public
-// Start/End sounds + checkmate sound
-// Chess24/chessable themes
-// Cookie/Storage warning
-// Contribute page -> gives explanation etc, then link to debug page that when you click done on, returns to contribute page with object in local storage that fills the form out
-// Submitting contribution posts to api which adds suggestion as new issue in GitHub, return link to user so they can follow any updates
-// Rename sidebar to navbar
-// Refactor Components into folders and reusable components: Button
-// On navbar, have Learn Train and Traps links in larger font
-// store debug moves in Store instead of local storage? argument for storage is that they can leave and come back and it will still be there
-// analytics https://nextjs.org/docs/advanced-features/measuring-performance
-// Chessboard headings
-// get side panel should be a component which you pass all props to, and inside it is the switch case, just to shorten the length of this file
-// Contribute form should have userColour option for traps
-
-// https://kumarabhirup.me/writings/google-recaptcha-react-node-js
-// move everything over to firebase?
-// also rate limit per IP address on firebase incase someone just likes to spam fill out captchas
-// suggestions have their own page, and can have comments left, link sent to contributer
-// password protected admin page when i can comment/approve/reject openings, using password protected API routes (i can phsically send the password this time)
-
 export default function ChessBoard({ path, isDebug }) {
   const chessboardSize = useChessboardSize();
   const { state } = useStoreContext();

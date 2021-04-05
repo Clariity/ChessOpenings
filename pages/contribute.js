@@ -56,7 +56,7 @@ export default function Contribute() {
     };
 
     try {
-      const response = await fetch('/api/submit', {
+      const response = await fetch('/api/submission', {
         method: 'POST',
         headers: {
           Authorization: captchaToken

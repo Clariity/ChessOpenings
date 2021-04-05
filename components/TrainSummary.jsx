@@ -23,7 +23,10 @@ export default function TrainSummary({ openingsCompleted, openingsFailed }) {
           <div className="panel-summary-opening">{openingName}</div>
           <Link href={{ pathname: '/learn', query: { openingLink: openingName } }}>
             <div className="pad-10 flex-row panel-summary-opening-link">
-              <img src="/media/images/learn.png" alt="learn" width={30} height={30} />
+              <i
+                className="las la-graduation-cap navbar-display-link-icon navbar-display-link-selected"
+                style={{ fontSize: '32px' }}
+              />
             </div>
           </Link>
         </div>
