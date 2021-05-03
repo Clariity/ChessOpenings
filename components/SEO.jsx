@@ -45,7 +45,6 @@ export default function SEO({ description, title, image, path }) {
       ></link>
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400&display=swap" rel="stylesheet" />
 
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
