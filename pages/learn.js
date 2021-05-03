@@ -5,7 +5,7 @@ import SEO from '../components/SEO';
 export default function Learn() {
   // attempt at focusing on an element for mobile compatibility
   useEffect(() => {
-    document.querySelectorAll("img[alt='wP']")[0].focus();
+    document.querySelectorAll("img[alt='wP']")[0].click();
   });
 
   return (
