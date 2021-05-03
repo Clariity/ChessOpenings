@@ -26,7 +26,7 @@ export default function DebugPanel({
 
   return (
     <div className="panel">
-      <div className="panel-title">
+      <div id="panel-title" className="panel-title">
         <h1 className="panel-title-text">Debug Tool</h1>
       </div>
       <div className="panel-body flex-column">

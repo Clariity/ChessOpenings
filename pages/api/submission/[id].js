@@ -6,8 +6,8 @@ export default async (req, res) => {
   let responseBody = { error: 'Internal Server Error: Encountered an unknown error' };
 
   if (
-    req.headers.referer !== `http://localhost:3000/submission/${id}` &&
-    req.headers.referer !== `https://chessopenings.co.uk/submission/${id}`
+    !req.headers.referer.includes('http://localhost:3000') &&
+    !req.headers.referer.includes('https://chessopenings.co.uk')
   ) {
     res.statusCode = 401;
     res.json({ error: 'Unauthorized: Unauthorized host' });

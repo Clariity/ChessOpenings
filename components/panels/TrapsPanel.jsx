@@ -28,6 +28,12 @@ export default function TrapsPanel({
   const { openingLink } = router.query;
   const { dispatch, state } = useStoreContext();
 
+  useEffect(() => {
+    if (state.traps) {
+      document.getElementById('panel-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [state.traps]);
+
   useEffect(async () => {
     if (!state.traps) {
       const response = await fetch('/api/traps');
@@ -97,7 +103,7 @@ export default function TrapsPanel({
 
   return state.traps ? (
     <div className="panel">
-      <div className="panel-title">
+      <div id="panel-title" className="panel-title">
         <h1 className="panel-title-text">Learn Opening Traps</h1>
       </div>
       <div className="panel-body flex-column">

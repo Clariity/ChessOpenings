@@ -6,14 +6,9 @@ export default function ChessBoardHeader({ path, opening }) {
       {opening && <p className="chessboard-header">{opening.label}</p>}
       {!opening &&
         (path === '/train' ? (
-          <p className="chessboard-header">
-            <span className="chessboard-header-special">Select Opening</span> to Train and{' '}
-            <span className="chessboard-header-special">Press Start</span> to Begin
-          </p>
+          <p className="chessboard-header">Select Opening to Train and Press Start to Begin</p>
         ) : (
-          <p className="chessboard-header">
-            <span className="chessboard-header-special">Select Opening</span> to Begin
-          </p>
+          <p className="chessboard-header">Select Opening to Begin</p>
         ))}
     </>
   );

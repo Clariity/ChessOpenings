@@ -44,10 +44,10 @@ export default function Panel({
   const [canRetry, setCanRetry] = useState(false);
 
   useEffect(() => {
-    if (state.openings && window < 1600) {
+    if (state.openings) {
       document.getElementById('panel-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [state.openings]);
+  }, [state.openings, path]);
 
   useEffect(async () => {
     if (!state.openings) {
@@ -97,11 +97,11 @@ export default function Panel({
 
   // Set opening on load with URL param
   useEffect(() => {
-    if (openingLink && !opening) {
+    if (state.openings && openingLink && !opening) {
       const o = state.openings.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
       setOpening(o);
     }
-  }, [openingLink]);
+  }, [openingLink, state.openings]);
 
   // Scroll chessboard into view when train is started
   useEffect(() => {

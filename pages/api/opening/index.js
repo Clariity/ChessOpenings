@@ -11,8 +11,8 @@ export default async (req, res) => {
   // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
   if (
-    req.headers.referer !== 'http://localhost:3000/learn' &&
-    req.headers.referer !== 'https://chessopenings.co.uk/learn'
+    !req.headers.referer.includes('http://localhost:3000') &&
+    !req.headers.referer.includes('https://chessopenings.co.uk')
   ) {
     res.statusCode = 401;
     res.json({ error: 'Unauthorized: Unauthorized host' });
