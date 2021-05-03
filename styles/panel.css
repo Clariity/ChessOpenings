@@ -24,7 +24,7 @@
   padding: 20px;
   flex-grow: 1;
   max-height: 1080px;
-  /* min-height: 600px; */
+  min-height: 450px;
 
   overflow-y: auto;
   overflow-wrap: anywhere;

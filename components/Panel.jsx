@@ -43,6 +43,12 @@ export default function Panel({
   const [canStart, setCanStart] = useState(false);
   const [canRetry, setCanRetry] = useState(false);
 
+  useEffect(() => {
+    if (state.openings && window < 1600) {
+      document.getElementById('panel-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [state.openings]);
+
   useEffect(async () => {
     if (!state.openings) {
       const response = await fetch('/api/openings');
@@ -224,7 +230,7 @@ export default function Panel({
 
   return state.openings ? (
     <div className="panel">
-      <div className="panel-title">
+      <div id="panel-title" className="panel-title">
         <h1 className="panel-title-text">{isTrain ? 'Train Openings' : 'Learn Openings'}</h1>
       </div>
       <div className="panel-body flex-column">
