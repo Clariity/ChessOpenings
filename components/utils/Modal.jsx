@@ -1,7 +1,7 @@
-export default function Modal({ title, onClose, visible, children }) {
+export default function Modal({ title, onClose, children }) {
   return (
     <>
-      <div id="modal" className={`modal-component ${!visible && 'fade'}`}>
+      <div id="modal" className="modal-component">
         <div className="modal-header">
           <div className="modal-header-box" />
           <h1 className="panel-title-text modal-title">{title}</h1>
@@ -13,7 +13,7 @@ export default function Modal({ title, onClose, visible, children }) {
         </div>
         <div className="modal-content">{children}</div>
       </div>
-      <div className={`modal-background ${!visible && 'fade-background'}`} onClick={onClose} />
+      <div className="modal-background" onClick={onClose} />
     </>
   );
 }

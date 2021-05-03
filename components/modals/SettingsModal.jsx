@@ -6,7 +6,7 @@ import { animationChoices, themeChoices } from '../../data/consts';
 import { ActionType, useStoreContext } from '../Store';
 import Modal from '../utils/Modal';
 
-export default function SettingsModal({ showModal, setShowModal }) {
+export default function SettingsModal({ setShowModal }) {
   const { state, dispatch } = useStoreContext();
 
   function handleAnimationsOnChange(value) {
@@ -24,7 +24,7 @@ export default function SettingsModal({ showModal, setShowModal }) {
   }
 
   return (
-    <Modal title="Settings" onClose={() => setShowModal(false)} visible={showModal}>
+    <Modal title="Settings" onClose={() => setShowModal(false)}>
       <div className="panel-select">
         <p className="modal-label">Animations:</p>
         <Select

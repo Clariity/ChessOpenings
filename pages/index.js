@@ -1,9 +1,10 @@
-export const getServerSideProps = async ({ res }) => {
-  res.setHeader('location', '/learn');
-  res.statusCode = 302;
-  res.end();
+import SEO from '../components/SEO';
 
-  return { props: {} };
-};
-
-export default function Index() {}
+export default function Index() {
+  return (
+    <div className="flex-column" style={{ maxWidth: '1044px' }}>
+      <SEO description="Learn Chess Openings" title="home" path="/" />
+      Home
+    </div>
+  );
+}

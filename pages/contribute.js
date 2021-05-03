@@ -9,12 +9,9 @@ import Button from '../components/utils/Button';
 import Input from '../components/utils/Input';
 import SEO from '../components/SEO';
 import { contributeTypeChoices } from '../data/consts';
-import { ActionType, useStoreContext } from '../components/Store';
 import ResultModal from '../components/modals/ResultModal';
 
 export default function Contribute() {
-  const { dispatch, state } = useStoreContext();
-
   const [moves, setMoves] = useState();
   const [contributionType, setContributionType] = useState(contributeTypeChoices[0]);
   const [name, setName] = useState('');
@@ -66,10 +63,6 @@ export default function Contribute() {
       const responseJSON = await response.json();
 
       if (response.status === 200) {
-        dispatch({
-          type: ActionType.SET_SUBMISSIONS,
-          payload: [...state.submissions, submission]
-        });
         setResult({
           ...responseJSON,
           id
@@ -195,7 +188,9 @@ export default function Contribute() {
         <h1>Top Contributors</h1>
       </div>
 
-      <ResultModal showResultModal={showResultModal} setShowResultModal={setShowResultModal} result={result} />
+      {showResultModal && (
+        <ResultModal showResultModal={showResultModal} setShowResultModal={setShowResultModal} result={result} />
+      )}
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import BoardControls from '../BoardControls';
 import SubmissionDisplay from '../panel-displays/SubmissionDisplay';
 import { start } from '../../data/consts';
-import { useStoreContext } from '../Store';
 
 // TODO: Make this prettier
 
@@ -24,34 +23,25 @@ export default function SubmissionPanel({
 }) {
   const router = useRouter();
   const id = router.query.id;
-  const { state } = useStoreContext();
 
   const [submission, setSubmission] = useState();
   const [submissionNotFound, setSubmissionNotFound] = useState(false);
 
-  // Set opening on load with URL query
   useEffect(async () => {
-    if (id && state.submissions && !opening) {
-      // try to find submission locally first
-      const s = state.submissions.find((s) => s.id === id);
-      if (s) {
-        setOpening(s.data);
-        setSubmission(s);
-      } else {
-        // try to find submission remotely
-        try {
-          const response = await fetch(`/api/submission/${id}`);
-          const submission = await response.json();
-          if (response.status === 200) {
-            setOpening(JSON.parse(submission.body).data);
-            setSubmission(JSON.parse(submission.body));
-          } else setSubmissionNotFound(true);
-        } catch (error) {
-          setSubmissionNotFound(true);
-        }
+    if (id && !opening) {
+      // try to find submission remotely
+      try {
+        const response = await fetch(`/api/submission/${id}`);
+        const submission = await response.json();
+        if (response.status === 200) {
+          setOpening(JSON.parse(submission.body).data);
+          setSubmission(JSON.parse(submission.body));
+        } else setSubmissionNotFound(true);
+      } catch (error) {
+        setSubmissionNotFound(true);
       }
     }
-  }, [id, state.submissions]);
+  }, [id]);
 
   const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black') || navDisabled;
   const forwardDisabled = redoStack.length === 0 || navDisabled;

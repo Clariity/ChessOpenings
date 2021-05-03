@@ -19,7 +19,7 @@ export default function Navbar() {
   const [showModal, setShowModal] = React.useState(false);
 
   function getSubTitle() {
-    return <span className="navbar-logo-text-subtitle">{pathname.split('/')[1]}</span>;
+    return <span className="navbar-logo-text-subtitle">{pathname.split('/')?.[1] || 'home'}</span>;
   }
 
   return (
@@ -55,7 +55,7 @@ export default function Navbar() {
         <NavbarMenuLinks setMenuOpen={setMenuOpen} setShowModal={setShowModal} showModal={showModal} />
       </SmoothCollapse>
 
-      <SettingsModal showModal={showModal} setShowModal={setShowModal} />
+      {showModal && <SettingsModal setShowModal={setShowModal} />}
     </div>
   );
 }

@@ -53,24 +53,24 @@
   opacity: 1;
   z-index: 11;
 }
-.modal-component.fade {
+/* .modal-component.fade {
   opacity: 0;
   pointer-events: none;
   transform: translateY(-20px);
-}
+} */
 
 .modal-background {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  background: #00000000;
+  background: #000000a1;
   z-index: 10;
 }
-.modal-background.fade-background {
+/* .modal-background.fade-background {
   pointer-events: none;
-}
+} */
 
 .modal-header {
   background-color: #0f0f0f;

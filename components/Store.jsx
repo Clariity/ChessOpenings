@@ -3,7 +3,6 @@ import React from 'react';
 const ActionType = {
   SET_THEME: 'SET_THEME',
   SET_ANIMATIONS_ON: 'SET_ANIMATIONS_ON',
-  SET_SUBMISSIONS: 'SET_SUBMISSIONS',
   SET_OPENINGS: 'SET_OPENINGS',
   SET_OPENINGS_ERROR: 'SET_OPENINGS_ERROR',
   SET_TRAPS: 'SET_TRAPS',
@@ -19,7 +18,6 @@ const initialState = {
     label: 'On',
     value: true
   },
-  submissions: null,
   openings: null,
   openingsError: null,
   traps: null,
@@ -42,8 +40,6 @@ const StateProvider = ({ children }) => {
           window.localStorage.setItem('animationsOn', JSON.stringify(action.payload));
         }
         return { ...state, animationsOn: action.payload };
-      case ActionType.SET_SUBMISSIONS:
-        return { ...state, submissions: action.payload };
       case ActionType.SET_OPENINGS:
         return { ...state, openings: action.payload, openingsError: null };
       case ActionType.SET_OPENINGS_ERROR:

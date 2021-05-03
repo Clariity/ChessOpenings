@@ -14,15 +14,15 @@ export default function ResultModal({ showResultModal, setShowResultModal, resul
   }, [showResultModal]);
 
   return (
-    <Modal title="Contribute" onClose={() => setShowResultModal(false)} visible={showResultModal}>
-      {showResultModal && result.id && (
+    <Modal title="Contribute" onClose={() => setShowResultModal(false)}>
+      {result.id ? (
         <>
           <h1 style={{ marginTop: '0px' }}>Submission Successful</h1>
           <p>
             It will now be reviewed by an admin and either accepted or rejected. Here is a permanent link to your
             submission so you can track its progress:
           </p>
-          <a href={`/submissions/${result.id}`}>{`https://chessopenings.co.uk/submissions/${result.id}`}</a>
+          <a href={`/submission/${result.id}`}>{`https://chessopenings.co.uk/submission/${result.id}`}</a>
           <Button
             onClick={() => setShowResultModal(false)}
             text="Submit Another"
@@ -30,8 +30,7 @@ export default function ResultModal({ showResultModal, setShowResultModal, resul
           />
           <Button onClick={() => router.push(`/submission/${result.id}`)} text="View Submission" />
         </>
-      )}
-      {showResultModal && !result.id && (
+      ) : (
         <>
           <h1 style={{ marginTop: '0px' }}>Submission Failed</h1>
           <p>Something went wrong with your submission, please try again later:</p>
