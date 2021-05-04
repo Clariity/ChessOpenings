@@ -8,7 +8,7 @@ export default function ResultModal({ setShowResultModal, result }) {
   const router = useRouter();
 
   useEffect(() => {
-    document.getElementById('modal')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('modal-header')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, []);
 
   return (

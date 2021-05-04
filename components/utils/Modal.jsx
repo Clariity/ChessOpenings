@@ -2,7 +2,7 @@ export default function Modal({ title, onClose, children }) {
   return (
     <>
       <div id="modal" className="modal-component">
-        <div className="modal-header">
+        <div id="modal-header" className="modal-header">
           <div className="modal-header-box" />
           <h1 className="panel-title-text modal-title">{title}</h1>
           <div className="modal-header-box">
