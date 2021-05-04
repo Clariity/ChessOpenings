@@ -27,9 +27,10 @@ export default function Navbar() {
       {window && (
         <div className="navbar-display">
           <div className="navbar-logo-container">
-            <Link href="/learn">
+            <Link href="/">
               <div className="navbar-logo">
                 <Image
+                  priority={true}
                   className="navbar-logo-image"
                   src="/media/images/logo.png"
                   alt="Chess Openings Logo"

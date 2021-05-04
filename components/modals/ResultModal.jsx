@@ -4,14 +4,12 @@ import { useRouter } from 'next/router';
 import Button from '../utils/Button';
 import Modal from '../utils/Modal';
 
-export default function ResultModal({ showResultModal, setShowResultModal, result }) {
+export default function ResultModal({ setShowResultModal, result }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (showResultModal) {
-      document.getElementById('modal')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [showResultModal]);
+    document.getElementById('modal')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
 
   return (
     <Modal title="Contribute" onClose={() => setShowResultModal(false)}>

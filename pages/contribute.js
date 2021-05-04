@@ -107,12 +107,14 @@ export default function Contribute() {
       </div>
 
       <Link href="/debug">
-        <Button
-          disabled={false}
-          onClick={null}
-          text="Add Moves with Debug Tool"
-          customStyles={{ borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' }}
-        />
+        <div>
+          <Button
+            disabled={false}
+            onClick={null}
+            text="Add Moves with Debug Tool"
+            customStyles={{ borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' }}
+          />
+        </div>
       </Link>
       <textarea
         value={moves ? JSON.stringify(moves) : ''}
@@ -188,9 +190,7 @@ export default function Contribute() {
         <h1>Top Contributors</h1>
       </div>
 
-      {showResultModal && (
-        <ResultModal showResultModal={showResultModal} setShowResultModal={setShowResultModal} result={result} />
-      )}
+      {showResultModal && <ResultModal setShowResultModal={setShowResultModal} result={result} />}
     </div>
   );
 }
