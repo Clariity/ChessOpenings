@@ -1,9 +1,6 @@
 .navbar {
-  display: flex;
-  flex-direction: column;
-  background-color: #2a2a2a;
-  color: #e0e0e0;
-  width: 100vw;
+  background-color: var(--secondary-bg);
+  color: var(--primary-fg);
 }
 
 .navbar-display {
@@ -12,22 +9,15 @@
   align-items: center;
 
   padding: 0px 10px;
-
-  max-height: 80px;
   height: 80px;
 }
 
 /* ##### LOGO ##### */
 .navbar-logo-container {
-  display: flex;
-  align-items: center;
-
   width: 33.33%;
-  height: 100%;
 }
 .navbar-logo {
   display: flex;
-  align-items: center;
   cursor: pointer;
 }
 .navbar-logo-image {
@@ -53,19 +43,17 @@
   align-items: center;
 
   width: 33.33%;
-  height: 100%;
   max-width: 800px;
-  margin: auto;
 }
 
 .navbar-display-link {
   cursor: pointer;
   font-size: 45px;
-  -webkit-text-stroke: 1px #2a2a2a;
+  -webkit-text-stroke: 1px var(--secondary-bg);
 }
 .navbar-display-link:hover,
 .navbar-display-link-selected {
-  color: #779952;
+  color: var(--secondary-fg);
 }
 
 /* ##### MENU LINKS ##### */

@@ -228,13 +228,13 @@ export default function Panel({
   const forwardDisabled = redoStack.length === 0 || navDisabled;
   const startDisabled = selectedOpenings.length === 0;
 
-  return state.openings ? (
+  return (
     <div className="panel">
       <div id="panel-title" className="panel-title">
         <h1 className="panel-title-text">{isTrain ? 'Train Openings' : 'Learn Openings'}</h1>
       </div>
       <div className="panel-body flex-column">
-        {!started && (
+        {!started && state.openings && (
           <div className="panel-select">
             <Select
               closeMenuOnSelect={!isTrain}
@@ -310,7 +310,5 @@ export default function Panel({
         setBoardOrientation={setBoardOrientation}
       />
     </div>
-  ) : (
-    <div>Loading</div>
   );
 }

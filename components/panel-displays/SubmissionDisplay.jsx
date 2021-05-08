@@ -25,6 +25,7 @@ export default function SubmissionDisplay({ history, opening, submission }) {
       </div>
       <div className="pad-20-t font-size-20">{opening.description}</div>
       <h2 className="text-align-center completed">Submission Details</h2>
+      <div className="pad-20-t font-size-20">Submission Type: {submission.type}</div>
       <div className="pad-20-t font-size-20">Submitted by: {submission.contributor}</div>
       <div className="pad-20-t font-size-20">Submitted on: {getDate()}</div>
       <div className="pad-20-t font-size-20">

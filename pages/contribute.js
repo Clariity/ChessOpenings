@@ -8,12 +8,13 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '../components/utils/Button';
 import Input from '../components/utils/Input';
 import SEO from '../components/SEO';
-import { contributeTypeChoices } from '../data/consts';
+import { contributeTypeChoices, colourChoices } from '../data/consts';
 import ResultModal from '../components/modals/ResultModal';
 
 export default function Contribute() {
   const [moves, setMoves] = useState();
   const [contributionType, setContributionType] = useState(contributeTypeChoices[0]);
+  const [colour, setColour] = useState(colourChoices[0]);
   const [name, setName] = useState('');
   const [variation, setVariation] = useState('');
   const [description, setDescription] = useState('');
@@ -51,6 +52,7 @@ export default function Contribute() {
         value: moves
       }
     };
+    if (contributionType?.value.includes('Trap')) submission.data.colour = colour.value;
 
     try {
       const response = await fetch('/api/submission', {
@@ -137,10 +139,27 @@ export default function Contribute() {
           id="type-form-input"
           options={contributeTypeChoices}
           defaultValue={contributeTypeChoices[0]}
-          onChange={(change) => setContributionType(change.value)}
+          onChange={setContributionType}
           isSearchable={false}
         />
       </div>
+
+      {contributionType?.value.includes('Trap') && (
+        <>
+          <label className="margin-10-t margin-5-b" htmlFor="type-form-input">
+            Play as Colour
+          </label>
+          <div className="contribute-select">
+            <Select
+              id="type-form-input"
+              options={colourChoices}
+              defaultValue={colourChoices[0]}
+              onChange={setColour}
+              isSearchable={false}
+            />
+          </div>
+        </>
+      )}
 
       <Input
         id="opening-name"

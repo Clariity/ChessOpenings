@@ -101,24 +101,26 @@ export default function TrapsPanel({
   const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black') || navDisabled;
   const forwardDisabled = redoStack.length === 0 || navDisabled;
 
-  return state.traps ? (
+  return (
     <div className="panel">
       <div id="panel-title" className="panel-title">
         <h1 className="panel-title-text">Learn Opening Traps</h1>
       </div>
       <div className="panel-body flex-column">
-        <div className="panel-select">
-          <Select
-            value={opening}
-            filterOption={filterOptions}
-            formatGroupLabel={formatGroupLabel}
-            isSearchable={window > 850}
-            maxMenuHeight={325}
-            onChange={handleLearnOpeningChange}
-            options={state.traps}
-            placeholder={'Select Opening Trap to Learn'}
-          />
-        </div>
+        {state.traps && (
+          <div className="panel-select">
+            <Select
+              value={opening}
+              filterOption={filterOptions}
+              formatGroupLabel={formatGroupLabel}
+              isSearchable={window > 850}
+              maxMenuHeight={325}
+              onChange={handleLearnOpeningChange}
+              options={state.traps}
+              placeholder={'Select Opening Trap to Learn'}
+            />
+          </div>
+        )}
         <div id="panel-scroll-display" className="panel-scroll-display">
           <LearnDisplay history={game?.history({ verbose: true })} opening={opening} />
         </div>
@@ -134,7 +136,5 @@ export default function TrapsPanel({
         setBoardOrientation={setBoardOrientation}
       />
     </div>
-  ) : (
-    <div>Loading</div>
   );
 }

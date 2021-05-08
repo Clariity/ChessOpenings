@@ -7,14 +7,22 @@
 @import './responsive.css';
 @import './utilities.css';
 
+:root {
+  --primary-bg: #383635;
+  --secondary-bg: #2a2a2a;
+
+  --primary-fg: #e0e0e0;
+  --secondary-fg: #779952;
+  --link-fg: #95c068;
+}
+
 html,
 body {
-  padding: 0;
   margin: 0;
   font-family: 'Lexend', sans-serif;
   font-size: 16px;
-  background-color: #383635;
-  color: white;
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
 }
 
 a {
@@ -22,19 +30,22 @@ a {
   text-decoration: none;
 }
 
+p {
+  line-height: 28px;
+}
+
 * {
   box-sizing: border-box;
 }
 
 .app {
-  background-color: #383635;
+  background-color: var(--primary-bg);
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
 }
 
 .main {
-  width: 100%;
   min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: row;

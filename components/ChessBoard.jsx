@@ -76,6 +76,7 @@ export default function ChessBoard({ path, isDebug }) {
 
     // if move is undone and its CPU turn next, make CPU move
     if (opening && path === '/submission' && !loadingGame) {
+      setBoardOrientation(opening.colour || 'white');
       setLoadingGame(true);
       loadGame();
     }
