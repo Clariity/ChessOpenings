@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 
+import TrainSummaryDisplay from './TrainSummaryDisplay';
 import { useWindowSize } from '../../functions/hooks';
-import TrainSummary from '../TrainSummary';
 
 export default function TrainDisplay({ openingsCompleted, opening, openingsFailed, selectedOpenings, started }) {
   const window = useWindowSize();
@@ -41,7 +41,7 @@ export default function TrainDisplay({ openingsCompleted, opening, openingsFaile
           </div>
         ))
       ) : endReached ? (
-        <TrainSummary openingsCompleted={openingsCompleted} openingsFailed={openingsFailed} />
+        <TrainSummaryDisplay openingsCompleted={openingsCompleted} openingsFailed={openingsFailed} />
       ) : (
         <>
           <p className="chessboard-header pad-20-b">
@@ -54,7 +54,7 @@ export default function TrainDisplay({ openingsCompleted, opening, openingsFaile
           <p className="chessboard-header pad-20-b">
             Want to learn some more openings?{' '}
             <Link href="/learn">
-              <span className="chessboard-header-special hover">Click here</span>
+              <span className="link hover">Click here</span>
             </Link>{' '}
             to learn some.
           </p>

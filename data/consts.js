@@ -88,3 +88,138 @@ export const formatGroupLabel = (data) => (
     <span style={groupBadgeStyles}>{data.options.length}</span>
   </div>
 );
+
+export const openingChoices = [
+  {
+    label: 'English Opening',
+    value: 'English Opening'
+  },
+  {
+    label: 'Italian Game',
+    value: 'Italian Game'
+  },
+  {
+    label: 'Ruy Lopez',
+    value: 'Ruy Lopez'
+  },
+  {
+    label: 'Englund Gambit',
+    value: 'Englund Gambit'
+  },
+  {
+    label: "Queen's Indian Defense",
+    value: "Queen's Indian Defense"
+  },
+  {
+    label: "King's Indian Defense",
+    value: "King's Indian Defense"
+  },
+  {
+    label: "Queen's Pawn Game",
+    value: "Queen's Pawn Game"
+  },
+  {
+    label: 'Budapest Gambit',
+    value: 'Budapest Gambit'
+  },
+  {
+    label: 'Benoni Defense',
+    value: 'Benoni Defense'
+  },
+  {
+    label: 'Dutch Defense',
+    value: 'Dutch Defense'
+  },
+  {
+    label: 'Scandinavian Defense',
+    value: 'Scandinavian Defense'
+  },
+  {
+    label: "Alekhine's Defense",
+    value: "Alekhine's Defense"
+  },
+  {
+    label: 'Pirc Defense',
+    value: 'Pirc Defense'
+  },
+  {
+    label: 'Caro-Kann',
+    value: 'Caro-Kann'
+  },
+  {
+    label: 'Sicilian Defense',
+    value: 'Sicilian Defense'
+  },
+  {
+    label: 'French Defense',
+    value: 'French Defense'
+  },
+  {
+    label: 'Danish Gambit',
+    value: 'Danish Gambit'
+  },
+  {
+    label: 'Vienna Game',
+    value: 'Vienna Game'
+  },
+  {
+    label: "King's Gambit Accepted",
+    value: "King's Gambit Accepted"
+  },
+  {
+    label: "King's Gambit Declined",
+    value: "King's Gambit Declined"
+  },
+  {
+    label: "Queen's Gambit Accepted",
+    value: "Queen's Gambit Accepted"
+  },
+  {
+    label: "Queen's Gambit Declined",
+    value: "Queen's Gambit Declined"
+  },
+  {
+    label: 'Center Game',
+    value: 'Center Game'
+  },
+  {
+    label: 'Philidor Defense',
+    value: 'Philidor Defense'
+  },
+  {
+    label: 'Russian Defense',
+    value: 'Russian Defense'
+  },
+  {
+    label: 'Scotch Game',
+    value: 'Scotch Game'
+  },
+  {
+    label: 'Three Knights Game',
+    value: 'Three Knights Game'
+  },
+  {
+    label: 'Four Knights Game',
+    value: 'Four Knights Game'
+  },
+  {
+    label: 'Evans Gambit',
+    value: 'Evans Gambit'
+  },
+  {
+    label: 'Neo-Grünfeld Defense',
+    value: 'Neo-Grünfeld Defense'
+  },
+  {
+    label: 'Grünfeld Defense',
+    value: 'Grünfeld Defense'
+  },
+  {
+    label: 'Catalan',
+    value: 'Catalan'
+  },
+  {
+    label: 'Nimzo-Indian',
+    value: 'Nimzo-Indian'
+  }
+];

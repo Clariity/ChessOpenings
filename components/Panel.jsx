@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
 
 import BoardControls from './BoardControls';
@@ -275,6 +276,7 @@ export default function Panel({
           )}
         </div>
         <div className="flex-row">
+          <ReactTooltip id="panel-buttons" place="top" effect="solid" />
           {isTrain && !started && (
             <button
               className={`button-component margin-10-r ${
@@ -282,6 +284,8 @@ export default function Panel({
               }`}
               disabled={startDisabled || (canRetry && openingsFailed.length === 0)}
               onClick={canRetry ? handleRetryFailed : handleTrainShuffle}
+              data-tip={canRetry ? 'Retry Failed' : 'Shuffle & Start'}
+              data-for="panel-buttons"
             >
               <span className="material-icons pad-5-r">{canRetry ? 'restart_alt' : 'shuffle'}</span>
               {canRetry ? 'Failed' : ''}
@@ -292,6 +296,8 @@ export default function Panel({
               className={`button-component margin-10-l ${startDisabled && 'disabled'} ${started && 'quit'}`}
               disabled={startDisabled}
               onClick={started ? handleTrainStop : handleTrainStart}
+              data-tip={started ? '' : canRetry ? 'Retry All' : 'Start'}
+              data-for="panel-buttons"
             >
               <span className="material-icons pad-5-r">{started ? '' : canRetry ? 'restart_alt' : 'play_arrow'}</span>
               {started ? 'Quit' : canRetry ? 'All' : ''}

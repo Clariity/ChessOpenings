@@ -33,7 +33,7 @@ export default async (req, res) => {
     }, []);
 
     statusCode = 200;
-    responseBody = { title: 'Success', body: JSON.stringify(trapGroups) };
+    responseBody = { title: 'Success', body: JSON.stringify(trapGroups.sort((a, b) => (a.label < b.label ? -1 : 1))) };
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

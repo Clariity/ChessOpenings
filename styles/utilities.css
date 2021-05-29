@@ -15,6 +15,9 @@
 .pad-10-l {
   padding-left: 10px;
 }
+.pad-10-tb {
+  padding: 10px 0px;
+}
 
 .pad-20-t {
   padding-top: 20px;
@@ -64,6 +67,11 @@
 .flex-column {
   display: flex;
   flex-direction: column;
+}
+
+.flex-justify {
+  display: flex;
+  justify-content: center;
 }
 
 /* ##### Hover ##### */

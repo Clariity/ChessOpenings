@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+import CreatableSelect from 'react-select/creatable';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Select from 'react-select';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '../components/utils/Button';
 import Input from '../components/utils/Input';
 import SEO from '../components/SEO';
-import { contributeTypeChoices, colourChoices } from '../data/consts';
+import { contributeTypeChoices, colourChoices, openingChoices } from '../data/consts';
 import ResultModal from '../components/modals/ResultModal';
 
 export default function Contribute() {
@@ -47,7 +48,7 @@ export default function Contribute() {
       comments: [],
       contributor: username || 'anonymous contributor',
       data: {
-        label: `${name}: ${variation}`,
+        label: `${name.value}: ${variation}`,
         description,
         value: moves
       }
@@ -98,7 +99,17 @@ export default function Contribute() {
           site. If you know an opening/variation that has not been added yet, you can submit it below and it will be
           reviewed to be added to the site.
         </p>
-        <p>Want to contribute to the site itself? Make a Pull Request on the GitHub Repo.</p>
+        <p>
+          Want to contribute to the site itself?{' '}
+          <a
+            className="link"
+            href="https://github.com/Clariity/ChessOpenings"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Make a Pull Request on the GitHub Repo.
+          </a>
+        </p>
 
         <h1>Submission Form</h1>
         <p>
@@ -161,14 +172,18 @@ export default function Contribute() {
         </>
       )}
 
-      <Input
-        id="opening-name"
-        label="Opening Name"
-        placeholder="e.g. Italian Game"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        maxLength={30}
-      />
+      <label className="margin-10-t margin-5-b" htmlFor="opening-name">
+        Opening Name
+      </label>
+      <div className="contribute-select">
+        <CreatableSelect
+          id="opening-name"
+          isClearable
+          placeholder="e.g. Italian Game"
+          options={openingChoices.sort((a, b) => (a.value < b.value ? -1 : 1))}
+          onChange={setName}
+        />
+      </div>
 
       <Input
         id="opening-variation"

@@ -116,7 +116,7 @@ export default function TrapsPanel({
               isSearchable={window > 850}
               maxMenuHeight={325}
               onChange={handleLearnOpeningChange}
-              options={state.traps}
+              options={state.traps.sort((a, b) => (a.value < b.value ? -1 : 1))}
               placeholder={'Select Opening Trap to Learn'}
             />
           </div>

@@ -30,6 +30,10 @@ a {
   text-decoration: none;
 }
 
+.link {
+  text-decoration: underline;
+}
+
 p {
   line-height: 28px;
 }

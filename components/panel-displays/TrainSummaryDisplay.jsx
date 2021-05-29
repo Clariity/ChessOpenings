@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function TrainSummary({ openingsCompleted, openingsFailed }) {
+export default function TrainSummaryDisplay({ openingsCompleted, openingsFailed }) {
   React.useEffect(() => {
     document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, []);

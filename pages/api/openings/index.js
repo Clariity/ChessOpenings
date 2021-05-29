@@ -38,19 +38,25 @@ export default async (req, res) => {
         value: 'All'
       }
     ];
-    openingGroups.forEach((g) =>
+
+    const sortedOpeningGroups = openingGroups.map((g) => {
       selectAllOptions.push({
         label: `All ${g.label}`,
         value: `${g.label}:`
-      })
-    );
-    openingGroups.unshift({
+      });
+      return {
+        label: g.label,
+        options: g.options.sort((a, b) => (a.label < b.label ? -1 : 1))
+      };
+    });
+
+    sortedOpeningGroups.unshift({
       label: 'Select All',
       options: selectAllOptions
     });
 
     statusCode = 200;
-    responseBody = { title: 'Success', body: JSON.stringify(openingGroups) };
+    responseBody = { title: 'Success', body: JSON.stringify(sortedOpeningGroups) };
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

@@ -200,7 +200,7 @@ export default function ChessBoard({ path, isDebug }) {
       () => {
         playSound();
       },
-      state.animationsOn.value ? 300 : 100
+      state.animationsOn.value ? 300 : 200
     );
     setMoveSquares({
       [redoMove.from]: {
@@ -244,7 +244,7 @@ export default function ChessBoard({ path, isDebug }) {
         setNavDisabled(false);
         if (opening.value[game.history().length] === undefined) setOpeningComplete(true);
       },
-      state.animationsOn.value ? 300 : 100
+      state.animationsOn.value ? 300 : 200
     );
   }
 
