@@ -1,12 +1,13 @@
 export default function Input({
-  id,
   customStyles,
   disabled = false,
-  onChange,
-  value,
-  placeholder,
+  id,
   label,
-  maxLength = 255
+  maxLength = 255,
+  onChange,
+  placeholder,
+  type = 'text',
+  value
 }) {
   return (
     <>
@@ -23,7 +24,7 @@ export default function Input({
         onChange={onChange}
         placeholder={placeholder}
         style={customStyles}
-        type="text"
+        type={type}
         maxLength={maxLength}
       />
     </>

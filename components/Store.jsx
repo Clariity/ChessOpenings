@@ -6,7 +6,9 @@ const ActionType = {
   SET_OPENINGS: 'SET_OPENINGS',
   SET_OPENINGS_ERROR: 'SET_OPENINGS_ERROR',
   SET_TRAPS: 'SET_TRAPS',
-  SET_TRAPS_ERROR: 'SET_TRAPS_ERROR'
+  SET_TRAPS_ERROR: 'SET_TRAPS_ERROR',
+  SET_SUBMISSIONS: 'SET_SUBMISSIONS',
+  SET_SUBMISSIONS_ERROR: 'SET_SUBMISSIONS_ERROR'
 };
 
 const initialState = {
@@ -21,7 +23,9 @@ const initialState = {
   openings: null,
   openingsError: null,
   traps: null,
-  trapsError: null
+  trapsError: null,
+  submissions: null,
+  submissionsError: null
 };
 
 const StoreContext = React.createContext(initialState);
@@ -48,6 +52,10 @@ const StateProvider = ({ children }) => {
         return { ...state, traps: action.payload };
       case ActionType.SET_TRAPS_ERROR:
         return { ...state, trapsError: action.payload, traps: null };
+      case ActionType.SET_SUBMISSIONS:
+        return { ...state, submissions: action.payload, submissionsError: null };
+      case ActionType.SET_SUBMISSIONS_ERROR:
+        return { ...state, submissionsError: action.payload };
       default:
         throw new Error(`Unhandled ActionType ${action.type}`);
     }
