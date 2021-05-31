@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 
 import Chess from 'chess.js';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -33,7 +34,7 @@ export default function LearnDisplay({ history, opening }) {
       </div>
       <div className="pad-20-t font-size-20">{opening.description}</div>
       <CopyToClipboard
-        text={'https://chessopenings.co.uk/learn?openingLink=' + opening.label}
+        text={`https://chessopenings.co.uk${Router.route}?openingLink=${opening.label}`}
         onCopy={() => {
           setCopied(true);
           setExported(false);

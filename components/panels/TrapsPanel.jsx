@@ -54,11 +54,11 @@ export default function TrapsPanel({
 
   // Set opening on load with URL param
   useEffect(() => {
-    if (openingLink && !opening) {
+    if (state.traps && openingLink && !opening) {
       const o = state.traps.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
       setOpening(o);
     }
-  }, [openingLink]);
+  }, [openingLink, state.traps]);
 
   // Scroll chessboard into view when opening is selected
   useEffect(() => {
