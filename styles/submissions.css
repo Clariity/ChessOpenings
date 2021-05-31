@@ -1,0 +1,25 @@
+.submission-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--secondary-bg);
+  transition: transform ease-in-out 0.1s;
+}
+.submission-card:hover {
+  transform: translateY(-5px);
+}
+
+.submission-card-board {
+  width: 30%;
+  margin-left: auto;
+  margin-bottom: 0px;
+}
+
+.submission-card-header {
+  display: flex;
+  margin-right: auto;
+}
+
+.submission-card-data {
+  width: 70%;
+}

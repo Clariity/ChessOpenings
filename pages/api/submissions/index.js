@@ -18,7 +18,7 @@ export default async (req, res) => {
     const querySnapshot = await firebase.collection('submissions').get();
     querySnapshot.forEach((doc) => submissions.push(doc.data()));
 
-    const sortedSubmissions = submissions.sort((a, b) => (a.timestamp.toDate() < b.timestamp.toDate() ? -1 : 1));
+    const sortedSubmissions = submissions.sort((a, b) => (a.timestamp.toDate() > b.timestamp.toDate() ? -1 : 1));
     statusCode = 200;
     responseBody = { title: 'Success', body: JSON.stringify(sortedSubmissions) };
   } catch (error) {

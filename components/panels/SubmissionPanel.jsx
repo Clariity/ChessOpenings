@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import AdminSubmissionDisplay from '../panel-displays/AdminSubmissionDisplay';
 import BoardControls from '../BoardControls';
 import SubmissionDisplay from '../panel-displays/SubmissionDisplay';
 import { start } from '../../data/consts';
-
-// TODO: Make this prettier
+import { useStoreContext } from '../Store';
 
 export default function SubmissionPanel({
   boardOrientation,
@@ -18,30 +18,30 @@ export default function SubmissionPanel({
   reset,
   setBoardOrientation,
   setOpening,
-  userColor,
-  isAdmin = false
+  userColor
 }) {
-  const router = useRouter();
-  const id = router.query.id;
-
+  const { state } = useStoreContext();
   const [submission, setSubmission] = useState();
   const [submissionNotFound, setSubmissionNotFound] = useState(false);
 
+  const router = useRouter();
+  const id = router.query.id;
+  const isAdmin = router.pathname.includes('/admin/');
+
   useEffect(async () => {
-    if (id && !opening) {
-      // try to find submission remotely
+    if (id) {
       try {
         const response = await fetch(`/api/submission/${id}`);
         const submission = await response.json();
         if (response.status === 200) {
-          setOpening(JSON.parse(submission.body).data);
+          if (!opening) setOpening(JSON.parse(submission.body).data);
           setSubmission(JSON.parse(submission.body));
         } else setSubmissionNotFound(true);
       } catch (error) {
         setSubmissionNotFound(true);
       }
     }
-  }, [id]);
+  }, [id, state.submissions]);
 
   const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black') || navDisabled;
   const forwardDisabled = redoStack.length === 0 || navDisabled;
@@ -60,9 +60,16 @@ export default function SubmissionPanel({
       ) : submission ? (
         <div className="panel-body flex-column">
           <div id="panel-scroll-display" className="panel-scroll-display">
-            <SubmissionDisplay history={game?.history({ verbose: true })} opening={opening} submission={submission} />
+            {isAdmin ? (
+              <AdminSubmissionDisplay
+                history={game?.history({ verbose: true })}
+                opening={opening}
+                submission={submission}
+              />
+            ) : (
+              <SubmissionDisplay history={game?.history({ verbose: true })} opening={opening} submission={submission} />
+            )}
           </div>
-          {isAdmin && <div className="flex-row">Buttons go here</div>}
         </div>
       ) : (
         'Loading'

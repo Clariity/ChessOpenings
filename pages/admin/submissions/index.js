@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 import Cookies from 'js-cookie';
 
-import firebase from '../../firebaseConfig';
-import SEO from '../../components/SEO';
-import SubmissionCard from '../../components/submissions/SubmissionCard';
-import { ActionType, useStoreContext } from '../../components/Store';
+import firebase from '../../../firebaseConfig';
+import SEO from '../../../components/SEO';
+import SubmissionCard from '../../../components/submissions/SubmissionCard';
+import { ActionType, useStoreContext } from '../../../components/Store';
 
 export default function Submissions({ token }) {
   const { dispatch, state } = useStoreContext();
@@ -33,7 +33,7 @@ export default function Submissions({ token }) {
   }
 
   return (
-    <div className="flex-column" style={{ maxWidth: '1044px' }}>
+    <div className="flex-column" style={{ maxWidth: '1044px', width: '100%' }}>
       <SEO description="Admin Submissions" title="submissions" path="/admin/submissions" />
       <h1 className="page-title">Submissions</h1>
 

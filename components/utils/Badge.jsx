@@ -1,3 +1,7 @@
-export default function Badge({ title, status }) {
-  return <div className={`badge-component ${status}`}>{title}</div>;
+export default function Badge({ status, customStyles }) {
+  return (
+    <div className={`badge-component ${status}`} style={customStyles}>
+      {status}
+    </div>
+  );
 }

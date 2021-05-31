@@ -28,6 +28,17 @@
   .panel-board-controls {
     font-size: 12px;
   }
+
+  .submission-card {
+    flex-direction: column !important;
+  }
+  .submission-card:hover {
+    transform: unset !important;
+  }
+  .submission-card-board {
+    margin-left: 0px !important;
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 1260px) {
