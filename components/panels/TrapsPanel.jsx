@@ -56,8 +56,7 @@ export default function TrapsPanel({
   useEffect(() => {
     if (state.traps && openingLink && !opening) {
       const o = state.traps.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
-      setOpening(o);
-      setBoardOrientation(o.colour);
+      handleLearnOpeningChange(o);
     }
   }, [openingLink, state.traps]);
 
