@@ -16,8 +16,8 @@ export default function Index() {
     const yVal = e.nativeEvent.layerY;
 
     // Calculate rotation values along the X and Y-axis. Multiplier set to 20
-    const yRotation = 2 * ((xVal - ref.current.clientWidth / 2) / ref.current.clientWidth);
-    const xRotation = -2 * ((yVal - ref.current.clientHeight / 2) / ref.current.clientHeight);
+    const yRotation = 4 * ((xVal - ref.current.clientWidth / 2) / ref.current.clientWidth);
+    const xRotation = -4 * ((yVal - ref.current.clientHeight / 2) / ref.current.clientHeight);
 
     /* Generate string for CSS transform property */
     const string = 'perspective(800px) scale(1.02) rotateX(' + xRotation + 'deg) rotateY(' + yRotation + 'deg)';
@@ -33,32 +33,34 @@ export default function Index() {
   return (
     <div className="flex-column" style={{ maxWidth: '1044px' }}>
       <SEO description="Learn and Train Chess Openings for free" title="home" path="/" />
-      <div className="flex-row">
+      <h3 className="home-subtitle-text" style={{ textAlign: 'center' }}>
+        Openings needed. If you know any that aren&apos;t on the site yet,{' '}
+        <Link href="/contribute">
+          <a className="link">please add them here.</a>
+        </Link>
+      </h3>
+      <div className="home-title">
         <Image
           priority={true}
-          className="navbar-logo-image"
+          className="home-logo"
           src="/media/images/logo.png"
           alt="Chess Openings Logo"
-          width={60}
-          height={60}
+          width={80}
+          height={80}
         />
-        <h1 className="page-title">Page under construction - ChessOpenings.co.uk</h1>
+        <h1 className="home-title-text">ChessOpenings.co.uk</h1>
       </div>
-      <div style={{ textAlign: 'justify' }}>
+      <div style={{ textAlign: 'center' }}>
+        <h2 className="home-subtitle-text">Learn and Train Chess Openings, completely for FREE</h2>
         <p>
-          As an open source project, ChessOpenings.co.uk relies on community contributions to add great content to the
-          site. If you know an opening/variation that has not been added yet, you can submit it below and it will be
-          reviewed to be added to the site.
-        </p>
-        <p>
-          Want to contribute to the site itself?{' '}
+          Want to support the site?{' '}
           <a
             className="link"
-            href="https://github.com/Clariity/ChessOpenings"
+            href="https://paypal.me/chessopenings?locale.x=en_GB"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Make a Pull Request on the GitHub Repo.
+            Donate here.
           </a>
         </p>
       </div>
@@ -70,88 +72,86 @@ export default function Index() {
           onMouseMove={(e) => handleCardTilt(e, learnCard)}
           onMouseOut={() => handleMouseOut(learnCard)}
         >
-          <Image
-            priority={true}
-            className="home-card-image"
-            src="/media/images/learn.png"
-            alt="Learn Chess Board"
-            width={650}
-            height={420}
-          />
+          <img className="home-card-image flipped" src="/media/images/learn.png" alt="Learn Chess Board" />
           <div className="home-card-content">
             <div className="home-card-content-title">
               <i className="las la-graduation-cap home-card-icon" />
               <h1 style={{ paddingLeft: '10px' }}>Learn</h1>
             </div>
+            <p>Learn variations for Chess openings and be prepared for whatever your opponent may throw at you.</p>
+            <p>Learn a completely new Chess opening today and try it out when you next play some games.</p>
           </div>
         </div>
       </Link>
 
-      <div
-        className="home-card"
-        ref={trainCard}
-        onMouseMove={(e) => handleCardTilt(e, trainCard)}
-        onMouseOut={() => handleMouseOut(trainCard)}
-      >
-        <div className="home-card-content">
-          <div className="home-card-content-title">
-            <i className="las la-dumbbell home-card-icon" />
-            <h1 style={{ paddingLeft: '10px' }}>Train</h1>
+      <Link href="/train">
+        <div
+          className="home-card"
+          ref={trainCard}
+          onMouseMove={(e) => handleCardTilt(e, trainCard)}
+          onMouseOut={() => handleMouseOut(trainCard)}
+        >
+          <div className="home-card-content">
+            <div className="home-card-content-title">
+              <i className="las la-dumbbell home-card-icon" />
+              <h1 style={{ paddingLeft: '10px' }}>Train</h1>
+            </div>
+            <p>Test your Chess openings knowledge and train to remember the moves to make for different variations.</p>
+            <p>
+              Try to get as many correct as possible and if you forget any, a handy link will be provided to brush up on
+              the forgotten moves.
+            </p>
           </div>
+          <img className="home-card-image" src="/media/images/train.png" alt="Learn Chess Board" />
         </div>
-        <Image
-          priority={true}
-          className="home-card-image"
-          src="/media/images/train.png"
-          alt="Learn Chess Board"
-          width={650}
-          height={420}
-        />
-      </div>
+      </Link>
 
-      <div
-        className="home-card"
-        ref={trapsCard}
-        onMouseMove={(e) => handleCardTilt(e, trapsCard)}
-        onMouseOut={() => handleMouseOut(trapsCard)}
-      >
-        <Image
-          priority={true}
-          className="home-card-image"
-          src="/media/images/traps.png"
-          alt="Learn Chess Board"
-          width={650}
-          height={420}
-        />
-        <div className="home-card-content">
-          <div className="home-card-content-title">
-            <i className="las la-compress-arrows-alt home-card-icon" />
-            <h1 style={{ paddingLeft: '10px' }}>Traps</h1>
+      <Link href="/traps">
+        <div
+          className="home-card"
+          ref={trapsCard}
+          onMouseMove={(e) => handleCardTilt(e, trapsCard)}
+          onMouseOut={() => handleMouseOut(trapsCard)}
+        >
+          <img className="home-card-image flipped" src="/media/images/traps.png" alt="Learn Chess Board" />
+          <div className="home-card-content">
+            <div className="home-card-content-title">
+              <i className="las la-compress-arrows-alt home-card-icon" />
+              <h1 style={{ paddingLeft: '10px' }}>Traps</h1>
+            </div>
+            <p>
+              Learn tricky opening traps that may catch your opponent off guard if they don&apos;t know how to correctly
+              respond.
+            </p>
+            <p>Make sure you don&apos;t get caught out by them either.</p>
           </div>
         </div>
-      </div>
+      </Link>
 
-      <div
-        className="home-card"
-        ref={contributeCard}
-        onMouseMove={(e) => handleCardTilt(e, contributeCard)}
-        onMouseOut={() => handleMouseOut(contributeCard)}
-      >
-        <div className="home-card-content special">
-          <div className="home-card-content-title">
-            <i className="las la-plus home-card-icon" />
-            <h1 style={{ paddingLeft: '10px' }}>Contribute</h1>
+      <Link href="/contribute">
+        <div
+          className="home-card"
+          ref={contributeCard}
+          onMouseMove={(e) => handleCardTilt(e, contributeCard)}
+          onMouseOut={() => handleMouseOut(contributeCard)}
+        >
+          <div className="home-card-content special">
+            <div className="home-card-content-title">
+              <i className="las la-plus home-card-icon" />
+              <h1 style={{ paddingLeft: '10px' }}>Contribute</h1>
+            </div>
+            <p>
+              Become a part of ChessOpenings history. Contribute your opening knowledge and help other ChessOpenings
+              users to learn valuable openings.
+            </p>
+            <p>
+              With a move recording tool and an easy to fill out form, it&apos;s very simple to submit your openings.
+              Once reviewed by a site admin it will then be added to the list of openings if approved.
+            </p>
           </div>
+          <img className="home-card-image" src="/media/images/contribute.png" alt="Learn Chess Board" />
         </div>
-        <Image
-          priority={true}
-          className="home-card-image"
-          src="/media/images/contribute.png"
-          alt="Learn Chess Board"
-          width={650}
-          height={420}
-        />
-      </div>
+      </Link>
     </div>
   );
 }

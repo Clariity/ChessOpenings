@@ -222,6 +222,7 @@ export default function Contribute() {
       />
       <div className="flex-column">
         <h1>Top Contributors</h1>
+        <p>Coming Soon...</p>
       </div>
 
       {showResultModal && <ResultModal setShowResultModal={setShowResultModal} result={result} />}

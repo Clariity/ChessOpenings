@@ -47,6 +47,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
             <p className="navbar-menu-link-text">Traps</p>
           </div>
         </Link>
+
         <Link href="/contribute">
           <div
             className={`navbar-menu-link ${
@@ -58,6 +59,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
             <p className="navbar-menu-link-text">Contribute</p>
           </div>
         </Link>
+
         <Link href="/help">
           <div
             className={`navbar-menu-link ${pathname === '/help' && 'navbar-menu-link-selected'}`}
@@ -67,6 +69,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
             <p className="navbar-menu-link-text">Help & Contact</p>
           </div>
         </Link>
+
         <div
           className={`navbar-menu-link ${showModal && 'navbar-menu-link-selected'}`}
           onClick={() => {

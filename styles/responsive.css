@@ -1,4 +1,8 @@
 @media (max-width: 550px) {
+  .home-subtitle-text {
+    font-size: 14px !important;
+  }
+
   .navbar-logo-text {
     font-size: 18px;
   }
@@ -18,6 +22,14 @@
 }
 
 @media (max-width: 850px) {
+  .home-title-text {
+    font-size: 8vw;
+    margin-left: 10px;
+  }
+  .home-subtitle-text {
+    font-size: 2vw;
+  }
+
   .chessboard-header {
     font-size: 16px;
   }
@@ -38,6 +50,25 @@
   .submission-card-board {
     margin-left: 0px !important;
     width: 100% !important;
+  }
+}
+
+@media (max-width: 1044px) {
+  .home-card {
+    flex-direction: column;
+  }
+  .home-card-image {
+    max-height: 420px;
+    max-width: 95vw;
+    height: 100%;
+    margin: auto;
+    order: 0;
+  }
+  .home-card-content {
+    max-width: 620px;
+    margin: auto;
+    text-align: center;
+    order: 1;
   }
 }
 
