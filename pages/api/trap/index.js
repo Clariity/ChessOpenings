@@ -5,11 +5,6 @@ export default async (req, res) => {
   let statusCode = 500;
   let responseBody = { error: 'Internal Server Error: Encountered an unknown error' };
 
-  const secretKey = process.env.API_SECRET_KEY;
-  const password = req.headers.authorization;
-  const passwordVerified = password === secretKey;
-  // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
   if (
     !req.headers.referer.includes('http://localhost:3000') &&
     !req.headers.referer.includes('https://chessopenings.co.uk')
@@ -19,7 +14,28 @@ export default async (req, res) => {
     return res;
   }
 
-  if (passwordVerified) {
+  // check admin token
+  const adminToken = req.cookies?.adminToken;
+  let tokenVerified = false;
+
+  // allow session if token provided and update stored tokens
+  if (adminToken) {
+    // get all tokens from firebase
+    const querySnapshot = await firebase.collection('tokens').get();
+    // for each token, if they have expired delete them
+    const validTokens = [];
+    querySnapshot.forEach((doc) => {
+      if (doc.data().expires < Date.now()) {
+        firebase.collection('tokens').doc(doc.id).delete();
+      } else validTokens.push(doc.id);
+    });
+    // check if adminToken remains
+    if (validTokens.includes(JSON.parse(adminToken).id)) {
+      tokenVerified = true;
+    }
+  }
+
+  if (tokenVerified) {
     try {
       await firebase.collection('traps').add({
         ...JSON.parse(req.body),
@@ -33,7 +49,7 @@ export default async (req, res) => {
     }
   } else {
     statusCode = 401;
-    responseBody = { error: 'Unauthorized: Invalid Password.' };
+    responseBody = { error: 'Unauthorized: Invalid Token.' };
   }
 
   res.statusCode = statusCode;

@@ -36,6 +36,7 @@ export default function SubmissionCard({ submission }) {
           <h3>{submission.data.label}</h3>
           <p>Type: {submission.type}</p>
           <p>Submitted: {new Date(submission.timestamp._seconds * 1000).toDateString()}</p>
+          {submission.updated && <p>Updated: {new Date(submission.updated._seconds * 1000).toDateString()}</p>}
           <p>Contributor: {submission.contributor}</p>
         </div>
         <div className="chessboard-header submission-card-board">

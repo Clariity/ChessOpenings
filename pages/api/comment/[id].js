@@ -2,6 +2,7 @@ import admin from 'firebase-admin';
 import firebase from '../../../firebaseConfig';
 
 export default async (req, res) => {
+  const { id } = req.query;
   let statusCode = 500;
   let responseBody = { error: 'Internal Server Error: Encountered an unknown error' };
 
@@ -37,10 +38,12 @@ export default async (req, res) => {
 
   if (tokenVerified) {
     try {
-      await firebase.collection('openings').add({
-        ...JSON.parse(req.body),
-        timestamp: admin.firestore.FieldValue.serverTimestamp()
-      });
+      await firebase
+        .collection('submissions')
+        .doc(id)
+        .update({
+          comments: admin.firestore.FieldValue.arrayUnion(JSON.parse(req.body))
+        });
       statusCode = 200;
       responseBody = { title: 'Success' };
     } catch (error) {

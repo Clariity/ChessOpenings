@@ -1,43 +1,119 @@
 import { useState } from 'react';
+import Router from 'next/router';
 
 import Badge from '../utils/Badge';
 import Button from '../utils/Button';
 import Input from '../utils/Input';
+import { ActionType, useStoreContext } from '../../components/Store';
 
 export default function AdminSubmissionDisplay({ history, opening, submission }) {
-  console.log(submission);
+  const { dispatch } = useStoreContext();
   const [label, setLabel] = useState(submission.data.label);
   const [description, setDescription] = useState(submission.data.description);
   const [contributor, setContributor] = useState(submission.contributor);
   const [comment, setComment] = useState('');
+  const [result, setResult] = useState('');
 
   function getDate() {
-    const date = new Date(submission.timestamp._seconds * 1000);
+    const date = new Date(submission.timestamp?._seconds * 1000);
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   }
 
-  function handleCommentSubmit() {
-    // post comment
-    // fetch updated submissions
-    console.log(comment);
+  async function handleCommentSubmit() {
+    try {
+      const response = await fetch(`/api/comment/${submission.id}`, {
+        method: 'POST',
+        body: JSON.stringify(comment)
+      });
+      const responseJSON = await response.json();
+      if (response.status !== 200) {
+        setResult(responseJSON);
+        return;
+      }
+    } catch (error) {
+      setResult(error);
+      return;
+    }
+
+    setComment('');
+    fetchUpdatedSubmissions();
   }
 
-  function handleMerge() {
-    // if opening/trap, make POST to /opening or /trap with new object
-    // update submission to MERGED status (adding timestamp for merged action)
-    // fetch updated submissions
-    console.log(comment);
+  async function handleMerge() {
+    try {
+      const response = await fetch(`/api/${submission.type.toLowerCase()}`, {
+        method: 'POST',
+        body: JSON.stringify(submission.data)
+      });
+      const responseJSON = await response.json();
+      if (response.status !== 200) {
+        setResult(responseJSON);
+        return;
+      }
+    } catch (error) {
+      setResult(error);
+      return;
+    }
+    updateSubmission('MERGED');
+    fetchUpdatedSubmissions();
+    Router.push('/admin/submissions');
   }
 
-  function handleClose() {
-    // Don't allow Close unless comment exists on submission
-    // update submission to CLOSED status (adding timestamp for closed action)
-    // fetch updated submissions
-    console.log(comment);
+  async function handleClose() {
+    updateSubmission('CLOSED');
+    fetchUpdatedSubmissions();
+    Router.push('/admin/submissions');
+  }
+
+  async function updateSubmission(status) {
+    try {
+      const newSubmission = submission;
+      delete newSubmission.timestamp;
+      const response = await fetch(`/api/submission/${submission.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          ...newSubmission,
+          status
+        })
+      });
+      const responseJSON = await response.json();
+      if (response.status !== 200) {
+        setResult(responseJSON);
+        return;
+      }
+    } catch (error) {
+      setResult(error);
+      return;
+    }
+    fetchUpdatedSubmissions();
+  }
+
+  async function fetchUpdatedSubmissions() {
+    try {
+      const response = await fetch('/api/submissions');
+      const submissions = await response.json();
+      if (response.status === 200) {
+        dispatch({
+          type: ActionType.SET_SUBMISSIONS,
+          payload: JSON.parse(submissions.body)
+        });
+      } else {
+        dispatch({
+          type: ActionType.SET_SUBMISSIONS_ERROR,
+          payload: JSON.parse(submissions.error)
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: ActionType.SET_SUBMISSIONS_ERROR,
+        payload: JSON.parse(error)
+      });
+    }
   }
 
   return (
     <>
+      {result && <p>{result}</p>}
       <Badge title={submission.status} status={submission.status} />
 
       <Input id="opening-label" label="Label" value={label} onChange={(e) => setLabel(e.target.value)} />
@@ -92,8 +168,18 @@ export default function AdminSubmissionDisplay({ history, opening, submission })
         ))}
       </div>
 
-      <Button onClick={handleMerge} text="Merge" customStyles={{ marginBottom: '20px', marginTop: '40px' }} />
-      <Button onClick={handleClose} text="Close" customStyles={{ backgroundColor: 'rgb(255, 60, 60)' }} />
+      <Button
+        onClick={handleMerge}
+        text="Merge"
+        disabled={submission.type.includes('Alteration') || submission.status === 'MERGED'}
+        customStyles={{ marginBottom: '20px', marginTop: '40px' }}
+      />
+      <Button
+        onClick={handleClose}
+        text="Close"
+        disabled={submission.comments.length === 0 || submission.status === 'CLOSED'}
+        customStyles={{ backgroundColor: 'rgb(255, 60, 60)' }}
+      />
     </>
   );
 }

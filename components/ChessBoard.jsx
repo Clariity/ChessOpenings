@@ -64,6 +64,15 @@ export default function ChessBoard({ path, isDebug }) {
       return;
     }
 
+    // set initial move highlight
+    if ((path === '/learn' || path === '/traps') && game?.fen() === start && userColor === 'white' && opening) {
+      const move = opening.value[game.history().length];
+      setMoveSquares({
+        [move.from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+        [move.to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+      });
+    }
+
     // if move is undone and its CPU turn next, make CPU move
     if (
       undoMade &&
@@ -74,7 +83,6 @@ export default function ChessBoard({ path, isDebug }) {
       redoStack.pop();
     }
 
-    // if move is undone and its CPU turn next, make CPU move
     if (opening && path === '/submission' && !loadingGame) {
       setBoardOrientation(opening.colour || 'white');
       setLoadingGame(true);
@@ -110,6 +118,7 @@ export default function ChessBoard({ path, isDebug }) {
     setRightClickedSquares({});
     setMoveSquares({});
     setOptionSquares({});
+    playSound('start');
   }
 
   function setSounds() {
@@ -118,13 +127,28 @@ export default function ChessBoard({ path, isDebug }) {
       capture: new Audio(`/media/themes/${state.theme.value}/capture.mp3`),
       check: new Audio(`/media/themes/${state.theme.value}/check.mp3`),
       castle: new Audio(`/media/themes/${state.theme.value}/castle.mp3`),
-      error: new Audio(`/media/themes/${state.theme.value}/error.flac`)
+      error: new Audio(`/media/themes/${state.theme.value}/error.mp3`),
+      start: new Audio(`/media/themes/${state.theme.value}/start.mp3`),
+      end: new Audio(`/media/themes/${state.theme.value}/end.mp3`)
     });
   }
 
   // play sound on moves
-  function playSound() {
+  function playSound(sound) {
+    if (sound === 'start') {
+      moveSounds.start.play();
+      return;
+    }
+    if (sound === 'end') {
+      moveSounds.end.play();
+      return;
+    }
+
     const move = game.history({ verbose: true })[game.history().length - 1];
+    if (game.in_checkmate()) {
+      moveSounds.end.play();
+      return;
+    }
     if (game.in_check() || game.in_checkmate()) {
       moveSounds.check.play();
       return;
@@ -174,6 +198,15 @@ export default function ChessBoard({ path, isDebug }) {
     });
     moveSounds.move.play();
 
+    if (path === '/learn' || path === '/traps') {
+      const move = opening.value[game.history().length - 2];
+      setMoveSquares({
+        [move?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+        [move?.to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+      });
+      return;
+    }
+
     // colour move squares of move made prior to 2 moves ago
     const priorMoveIndex = history.length - 3;
     if (priorMoveIndex > -1) {
@@ -187,7 +220,9 @@ export default function ChessBoard({ path, isDebug }) {
           backgroundColor: 'rgba(255, 255, 0, 0.4)'
         }
       });
-    } else setMoveSquares({});
+      return;
+    }
+    setMoveSquares({});
   }
 
   function goForward() {
@@ -238,11 +273,23 @@ export default function ChessBoard({ path, isDebug }) {
       [from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
       [to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
     });
+    // if can highlight next move, do that instead on learn/trap pages
     setTimeout(
       () => {
         playSound();
         setNavDisabled(false);
-        if (opening.value[game.history().length] === undefined) setOpeningComplete(true);
+        if (opening.value[game.history().length] === undefined) {
+          setOpeningComplete(true);
+          if (path !== '/train') playSound('end');
+        }
+
+        if (path === '/learn' || path === '/traps') {
+          const move = opening.value[game.history().length];
+          setMoveSquares({
+            [move?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+            [move?.to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+          });
+        }
       },
       state.animationsOn.value ? 300 : 200
     );
@@ -278,6 +325,14 @@ export default function ChessBoard({ path, isDebug }) {
         [sourceSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' },
         [targetSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' }
       });
+      setTimeout(
+        () =>
+          setMoveSquares({
+            [opening.value[historyLength - 1].from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+            [opening.value[historyLength - 1].to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+          }),
+        1000
+      );
       return;
     }
 
@@ -291,7 +346,10 @@ export default function ChessBoard({ path, isDebug }) {
 
     if (opening.value[historyLength] !== undefined) {
       makeComputerMove(opening.value[historyLength].from, opening.value[historyLength].to);
-    } else setOpeningComplete(true);
+    } else {
+      setOpeningComplete(true);
+      if (path !== '/train') playSound('end');
+    }
   }
 
   // For recording moves
@@ -424,6 +482,7 @@ export default function ChessBoard({ path, isDebug }) {
             openingComplete={openingComplete}
             openingError={openingError}
             path={path}
+            playSound={playSound}
             redoStack={redoStack}
             reset={reset}
             setBoardOrientation={setBoardOrientation}
@@ -453,8 +512,8 @@ export default function ChessBoard({ path, isDebug }) {
             }}
             squareStyles={{
               ...rightClickedSquares,
-              ...moveSquares,
-              ...optionSquares
+              ...optionSquares,
+              ...moveSquares
             }}
             onDrop={isDebug ? onDropDebug : onDrop}
             onSquareClick={onSquareClick}

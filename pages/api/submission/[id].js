@@ -1,3 +1,4 @@
+import admin from 'firebase-admin';
 import firebase from '../../../firebaseConfig';
 
 export default async (req, res) => {
@@ -12,6 +13,30 @@ export default async (req, res) => {
     res.statusCode = 401;
     res.json({ error: 'Unauthorized: Unauthorized host' });
     return res;
+  }
+
+  console.log(req.method);
+
+  if (req.method === 'PUT') {
+    try {
+      await firebase
+        .collection('submissions')
+        .doc(id)
+        .update({
+          ...JSON.parse(req.body),
+          updated: admin.firestore.FieldValue.serverTimestamp()
+        });
+
+      statusCode = 200;
+      responseBody = { title: 'Success' };
+    } catch (error) {
+      statusCode = 500;
+      responseBody = { error: `Internal Server Error: Error updating Firestore. ${error.message}` };
+    }
+
+    res.statusCode = statusCode;
+    res.json(responseBody);
+    return;
   }
 
   try {

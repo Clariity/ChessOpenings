@@ -56,7 +56,7 @@ export default function TrapsPanel({
   useEffect(() => {
     if (state.traps && openingLink && !opening) {
       const o = state.traps.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
-      handleLearnOpeningChange(o);
+      handleOpeningChange(o);
     }
   }, [openingLink, state.traps]);
 
@@ -71,7 +71,7 @@ export default function TrapsPanel({
     return <div>Error</div>;
   }
 
-  function handleLearnOpeningChange(change) {
+  function handleOpeningChange(change) {
     setOpening(change);
     setUserColor(change.colour);
     setBoardOrientation(change.colour);
@@ -115,7 +115,7 @@ export default function TrapsPanel({
               formatGroupLabel={formatGroupLabel}
               isSearchable={window > 850}
               maxMenuHeight={325}
-              onChange={handleLearnOpeningChange}
+              onChange={handleOpeningChange}
               options={state.traps.sort((a, b) => (a.value < b.value ? -1 : 1))}
               placeholder={'Select Opening Trap to Learn'}
             />

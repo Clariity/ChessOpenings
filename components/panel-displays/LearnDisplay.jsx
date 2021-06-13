@@ -34,7 +34,7 @@ export default function LearnDisplay({ history, opening }) {
       </div>
       <div className="pad-20-t font-size-20">{opening.description}</div>
       <CopyToClipboard
-        text={`https://chessopenings.co.uk${Router.route}?openingLink=${opening.label}`}
+        text={`https://chessopenings.co.uk${Router.route}?openingLink=${encodeURIComponent(opening.label)}`}
         onCopy={() => {
           setCopied(true);
           setExported(false);

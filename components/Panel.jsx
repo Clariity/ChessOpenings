@@ -21,6 +21,7 @@ export default function Panel({
   openingComplete,
   openingError,
   path,
+  playSound,
   redoStack,
   reset,
   setBoardOrientation,
@@ -197,6 +198,7 @@ export default function Panel({
     setStarted(false);
     setOpening();
     setOpeningsCopy([...selectedOpenings]);
+    playSound('end');
   }
 
   function filterOptions({ label, value }, searchInput) {

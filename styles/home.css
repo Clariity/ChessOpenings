@@ -1,0 +1,29 @@
+.home-card {
+  display: flex;
+  flex-direction: row;
+  margin: 30px 0px;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.home-card-content {
+  background-color: var(--secondary-bg);
+  flex-grow: 1;
+  padding: 10px;
+}
+.home-card-content.special {
+  background-color: var(--primary-bg);
+  flex-grow: 1;
+}
+
+.home-card-content-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-card-icon {
+  font-size: 60px;
+  -webkit-text-stroke: 1px var(--secondary-bg);
+}
