@@ -50,10 +50,10 @@
   padding-right: 10px;
 }
 .completed {
-  color: #779952;
+  color: var(--secondary-fg);
 }
 .failed {
-  color: #b40000;
+  color: var(--secondary-fg);
 }
 .current {
   background-color: #0f0f0f;

@@ -1,5 +1,5 @@
 .button-component {
-  background-color: #779952;
+  background-color: var(--secondary-fg);
   color: white;
   width: 100%;
   min-height: 50px;

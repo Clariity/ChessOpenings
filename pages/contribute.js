@@ -97,7 +97,8 @@ export default function Contribute() {
         <p>
           As an open source project, ChessOpenings.co.uk relies on community contributions to add great content to the
           site. If you know an opening/variation that has not been added yet, you can submit it below and it will be
-          reviewed to be added to the site.
+          reviewed to be added to the site. If you feel an opening needs to be corrected, you can submit an alteration
+          request below too by selecting &apos;Opening Alteration&apos; in the Contribution Type dropdown.
         </p>
         <p>
           Want to contribute to the site itself?{' '}

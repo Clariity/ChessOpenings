@@ -32,7 +32,7 @@ export default function Navbar() {
                 <Image
                   priority={true}
                   className="navbar-logo-image"
-                  src="/media/images/logo.png"
+                  src="/media/images/logo2.png"
                   alt="Chess Openings Logo"
                   width={window <= 550 ? 30 : 60}
                   height={window <= 550 ? 30 : 60}

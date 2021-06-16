@@ -43,3 +43,9 @@
   font-size: 60px;
   -webkit-text-stroke: 1px var(--secondary-bg);
 }
+
+.home-message {
+  padding: 10px;
+  background-color: var(--secondary-bg);
+  border-radius: 15px;
+}

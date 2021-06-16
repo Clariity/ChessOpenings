@@ -11,13 +11,13 @@ export default function TrainSummaryDisplay({ openingsCompleted, openingsFailed 
       <h1 id="summary" className="text-align-center">
         Summary
       </h1>
-      <h2 className="text-align-center completed">Openings Completed: {openingsCompleted.length}</h2>
+      <h2 className="completed">Openings Completed: {openingsCompleted.length}</h2>
       {openingsCompleted.map((openingName) => (
         <div key={openingName} className="panel-scroll-display-opening">
           {openingName}
         </div>
       ))}
-      <h2 className="text-align-center failed">Openings Failed: {openingsFailed.length}</h2>
+      <h2 className="failed">Openings Failed: {openingsFailed.length}</h2>
       {openingsFailed.map((openingName) => (
         <div key={openingName} className="panel-scroll-display-opening">
           <div className="panel-summary-opening">{openingName}</div>

@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import SEO from '../components/SEO';
 
-export default function Index() {
+export default function NotFound() {
   const learnCard = useRef();
   const trainCard = useRef();
   const trapsCard = useRef();
@@ -32,13 +32,7 @@ export default function Index() {
 
   return (
     <div className="flex-column" style={{ maxWidth: '1044px' }}>
-      <SEO description="Learn and Train Chess Openings for free" title="home" path="/" />
-      <h3 className="home-subtitle-text home-message" style={{ textAlign: 'center' }}>
-        Openings needed. If you know any that aren&apos;t on the site yet,{' '}
-        <Link href="/contribute">
-          <a className="link">please add them here.</a>
-        </Link>
-      </h3>
+      <SEO description="Page Not Found" title="404" path="/" />
       <div className="home-title">
         <Image
           priority={true}
@@ -48,22 +42,12 @@ export default function Index() {
           width={80}
           height={80}
         />
-        <h1 className="home-title-text">ChessOpenings.co.uk</h1>
+        <h1 className="home-title-text">404</h1>
       </div>
-      <div style={{ textAlign: 'center' }}>
-        <h2 className="home-subtitle-text">Learn and Train Chess Openings, completely for FREE</h2>
-        <p>
-          Want to support the site?{' '}
-          <a
-            className="link"
-            href="https://paypal.me/chessopenings?locale.x=en_GB"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Donate here.
-          </a>
-        </p>
-      </div>
+      <h3 className="home-subtitle-text" style={{ textAlign: 'center' }}>
+        Looks like the page you tried to access doesn&apos;t exist. Try one of the links below to get to where you want
+        to go.
+      </h3>
 
       <Link href="/learn">
         <div
