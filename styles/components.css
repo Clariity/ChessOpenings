@@ -122,4 +122,5 @@
   background-color: var(--secondary-bg);
   padding: 10px 20px;
   align-items: center;
+  z-index: 5;
 }
