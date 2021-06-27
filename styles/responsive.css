@@ -19,6 +19,10 @@
     font-size: 32px !important;
     margin-bottom: 10px !important;
   }
+
+  .help-twitter {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 850px) {

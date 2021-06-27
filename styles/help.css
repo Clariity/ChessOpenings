@@ -1,0 +1,15 @@
+.help-twitter {
+  display: flex;
+  text-align: justify;
+}
+
+.help-twitter-link {
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.twitter {
+  width: 100px;
+  border-radius: 25px;
+  margin-bottom: 10px;
+}

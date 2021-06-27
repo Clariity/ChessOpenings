@@ -114,3 +114,12 @@
 .badge-component.MERGED {
   background-color: rgb(35, 134, 54);
 }
+
+.cookie-warning-component {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: var(--secondary-bg);
+  padding: 10px 20px;
+  align-items: center;
+}

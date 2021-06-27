@@ -77,6 +77,11 @@
   justify-content: center;
 }
 
+.flex-align {
+  display: flex;
+  align-items: center;
+}
+
 /* ##### Hover ##### */
 .hover {
   cursor: pointer;

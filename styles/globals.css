@@ -2,6 +2,7 @@
 @import './chessboard.css';
 @import './components.css';
 @import './contribute.css';
+@import './help.css';
 @import './home.css';
 @import './navbar.css';
 @import './panel.css';
@@ -62,7 +63,7 @@ p {
 
 *::-webkit-scrollbar {
   width: 10px;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: var(--secondary-bg);
 }
 
 *::-webkit-scrollbar-thumb {
