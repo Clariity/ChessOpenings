@@ -4,7 +4,7 @@ import SEO from '../components/SEO';
 
 export default function Help() {
   return (
-    <div className="flex-column" style={{ maxWidth: '1044px', textAlign: 'justify' }}>
+    <div className="flex-column" style={{ maxWidth: '1044px' }}>
       <SEO description="ChessOpenings Help and Contact" title="help" path="/help" />
       <h1 className="page-title">Help and Contact</h1>
 
@@ -40,7 +40,7 @@ export default function Help() {
       <h2>
         <i>&quot;How do I use this site to learn openings?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         On the{' '}
         <Link href="/learn">
           <a className="link">Learn page</a>
@@ -50,7 +50,7 @@ export default function Help() {
         is a work in progress so all openings are not currently added, we are working on it with helpful contributions
         from the community).
       </p>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         Once you have selected an opening and a colour you wish to play with, you will then be shown the board moves to
         make in that opening variation. The PGN notation and a description will also be listed. Practise making the
         moves and learn what moves to make at each point in the opening. Once you are ready to test yourself, you can
@@ -64,7 +64,7 @@ export default function Help() {
       <h2>
         <i>&quot;How do I use this site to train openings?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         On the{' '}
         <Link href="/train">
           <a className="link">Train page</a>
@@ -75,13 +75,13 @@ export default function Help() {
         progress so all openings are not currently added, we are working on it with helpful contributions from the
         community).
       </p>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         Once you have selected the openings you would like to train and colour you wish to play with, you can either
         click play (to test them in the order selected) or shuffle (to randomise the order in which you are tested).
         Once started, you will then attempt to play each opening to completion. Once you complete or fail each opening,
         it will move on to the next one highlighted.
       </p>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         Once all openings have been attempted or the quit button has been clicked, a summary will be shown; listing the
         openings you got correct as well as the openings that you failed. Beside each opening that was failed will be a
         link to go to the{' '}
@@ -96,7 +96,7 @@ export default function Help() {
       <h2>
         <i>&quot;What are traps and how can I use this site to learn them?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         Traps are tricks you can play on your opponent to win material or outright win the game. They rely on your
         opponent making a mistake or being tricked by you into capturing a piece that seems free but ends up costing
         them dearly. Alternatively they can be tricks to trap an opponents piece where it cannot escape and will
@@ -113,7 +113,7 @@ export default function Help() {
       <h2>
         <i>&quot;Is there a way to share openings with a link?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         Yes there is! When on the{' '}
         <Link href="/learn">
           <a className="link">Learn page</a>
@@ -125,7 +125,7 @@ export default function Help() {
       <h2>
         <i>&quot;Can I download the PGNs of the openings for use with other analysis software?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         Yes you can! When on the{' '}
         <Link href="/learn">
           <a className="link">Learn page</a>
@@ -137,14 +137,14 @@ export default function Help() {
       <h2>
         <i>&quot;Why the UK domain and branding?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         ChessOpenings.com was unfortunately taken, but we&apos;d love to see users from everywhere around the world.
       </p>
 
       <h2>
         <i>&quot;What other features are planned to come to the site?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         There is a{' '}
         <a
           className="link"
@@ -160,7 +160,7 @@ export default function Help() {
       <h2>
         <i>&quot;Where can I play chess games against an opponent?&quot;</i>
       </h2>
-      <p>
+      <p style={{ textAlign: 'justify' }}>
         There are lots of great sites out there that provide great platforms to play chess against human and AI
         opponents. Give some of these a try:
         <ul>

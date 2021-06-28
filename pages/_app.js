@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import CookieWarning from '../components/utils/CookieWarning';
 import Navbar from '../components/navbar/Navbar';
+import { analytics } from '../firebase';
 import { StateProvider } from '../components/Store';
 
 import '../styles/globals.css';
@@ -12,8 +13,8 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const showWarning = window.localStorage.getItem('cookieWarning');
-      console.log(showWarning);
       setShowCookieWarning(showWarning === null);
+      analytics();
     }
   }, []);
 
