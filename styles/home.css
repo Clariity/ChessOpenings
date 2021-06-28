@@ -23,7 +23,8 @@
 
 .home-card-image {
   border-radius: 25px;
-  height: 420px;
+  width: 100%;
+  max-width: 630px;
 }
 
 .home-card-content {

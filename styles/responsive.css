@@ -63,8 +63,6 @@
   }
   .home-card-image {
     max-height: 420px;
-    max-width: 95vw;
-    height: 100%;
     margin: auto;
     order: 0;
   }
