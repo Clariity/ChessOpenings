@@ -36,12 +36,35 @@ export default function ChessBoard({ path, isDebug }) {
   const [rightClickedSquares, setRightClickedSquares] = React.useState({});
   const [moveSquares, setMoveSquares] = React.useState({});
   const [optionSquares, setOptionSquares] = React.useState({});
+  const [combinedSquares, setCombinedSquares] = React.useState({});
+
+  const [moveFrom, setMoveFrom] = React.useState('');
 
   // initialise
   React.useEffect(() => {
     setGame(new Chess());
     setSounds();
   }, []);
+
+  // set combined squares
+  React.useEffect(() => {
+    const newCombinedSquares = {};
+    Object.keys(moveSquares).forEach((s) => {
+      if (optionSquares[s]) {
+        newCombinedSquares[s] = {
+          background:
+            game.get(s) && game.get(s).color !== game.get(moveFrom)?.color
+              ? 'radial-gradient(circle, rgba(255, 255, 0,.5) 85%, transparent 85%)'
+              : 'radial-gradient(circle, rgba(255, 255, 0,.5) 25%, transparent 25%)',
+          borderRadius: '50%'
+        };
+      }
+    });
+    // if opening is not complete
+    if (game?.history().length === 0 || opening?.value[game?.history().length] !== undefined) {
+      setCombinedSquares(newCombinedSquares);
+    }
+  }, [optionSquares, moveSquares]);
 
   // handle theme change
   React.useEffect(() => {
@@ -281,9 +304,12 @@ export default function ChessBoard({ path, isDebug }) {
         if (opening.value[game.history().length] === undefined) {
           setOpeningComplete(true);
           if (path !== '/train') playSound('end');
+          setCombinedSquares({});
+          return;
         }
 
         if (path === '/learn' || path === '/traps') {
+          // show next move for human to take
           const move = opening.value[game.history().length];
           setMoveSquares({
             [move?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
@@ -295,18 +321,7 @@ export default function ChessBoard({ path, isDebug }) {
     );
   }
 
-  function onDrop({ sourceSquare, targetSquare }) {
-    // no opening has been selected yet so prevent anything happening
-    if (!opening) return;
-
-    // make move if valid, otherwise do nothing and return
-    const move = game.move({
-      from: sourceSquare,
-      to: targetSquare,
-      promotion: 'q'
-    });
-    if (move === null) return;
-
+  function makeMove(sourceSquare, targetSquare) {
     const historyLength = game.history().length;
 
     // if still in opening and incorrect move made
@@ -348,8 +363,26 @@ export default function ChessBoard({ path, isDebug }) {
       makeComputerMove(opening.value[historyLength].from, opening.value[historyLength].to);
     } else {
       setOpeningComplete(true);
-      if (path !== '/train') playSound('end');
+      setCombinedSquares({});
+      if (path !== '/train' && historyLength === opening.value.length) playSound('end');
     }
+  }
+
+  function onDrop({ sourceSquare, targetSquare }) {
+    // no opening has been selected yet so prevent anything happening
+    if (!opening) return;
+    // if in click mode, don't allow drop
+    if (state.moveMethod.value === 'click') return;
+
+    // make move if valid, otherwise do nothing and return
+    const move = game.move({
+      from: sourceSquare,
+      to: targetSquare,
+      promotion: 'q'
+    });
+    if (move === null) return;
+
+    makeMove(sourceSquare, targetSquare);
   }
 
   // For recording moves
@@ -368,8 +401,41 @@ export default function ChessBoard({ path, isDebug }) {
     console.log(JSON.stringify(game.history({ verbose: true })));
   }
 
-  function onSquareClick() {
+  function onSquareClick(square) {
     setRightClickedSquares({});
+    // no opening has been selected yet so prevent anything happening
+    if (!opening) return;
+
+    function resetFirstMove(square) {
+      setMoveFrom(square);
+      getMoveOptions(square);
+    }
+
+    if (state.moveMethod.value === 'click') {
+      // from square
+      if (!moveFrom) {
+        resetFirstMove(square);
+        return;
+      }
+
+      // attempt to make move
+      const move = game.move({
+        from: moveFrom,
+        to: square,
+        promotion: 'q'
+      });
+
+      // if invalid, setMoveFrom and getMoveOptions
+      if (move === null) {
+        resetFirstMove(square);
+        return;
+      }
+
+      // if valid, check if allowed in opening and make it or clear options
+      makeMove(moveFrom, square);
+      setMoveFrom('');
+      setOptionSquares({});
+    }
   }
 
   function onSquareRightClick(square) {
@@ -384,11 +450,21 @@ export default function ChessBoard({ path, isDebug }) {
   }
 
   function onMouseOverSquare(square) {
+    if (state.moveMethod.value === 'drag') {
+      setMoveFrom(square);
+      getMoveOptions(square);
+    }
+  }
+
+  function getMoveOptions(square) {
     const moves = game.moves({
       square,
       verbose: true
     });
-    if (moves.length === 0) return;
+    if (moves.length === 0) {
+      if (state.moveMethod.value === 'click') setOptionSquares({});
+      return;
+    }
 
     const newSquares = {};
     moves.map((move) => {
@@ -409,7 +485,9 @@ export default function ChessBoard({ path, isDebug }) {
 
   // Only set squares to {} if not already set to {}
   function onMouseOutSquare() {
-    if (Object.keys(optionSquares).length !== 0) setOptionSquares({});
+    if (state.moveMethod.value === 'drag') {
+      if (Object.keys(optionSquares).length !== 0) setOptionSquares({});
+    }
   }
 
   function getSidePanel() {
@@ -511,9 +589,10 @@ export default function ChessBoard({ path, isDebug }) {
               boxShadow: 'inset 0 0 1px 6px rgba(255,255,255,0.75)'
             }}
             squareStyles={{
-              ...rightClickedSquares,
+              ...moveSquares,
               ...optionSquares,
-              ...moveSquares
+              ...rightClickedSquares,
+              ...combinedSquares
             }}
             onDrop={isDebug ? onDropDebug : onDrop}
             onSquareClick={onSquareClick}

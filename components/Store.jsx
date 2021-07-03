@@ -2,6 +2,7 @@ import React from 'react';
 
 const ActionType = {
   SET_THEME: 'SET_THEME',
+  SET_MOVE_METHOD: 'SET_MOVE_METHOD',
   SET_ANIMATIONS_ON: 'SET_ANIMATIONS_ON',
   SET_OPENINGS: 'SET_OPENINGS',
   SET_OPENINGS_ERROR: 'SET_OPENINGS_ERROR',
@@ -15,6 +16,10 @@ const initialState = {
   theme: (typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('theme'))) || {
     label: 'Lichess',
     value: 'lichess'
+  },
+  moveMethod: (typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('moveMethod'))) || {
+    label: 'Click',
+    value: 'click'
   },
   animationsOn: (typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('animationsOn'))) || {
     label: 'On',
@@ -39,6 +44,11 @@ const StateProvider = ({ children }) => {
           window.localStorage.setItem('theme', JSON.stringify(action.payload));
         }
         return { ...state, theme: action.payload };
+      case ActionType.SET_MOVE_METHOD:
+        if (typeof window !== 'undefined') {
+          window.localStorage.setItem('moveMethod', JSON.stringify(action.payload));
+        }
+        return { ...state, moveMethod: action.payload };
       case ActionType.SET_ANIMATIONS_ON:
         if (typeof window !== 'undefined') {
           window.localStorage.setItem('animationsOn', JSON.stringify(action.payload));

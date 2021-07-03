@@ -34,6 +34,17 @@ export const themeChoices = [
   }
 ];
 
+export const moveMethodChoices = [
+  {
+    label: 'Click',
+    value: 'click'
+  },
+  {
+    label: 'Drag and Drop',
+    value: 'drag'
+  }
+];
+
 export const animationChoices = [
   {
     label: 'On',
