@@ -193,6 +193,10 @@ export default function Help() {
           <li>If the storage popup has been dismissed</li>
         </ul>
       </p>
+      <p>
+        The site also uses Google Analytics to collect anonymous usage data (pretty much so I can see how many people
+        are using the site and what pages are used)
+      </p>
 
       <h2>
         <i>&quot;Who made this site?&quot;</i>

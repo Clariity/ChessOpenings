@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }) {
         {showCookieWarning && (
           <CookieWarning
             onConfirm={handleCookieWarning}
-            text="This site uses local storage to improve the user experience and provide some functionality. By continuing to use the site you agree that you are comfortable with this. Information about what is stored is listed on the help page."
+            text="This site uses local storage and cookies to improve the user experience and provide some functionality. By continuing to use the site you agree that you are comfortable with this. Information about what is stored is listed on the help page."
             buttonText="Got it"
             customButtonStyles={{ maxWidth: '300px', marginTop: '10px' }}
           />
