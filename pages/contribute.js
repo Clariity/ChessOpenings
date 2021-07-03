@@ -118,6 +118,10 @@ export default function Contribute() {
           using the tool. When you are returned here, the moves section will be filled out for you. Then complete the
           rest of the form and submit your contribution to be reviewed.
         </p>
+        <p>
+          The criteria for an opening is that it is equal for both Black and White. If you know an opening where you
+          gain an advantage when the opponent makes a mistake, submit it as a trap.
+        </p>
       </div>
 
       <Link href="/debug">
