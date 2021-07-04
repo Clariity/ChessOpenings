@@ -1,5 +1,6 @@
 .board-panel-container {
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
 
   margin-left: auto;

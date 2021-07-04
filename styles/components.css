@@ -8,8 +8,11 @@
   cursor: pointer;
   font-size: 30px;
   display: flex;
+  display: -webkit-flex;
   justify-content: center;
+  -webkit-justify-content: center;
   align-items: center;
+  -webkit-align-items: center;
   font-family: 'Lexend', sans-serif;
 }
 .button-component.quit {
@@ -66,14 +69,18 @@
   background-color: #2a2a2a;
   text-align: center;
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
   padding: 0px 20px;
 }
 
 .modal-header-box {
   width: 50px;
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
 }
 
 .modal-title {
@@ -88,6 +95,7 @@
   overflow-y: auto;
   overflow-wrap: break-word;
   display: flex;
+  display: -webkit-flex;
   flex-direction: column;
 }
 
@@ -122,5 +130,6 @@
   background-color: var(--secondary-bg);
   padding: 10px 20px;
   align-items: center;
+  -webkit-align-items: center;
   z-index: 5;
 }

@@ -64,22 +64,28 @@
 /* ##### Flex ##### */
 .flex-row {
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
 }
 
 .flex-column {
   display: flex;
+  display: -webkit-flex;
   flex-direction: column;
 }
 
 .flex-justify {
   display: flex;
+  display: -webkit-flex;
   justify-content: center;
+  -webkit-justify-content: center;
 }
 
 .flex-align {
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
 }
 
 /* ##### Hover ##### */

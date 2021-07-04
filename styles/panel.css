@@ -4,6 +4,7 @@
   height: calc(100vh - 80px - 20px);
 
   display: flex;
+  display: -webkit-flex;
   flex-direction: column;
 
   background-color: #2a2a2a;
@@ -42,6 +43,7 @@
 
 .panel-scroll-display {
   display: flex;
+  display: -webkit-flex;
   flex-direction: column;
   flex-grow: 1;
   /* min-height: 400px; */
@@ -64,6 +66,7 @@
 .panel-scroll-display-opening {
   padding: 5px 0px;
   display: flex;
+  display: -webkit-flex;
 }
 
 .panel-board-controls {
@@ -77,6 +80,7 @@
   margin: 5px;
   cursor: pointer;
   align-items: center;
+  -webkit-align-items: center;
 }
 
 .panel-board-control.disabled {
@@ -106,14 +110,18 @@
 
 .panel-summary-opening {
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
   flex-grow: 1;
 }
 
 .panel-summary-opening-link {
   border-radius: 10px;
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
 }
 .panel-summary-opening-link:hover {
   cursor: pointer;

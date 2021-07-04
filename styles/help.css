@@ -1,5 +1,6 @@
 .help-twitter {
   display: flex;
+  display: -webkit-flex;
   text-align: justify;
 }
 

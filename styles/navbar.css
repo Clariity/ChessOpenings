@@ -5,8 +5,10 @@
 
 .navbar-display {
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
   align-items: center;
+  -webkit-align-items: center;
 
   padding: 0px 10px;
   height: 80px;
@@ -18,6 +20,7 @@
 }
 .navbar-logo {
   display: flex;
+  display: -webkit-flex;
   cursor: pointer;
 }
 .navbar-logo-image {
@@ -27,7 +30,9 @@
   margin: 0px;
   padding-left: 10px;
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
   white-space: nowrap;
 }
 .navbar-logo-text-subtitle {
@@ -38,9 +43,12 @@
 /* ##### DISPLAY LINKS ##### */
 .navbar-display-links {
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
   justify-content: space-between;
+  -webkit-justify-content: space-between;
   align-items: center;
+  -webkit-align-items: center;
 
   width: 33.33%;
   max-width: 800px;
@@ -59,15 +67,20 @@
 /* ##### MENU LINKS ##### */
 .navbar-menu-links {
   display: flex;
+  display: -webkit-flex;
   flex-direction: column;
   align-items: center;
+  -webkit-align-items: center;
 }
 
 .navbar-menu-link {
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
   align-items: center;
+  -webkit-align-items: center;
   justify-content: center;
+  -webkit-justify-content: center;
 
   width: 100%;
   height: 80px;
@@ -94,6 +107,7 @@
 /* ##### SETTINGS ##### */
 .navbar-display-settings {
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
   width: 33.33%;
   justify-content: flex-end;

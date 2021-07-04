@@ -62,7 +62,6 @@
     flex-direction: column;
   }
   .home-card-image {
-    max-height: 420px;
     margin: auto;
     order: 0;
   }
@@ -91,11 +90,13 @@
 
   .main {
     align-items: unset !important;
+    -webkit-align-items: unset !important;
   }
 
   .board-panel-container {
     flex-direction: column;
     align-items: center;
+    -webkit-align-items: center;
   }
 
   .chessboard {

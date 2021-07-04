@@ -1,6 +1,7 @@
 .submission-card {
   cursor: pointer;
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
   background-color: var(--secondary-bg);
   transition: transform ease-in-out 0.1s;
@@ -17,6 +18,7 @@
 
 .submission-card-header {
   display: flex;
+  display: -webkit-flex;
   margin-right: auto;
 }
 
