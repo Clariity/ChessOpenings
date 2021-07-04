@@ -96,6 +96,7 @@
   color: white;
   cursor: pointer;
   margin: auto;
+  padding: 0px;
 }
 
 .panel-board-control-button.disabled {
