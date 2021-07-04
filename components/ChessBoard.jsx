@@ -581,7 +581,7 @@ export default function ChessBoard({ path, isDebug }) {
         {showBoard && (
           <Board
             id="board"
-            draggable={state.moveMethod.value === 'drag'}
+            draggable={isDebug || state.moveMethod.value === 'drag'}
             position={game ? game.fen() : start}
             orientation={boardOrientation}
             darkSquareStyle={state.theme.darkSquareStyle}
