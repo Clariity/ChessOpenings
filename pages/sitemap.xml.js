@@ -23,16 +23,22 @@ export const getServerSideProps = ({ res }) => {
         <priority>0.90</priority>
       </url>
       <url>
+        <loc>https://chessopenings.co.uk/traps</loc>
+        <lastmod>2021-07-03T15:03:42+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+      </url>
+      <url>
         <loc>https://chessopenings.co.uk/contribute</loc>
           <lastmod>2021-07-03T15:03:42+00:00</lastmod>
           <changefreq>monthly</changefreq>
-        <priority>0.85</priority>
+        <priority>0.80</priority>
       </url>
       <url>
         <loc>https://chessopenings.co.uk/help</loc>
           <lastmod>2021-07-03T15:03:42+00:00</lastmod>
           <changefreq>monthly</changefreq>
-        <priority>0.80</priority>
+        <priority>0.75</priority>
       </url>
     </urlset>
   `;

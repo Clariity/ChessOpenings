@@ -5,7 +5,7 @@ export default function Traps() {
   return (
     <>
       <SEO
-        description="Learn Chess Opening Traps, how to take advantage of them, and how to defend against them."
+        description="Learn tricky opening traps that may catch your opponent off guard if they don't know how to correctly respond. Make sure you don't get caught out by them either."
         title="traps"
         path="/traps"
       />

@@ -32,7 +32,11 @@ export default function Index() {
 
   return (
     <div className="flex-column" style={{ maxWidth: '1044px' }}>
-      <SEO description="Learn and Train Chess Openings for free" title="home" path="/" />
+      <SEO
+        description="The free, community driven Chess site for learning and training Chess openings. Use interactive boards to practise moving the pieces in Chess openings and test your knowledge once you have learned more openings by trying the openings with no visual aids. Learn common Chess traps and tactics as well as contributing your own knowledge for others to learn from what you share."
+        title="home"
+        path="/"
+      />
       <h3 className="home-subtitle-text home-message" style={{ textAlign: 'center' }}>
         Openings needed. If you know any that aren&apos;t on the site yet,{' '}
         <Link href="/contribute">
