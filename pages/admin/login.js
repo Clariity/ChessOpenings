@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Router from 'next/router';
-
+import Cookies from 'js-cookie';
 import ReCAPTCHA from 'react-google-recaptcha';
 
+import firebase from '../../firebaseConfig';
 import Button from '../../components/utils/Button';
 import Input from '../../components/utils/Input';
 import SEO from '../../components/SEO';
@@ -10,19 +11,39 @@ import SEO from '../../components/SEO';
 export default function Login() {
   const [password, setPassword] = useState('');
   const [captchaToken, setCaptchaToken] = useState();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.grecaptcha?.reset();
-      setPassword('');
-    }
-  }, []);
-
+  // Attempt login, store token and push to submissions
   async function handleSubmit() {
-    Router.push({
-      pathname: '/admin/submissions',
-      query: { pw: password, ct: captchaToken }
-    });
+    setLoading(true);
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          Authorization: captchaToken
+        },
+        body: JSON.stringify({ pw: password })
+      });
+      const responseJSON = await response.json();
+      if (response.status === 200) {
+        const token = responseJSON.token;
+        if (token) {
+          Cookies.set('adminToken', JSON.stringify(token), { expires: 1 });
+        }
+        Router.push('/admin/submissions');
+      } else {
+        setError(responseJSON.error);
+        setLoading(false);
+        setCaptchaToken(null);
+        window.grecaptcha?.reset();
+      }
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+      setCaptchaToken(null);
+      window.grecaptcha?.reset();
+    }
   }
 
   return (
@@ -44,6 +65,8 @@ export default function Login() {
         </p>
       </div>
 
+      {error && <p>{error}</p>}
+
       <Input
         label="Password"
         type="password"
@@ -56,10 +79,41 @@ export default function Login() {
 
       <Button
         onClick={handleSubmit}
-        text="Submit"
+        text={loading ? 'Loading' : 'Submit'}
         customStyles={{ marginBottom: '40px', marginTop: '20px' }}
         disabled={!password || !captchaToken}
       />
     </div>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const adminToken = ctx.req.cookies?.adminToken;
+
+  // allow session if token provided and update stored tokens
+  if (adminToken) {
+    // get all tokens from firebase
+    const querySnapshot = await firebase.collection('tokens').get();
+    // for each token, if they have expired delete them
+    const validTokens = [];
+    querySnapshot.forEach((doc) => {
+      if (doc.data().expires < Date.now()) {
+        firebase.collection('tokens').doc(doc.id).delete();
+      } else validTokens.push(doc.id);
+    });
+    // check if adminToken remains, if so redirect to submissions
+    if (validTokens.includes(JSON.parse(adminToken).id)) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/admin/submissions'
+        }
+      };
+    }
+  }
+
+  // if no token or invalid token, don't redirect
+  return {
+    props: {}
+  };
 }

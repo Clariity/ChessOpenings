@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 
-import Cookies from 'js-cookie';
-
 import firebase from '../../../firebaseConfig';
 import SEO from '../../../components/SEO';
 import SubmissionCard from '../../../components/submissions/SubmissionCard';
 import { ActionType, useStoreContext } from '../../../components/Store';
 
-export default function Submissions({ token }) {
+export default function Submissions() {
   const { dispatch, state } = useStoreContext();
 
   useEffect(async () => {
@@ -28,10 +26,6 @@ export default function Submissions({ token }) {
     }
   }, [state.submissions]);
 
-  if (token) {
-    Cookies.set('adminToken', JSON.stringify(token), { expires: 1 });
-  }
-
   return (
     <div className="flex-column" style={{ maxWidth: '1044px', width: '100%' }}>
       <SEO description="Admin Submissions" title="submissions" path="/admin/submissions" />
@@ -45,16 +39,7 @@ export default function Submissions({ token }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const { pw, ct } = ctx.req.__NEXT_INIT_QUERY;
   const adminToken = ctx.req.cookies?.adminToken;
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-  const ip = ctx.req.headers['x-forwarded-for'] || ctx.req.connection.remoteAddress;
-  const redirect = {
-    redirect: {
-      permanent: false,
-      destination: '/admin/login'
-    }
-  };
 
   // allow session if token provided and update stored tokens
   if (adminToken) {
@@ -75,47 +60,11 @@ export async function getServerSideProps(ctx) {
     }
   }
 
-  // verify captcha
-  if (!ct) {
-    return redirect;
-  }
-  let captchaVerified = false;
-  try {
-    const verified = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-      },
-      body: `secret=${secretKey}&response=${ct}&remoteip=${ip}`
-    });
-    const verifiedJSON = await verified.json();
-    captchaVerified = verifiedJSON.success;
-  } catch (error) {
-    return redirect;
-  }
-
-  // verify password and create token
-  if (pw === process.env.ADMIN_SECRET_KEY && captchaVerified) {
-    const date = new Date();
-    const expires = date.setDate(date.getDate() + 1);
-    try {
-      const docRef = await firebase.collection('tokens').add({
-        expires
-      });
-      return {
-        props: {
-          token: {
-            id: docRef.id,
-            expires
-          }
-        }
-      };
-    } catch (error) {
-      console.log(error);
-      return redirect;
+  // if no token or invalid token, redirect to login
+  return {
+    redirect: {
+      permanent: false,
+      destination: '/admin/login'
     }
-  }
-
-  return redirect;
+  };
 }
