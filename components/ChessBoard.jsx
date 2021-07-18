@@ -289,17 +289,16 @@ export default function ChessBoard({ path, isDebug }) {
   }
 
   function makeComputerMove(from, to) {
-    safeGameMutate((game) => {
-      game.move({ from, to });
-    });
-    setMoveSquares({
-      [from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-      [to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
-    });
     // if can highlight next move, do that instead on learn/trap pages
     setTimeout(
       () => {
-        playSound();
+        safeGameMutate((game) => {
+          game.move({ from, to });
+        });
+        setMoveSquares({
+          [from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+          [to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+        });
         setNavDisabled(false);
         if (opening.value[game.history().length] === undefined) {
           setOpeningComplete(true);
@@ -317,7 +316,14 @@ export default function ChessBoard({ path, isDebug }) {
           });
         }
       },
-      state.animationsOn.value ? 300 : 200
+      state.animationsOn.value ? 200 : 0
+    );
+    // play move sound separately due to timing issues
+    setTimeout(
+      () => {
+        playSound();
+      },
+      state.animationsOn.value ? 500 : 200
     );
   }
 
@@ -433,6 +439,40 @@ export default function ChessBoard({ path, isDebug }) {
 
       // if valid, check if allowed in opening and make it or clear options
       makeMove(moveFrom, square);
+      setMoveFrom('');
+      setOptionSquares({});
+    }
+  }
+
+  function onSquareClickDebug(square) {
+    setRightClickedSquares({});
+
+    function resetFirstMove(square) {
+      setMoveFrom(square);
+      getMoveOptions(square);
+    }
+
+    if (state.moveMethod.value === 'click') {
+      // from square
+      if (!moveFrom) {
+        resetFirstMove(square);
+        return;
+      }
+
+      // attempt to make move
+      const move = game.move({
+        from: moveFrom,
+        to: square,
+        promotion: 'q'
+      });
+
+      // if invalid, setMoveFrom and getMoveOptions
+      if (move === null) {
+        resetFirstMove(square);
+        return;
+      }
+
+      console.log(JSON.stringify(game.history({ verbose: true })));
       setMoveFrom('');
       setOptionSquares({});
     }
@@ -581,7 +621,7 @@ export default function ChessBoard({ path, isDebug }) {
         {showBoard && (
           <Board
             id="board"
-            draggable={isDebug || state.moveMethod.value === 'drag'}
+            draggable={state.moveMethod.value === 'drag'}
             position={game ? game.fen() : start}
             orientation={boardOrientation}
             darkSquareStyle={state.theme.darkSquareStyle}
@@ -596,7 +636,7 @@ export default function ChessBoard({ path, isDebug }) {
               ...combinedSquares
             }}
             onDrop={isDebug ? onDropDebug : onDrop}
-            onSquareClick={onSquareClick}
+            onSquareClick={isDebug ? onSquareClickDebug : onSquareClick}
             onSquareRightClick={onSquareRightClick}
             onMouseOverSquare={onMouseOverSquare}
             onMouseOutSquare={onMouseOutSquare}
