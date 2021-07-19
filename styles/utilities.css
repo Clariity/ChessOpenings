@@ -1,3 +1,8 @@
+/* ### Container ### */
+.container {
+  max-width: 1044px;
+}
+
 /* ##### Padding ##### */
 .pad-5 {
   padding: 5px;

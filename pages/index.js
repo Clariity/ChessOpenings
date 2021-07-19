@@ -31,13 +31,13 @@ export default function Index() {
   }
 
   return (
-    <div className="flex-column" style={{ maxWidth: '1044px' }}>
+    <div className="flex-column container">
       <SEO
-        description="The free, community driven Chess site for learning and training Chess openings. Use interactive boards to practise moving the pieces in Chess openings and test your knowledge once you have learned more openings by trying the openings with no visual aids. Learn common Chess traps and tactics as well as contributing your own knowledge for others to learn from what you share."
+        description="The free, community driven Chess site for learning and training Chess openings. Use interactive boards to practise Chess openings and test your knowledge by trying the openings with no visual aids. Learn common Chess traps and tactics and contribute your own repertoires for others to learn from."
         title="home"
         path="/"
       />
-      <h3 className="home-subtitle-text home-message" style={{ textAlign: 'center' }}>
+      <h3 className="home-subtitle-text home-message text-align-center">
         Openings needed. If you know any that aren&apos;t on the site yet,{' '}
         <Link href="/contribute">
           <a className="link">please add them here.</a>
@@ -54,7 +54,7 @@ export default function Index() {
         />
         <h1 className="home-title-text">ChessOpenings.co.uk</h1>
       </div>
-      <div style={{ textAlign: 'center' }}>
+      <div className="text-align-center">
         <h2 className="home-subtitle-text">Learn and Train Chess Openings, completely for FREE</h2>
         <p>
           Want to support the site?{' '}
@@ -80,7 +80,7 @@ export default function Index() {
           <div className="home-card-content">
             <div className="home-card-content-title">
               <i className="las la-graduation-cap home-card-icon" />
-              <h1 style={{ paddingLeft: '10px' }}>Learn</h1>
+              <h3 className="home-card-header pad-10-l">Learn</h3>
             </div>
             <p>Learn variations for Chess openings and be prepared for whatever your opponent may throw at you.</p>
             <p>Learn a completely new Chess opening today and try it out when you next play some games.</p>
@@ -98,7 +98,7 @@ export default function Index() {
           <div className="home-card-content">
             <div className="home-card-content-title">
               <i className="las la-dumbbell home-card-icon" />
-              <h1 style={{ paddingLeft: '10px' }}>Train</h1>
+              <h3 className="home-card-header pad-10-l">Train</h3>
             </div>
             <p>Test your Chess openings knowledge and train to remember the moves to make for different variations.</p>
             <p>
@@ -106,7 +106,7 @@ export default function Index() {
               the forgotten moves.
             </p>
           </div>
-          <img className="home-card-image" src="/media/images/train.png" alt="Learn Chess Board" />
+          <img className="home-card-image" src="/media/images/train.png" alt="Train Chess Board" />
         </div>
       </Link>
 
@@ -117,11 +117,11 @@ export default function Index() {
           onMouseMove={(e) => handleCardTilt(e, trapsCard)}
           onMouseOut={() => handleMouseOut(trapsCard)}
         >
-          <img className="home-card-image flipped" src="/media/images/traps.png" alt="Learn Chess Board" />
+          <img className="home-card-image flipped" src="/media/images/traps.png" alt="Traps Chess Board" />
           <div className="home-card-content">
             <div className="home-card-content-title">
               <i className="las la-compress-arrows-alt home-card-icon" />
-              <h1 style={{ paddingLeft: '10px' }}>Traps</h1>
+              <h3 className="home-card-header pad-10-l">Traps</h3>
             </div>
             <p>
               Learn tricky opening traps that may catch your opponent off guard if they don&apos;t know how to correctly
@@ -142,7 +142,7 @@ export default function Index() {
           <div className="home-card-content special">
             <div className="home-card-content-title">
               <i className="las la-plus home-card-icon" />
-              <h1 style={{ paddingLeft: '10px' }}>Contribute</h1>
+              <h3 className="home-card-header pad-10-l">Contribute</h3>
             </div>
             <p>
               Become a part of ChessOpenings history. Contribute your opening knowledge and help other ChessOpenings
@@ -153,7 +153,7 @@ export default function Index() {
               Once reviewed by a site admin it will then be added to the list of openings if approved.
             </p>
           </div>
-          <img className="home-card-image" src="/media/images/contribute.png" alt="Learn Chess Board" />
+          <img className="home-card-image" src="/media/images/contribute.png" alt="Contribute Form" />
         </div>
       </Link>
     </div>

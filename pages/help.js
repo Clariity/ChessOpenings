@@ -5,7 +5,11 @@ import SEO from '../components/SEO';
 export default function Help() {
   return (
     <div className="flex-column" style={{ maxWidth: '1044px' }}>
-      <SEO description="ChessOpenings Help and Contact" title="help" path="/help" />
+      <SEO
+        description="ChessOpenings Help and Contact. Frequently asked questions and social links for ChessOpenings.co.uk"
+        title="help"
+        path="/help"
+      />
       <h1 className="page-title">Help and Contact</h1>
 
       <h1>Contact</h1>

@@ -92,7 +92,7 @@ export default function Contribute() {
   return (
     <div className="flex-column" style={{ maxWidth: '1044px' }}>
       <SEO
-        description="Become a part of ChessOpenings history. Contribute your opening knowledge and help other ChessOpenings users to learn valuable openings. With a move recording tool and an easy to fill out form, it's very simple to submit your openings. Once reviewed by a site admin it will then be added to the list of openings if approved."
+        description="Contribute your opening knowledge and help other ChessOpenings users to learn valuable openings. With a move recording tool and an easy to fill out form, it's very simple to submit your openings. Once reviewed by a site admin it will then be added to the list of openings if approved."
         title="contribute"
         path="/contribute"
       />

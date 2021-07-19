@@ -32,6 +32,10 @@
   max-height: 420px;
 }
 
+.home-card-header {
+  font-size: 2rem;
+}
+
 .home-card-content {
   flex-grow: 1;
   padding: 10px 20px;
