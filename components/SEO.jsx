@@ -35,7 +35,6 @@ export default function SEO({ description, title, image, path }) {
       <meta name="msapplication-TileColor" content="#000000" />
       <meta name="theme-color" content="#000000" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="description" content="ChessOpenings.co.uk" />
       <meta charSet="utf-8" />
 
       <link rel="icon" href="/favicon.ico" />
