@@ -346,14 +346,17 @@ export default function ChessBoard({ path, isDebug }) {
         [sourceSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' },
         [targetSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' }
       });
-      setTimeout(
-        () =>
-          setMoveSquares({
-            [opening.value[historyLength - 1].from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-            [opening.value[historyLength - 1].to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
-          }),
-        1000
-      );
+      // after 1 second, show the prior move made
+      if (path === '/learn' || path === '/traps') {
+        setTimeout(
+          () =>
+            setMoveSquares({
+              [opening.value[historyLength - 1].from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+              [opening.value[historyLength - 1].to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+            }),
+          1000
+        );
+      }
       return;
     }
 
