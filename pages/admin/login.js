@@ -26,7 +26,7 @@ export default function Login() {
         body: JSON.stringify({ pw: password })
       });
       const responseJSON = await response.json();
-      if (response.status === 200) {
+      if (response?.status === 200) {
         const token = responseJSON.token;
         if (token) {
           Cookies.set('adminToken', JSON.stringify(token), { expires: 1 });
@@ -34,12 +34,14 @@ export default function Login() {
         Router.push('/admin/submissions');
       } else {
         setError(responseJSON.error);
+        setPassword('');
         setLoading(false);
         setCaptchaToken(null);
         window.grecaptcha?.reset();
       }
     } catch (error) {
       setError(error);
+      setPassword('');
       setLoading(false);
       setCaptchaToken(null);
       window.grecaptcha?.reset();

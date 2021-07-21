@@ -55,7 +55,7 @@ export default function Panel({
     if (!state.openings) {
       const response = await fetch('/api/openings');
       const openings = await response.json();
-      if (response.status === 200) {
+      if (response?.status === 200) {
         dispatch({
           type: ActionType.SET_OPENINGS,
           payload: JSON.parse(openings.body)

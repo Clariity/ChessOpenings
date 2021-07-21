@@ -65,7 +65,7 @@ export default function Contribute() {
       });
       const responseJSON = await response.json();
 
-      if (response.status === 200) {
+      if (response?.status === 200) {
         setResult({
           ...responseJSON,
           id
@@ -200,7 +200,7 @@ export default function Contribute() {
         placeholder="e.g. Evans Gambit, Pierce Defense"
         value={variation}
         onChange={(e) => setVariation(e.target.value)}
-        maxLength={50}
+        maxLength={75}
       />
 
       <Input

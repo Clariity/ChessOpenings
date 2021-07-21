@@ -12,7 +12,7 @@ export default function Submissions() {
     if (!state.submissions) {
       const response = await fetch('/api/submissions');
       const submissions = await response.json();
-      if (response.status === 200) {
+      if (response?.status === 200) {
         dispatch({
           type: ActionType.SET_SUBMISSIONS,
           payload: JSON.parse(submissions.body)

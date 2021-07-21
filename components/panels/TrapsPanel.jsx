@@ -38,7 +38,7 @@ export default function TrapsPanel({
     if (!state.traps) {
       const response = await fetch('/api/traps');
       const traps = await response.json();
-      if (response.status === 200) {
+      if (response?.status === 200) {
         dispatch({
           type: ActionType.SET_TRAPS,
           payload: JSON.parse(traps.body)

@@ -33,7 +33,7 @@ export default function SubmissionPanel({
       try {
         const response = await fetch(`/api/submission/${id}`);
         const submission = await response.json();
-        if (response.status === 200) {
+        if (response?.status === 200) {
           if (!opening) setOpening(JSON.parse(submission.body).data);
           setSubmission(JSON.parse(submission.body));
         } else setSubmissionNotFound(true);

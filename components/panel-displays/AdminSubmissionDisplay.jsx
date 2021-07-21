@@ -26,7 +26,7 @@ export default function AdminSubmissionDisplay({ history, opening, submission })
         body: JSON.stringify(comment)
       });
       const responseJSON = await response.json();
-      if (response.status !== 200) {
+      if (response?.status !== 200) {
         setResult(responseJSON);
         return;
       }
@@ -43,10 +43,14 @@ export default function AdminSubmissionDisplay({ history, opening, submission })
     try {
       const response = await fetch(`/api/${submission.type.toLowerCase()}`, {
         method: 'POST',
-        body: JSON.stringify(submission.data)
+        body: JSON.stringify({
+          ...submission.data,
+          description,
+          label
+        })
       });
       const responseJSON = await response.json();
-      if (response.status !== 200) {
+      if (response?.status !== 200) {
         setResult(responseJSON);
         return;
       }
@@ -69,6 +73,12 @@ export default function AdminSubmissionDisplay({ history, opening, submission })
     try {
       const newSubmission = submission;
       delete newSubmission.timestamp;
+      newSubmission.data = {
+        ...submission.data,
+        description,
+        label
+      };
+
       const response = await fetch(`/api/submission/${submission.id}`, {
         method: 'PUT',
         body: JSON.stringify({
@@ -77,7 +87,7 @@ export default function AdminSubmissionDisplay({ history, opening, submission })
         })
       });
       const responseJSON = await response.json();
-      if (response.status !== 200) {
+      if (response?.status !== 200) {
         setResult(responseJSON);
         return;
       }
@@ -92,7 +102,7 @@ export default function AdminSubmissionDisplay({ history, opening, submission })
     try {
       const response = await fetch('/api/submissions');
       const submissions = await response.json();
-      if (response.status === 200) {
+      if (response?.status === 200) {
         dispatch({
           type: ActionType.SET_SUBMISSIONS,
           payload: JSON.parse(submissions.body)
