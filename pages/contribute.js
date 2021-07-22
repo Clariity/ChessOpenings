@@ -116,16 +116,25 @@ export default function Contribute() {
           </a>
         </p>
 
-        <h1>Submission Form</h1>
+        <h2>Submission Form</h2>
         <p>
           Adding content has been made easy with the use of the debug tool. Simply make the moves you wish to submit
           using the tool. When you are returned here, the moves section will be filled out for you. Then complete the
           rest of the form and submit your contribution to be reviewed.
         </p>
-        <p>
-          The criteria for an opening is that it is equal for both Black and White. If you know an opening where you
-          gain an advantage when the opponent makes a mistake, submit it as a trap.
-        </p>
+        <h2>Submission Criteria</h2>
+        <p>The following criteria must be met for an opening to be accepted:</p>
+        <ol>
+          <li>
+            The opening must be equal for both Black and White. If you know an opening where you gain an advantage when
+            the opponent makes a mistake, submit it as a trap.
+          </li>
+          <br />
+          <li>
+            The opening should be around 7-10 moves deep at least. There have been a lot of submissions that are great
+            openings but were unfortunately too short.
+          </li>
+        </ol>
       </div>
 
       <Link href="/debug">
