@@ -51,11 +51,46 @@ export default async (req, res) => {
           ...JSON.parse(req.body),
           timestamp: admin.firestore.FieldValue.serverTimestamp()
         });
+    } catch (error) {
+      res.statusCode = 500;
+      res.json({ error: `Internal Server Error: Error updating Firestore. ${error.message}` });
+      return res;
+    }
+
+    try {
+      const discordURL = process.env.DISCORD_WEBHOOK_URL;
+      await fetch(discordURL, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: 'Submissions Bot',
+          avatar_url: 'https://chessopenings.co.uk/media/images/logo.png',
+          content: `${JSON.parse(req.body).contributor} submitted an opening/trap`,
+          embeds: [
+            {
+              title: 'Chess Openings Submission',
+              thumbnail: {
+                url: 'https://chessopenings.co.uk/media/images/seo.png'
+              },
+              url: `https://chessopenings.co.uk/submission/${JSON.parse(req.body).id}`,
+              fields: [
+                {
+                  name: 'Opening Name',
+                  value: JSON.parse(req.body).data.label,
+                  inline: true
+                }
+              ]
+            }
+          ]
+        })
+      });
       statusCode = 200;
       responseBody = { title: 'Success' };
     } catch (error) {
       statusCode = 500;
-      responseBody = { error: `Internal Server Error: Error updating Firestore. ${error.message}` };
+      responseBody = { error: `Internal Server Error: Error pinging Discord. ${error}` };
     }
   } else {
     statusCode = 401;
