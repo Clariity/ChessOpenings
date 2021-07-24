@@ -57,6 +57,10 @@
   text-align: center;
 }
 
+.text-align-left {
+  text-align: left;
+}
+
 .font-size-20 {
   font-size: 20px;
 }

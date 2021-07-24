@@ -17,6 +17,21 @@ export default function ResultModal({ setShowResultModal, result }) {
             style={{ textAlign: 'center' }}
             href={`/submission/${result.id}`}
           >{`https://chessopenings.co.uk/submission/${result.id}`}</a>
+          <div className="help-social">
+            <p className="text-align-left">
+              Keep track of your submissions easier and see Admin comments by joining the ChessOpenings Discord Server.
+              Click on the Discord logo to join.
+            </p>
+            <a
+              className="flex-column flex-align flex-justify help-social-link"
+              href="https://discord.gg/xKYtamwV8p"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img className="twitter" src="/media/images/discord.png" alt="Discord" />
+              ChessOpenings Discord Server
+            </a>
+          </div>
           <div style={{ marginTop: 'auto' }}>
             <Button
               onClick={() => setShowResultModal(false)}

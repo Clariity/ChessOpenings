@@ -1,12 +1,16 @@
-.help-twitter {
+.help-social {
   display: flex;
   display: -webkit-flex;
+  align-items: center;
   text-align: justify;
+  margin-bottom: 40px;
 }
 
-.help-twitter-link {
+.help-social-link {
   cursor: pointer;
   margin-left: 20px;
+  text-align: center;
+  min-width: 155px;
 }
 
 .twitter {

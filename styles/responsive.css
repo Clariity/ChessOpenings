@@ -20,8 +20,11 @@
     margin-bottom: 10px !important;
   }
 
-  .help-twitter {
+  .help-social {
     flex-direction: column;
+  }
+  .help-social-link {
+    margin-left: unset;
   }
 }
 

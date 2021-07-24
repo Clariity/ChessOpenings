@@ -40,6 +40,8 @@
 
 .modal-component {
   max-width: 800px;
+  max-height: 85vh;
+
   width: 90vw;
 
   position: fixed;
@@ -88,7 +90,7 @@
 }
 
 .modal-content {
-  min-height: 500px;
+  max-height: 70vh;
   padding: 20px;
   text-align: left;
   background-color: #383635;

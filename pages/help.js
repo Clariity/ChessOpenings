@@ -13,19 +13,35 @@ export default function Help() {
       <h1 className="page-title">Help and Contact</h1>
 
       <h1>Contact</h1>
-      <div className="help-twitter">
+      <div className="help-social">
         <p>
           Want to contact ChessOpenings for any reason at all? Suggestions, Feedback, Say Hello? Click the Twitter logo
           to message our Twitter account or Tweet us and we will get back to you. You can follow us too for any updates.
         </p>
         <a
-          className="flex-column flex-align flex-justify help-twitter-link"
+          className="flex-column flex-align flex-justify help-social-link"
           href="https://twitter.com/messages/compose?recipient_id=1403741572395638792"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img className="twitter" src="/media/images/twitter.png" alt="Twitter" />
           @ChessOpeningsUK
+        </a>
+      </div>
+      <div className="help-social">
+        <p>
+          Want to be kept even more up to date? Discuss features and openings with the admin? See all the new
+          submissions as they come in? Or just have a chat? Join the Discord Server by clicking the Discord logo and get
+          involved with the community.
+        </p>
+        <a
+          className="flex-column flex-align flex-justify help-social-link"
+          href="https://discord.gg/xKYtamwV8p"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img className="twitter" src="/media/images/discord.png" alt="Discord" />
+          ChessOpenings Discord Server
         </a>
       </div>
 
