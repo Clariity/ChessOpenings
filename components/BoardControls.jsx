@@ -31,7 +31,11 @@ export default function BoardControls({
         Flip
       </div>
       <div className={`panel-board-control flex-column hover-dim ${resetDisabled && 'disabled'}`}>
-        <button className={`material-icons panel-board-control-button ${resetDisabled && 'disabled'}`} onClick={reset}>
+        <button
+          className={`material-icons panel-board-control-button ${resetDisabled && 'disabled'}`}
+          disabled={resetDisabled}
+          onClick={reset}
+        >
           replay
         </button>
         Reset
