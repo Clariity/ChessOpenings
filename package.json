@@ -14,7 +14,7 @@
     "firebase": "^8.6.8",
     "firebase-admin": "^9.6.0",
     "js-cookie": "^2.2.1",
-    "next": "^10.2.3",
+    "next": "^11.1.0",
     "patch-package": "^6.2.2",
     "react": "17.0.1",
     "react-copy-to-clipboard": "^5.0.3",
