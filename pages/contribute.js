@@ -95,11 +95,11 @@ export default function Contribute() {
 
   return (
     <div className="flex-column" style={{ maxWidth: '1044px' }}>
-      <SEO description="Contribute to ChessOpenings.co.uk" title="contribute" path="/contribute" />
-      <h1 className="page-title">Contribute to ChessOpenings</h1>
+      <SEO description="Contribute to YourNan.co.uk" title="contribute" path="/contribute" />
+      <h1 className="page-title">Contribute to YourNan</h1>
       <div style={{ textAlign: 'justify' }}>
         <p>
-          As an open source project, ChessOpenings.co.uk relies on community contributions to add great content to the
+          As an open source project, YourNan.co.uk relies on community contributions to add great content to the
           site. If you know an opening/variation that has not been added yet, you can submit it below and it will be
           reviewed to be added to the site.
         </p>

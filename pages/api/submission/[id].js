@@ -7,7 +7,7 @@ export default async (req, res) => {
 
   if (
     req.headers.referer !== `http://localhost:3000/submission/${id}` &&
-    req.headers.referer !== `https://chessopenings.co.uk/submission/${id}`
+    req.headers.referer !== `https://YourNan.co.uk/submission/${id}`
   ) {
     res.statusCode = 401;
     res.json({ error: 'Unauthorized: Unauthorized host' });

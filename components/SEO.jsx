@@ -1,41 +1,41 @@
 import Head from 'next/head';
 
 export default function SEO({ description, title, image, path }) {
-  const url = path ? 'https://chessopenings.co.uk' + path : 'https://chessopenings.co.uk';
+  const url = path ? 'https://YourNan.co.uk' + path : 'https://YourNan.co.uk';
   const defaultDescription = 'Practise and Learn Chess Openings for Free.';
-  const defaultImageURL = 'https://chessopenings.co.uk/media/images/seo.png';
+  const defaultImageURL = 'https://YourNan.co.uk/media/images/seo.png';
 
   const metaDescription = description || defaultDescription;
   const metaImage = image || defaultImageURL;
 
   return (
     <Head>
-      <title> {title} • ChessOpenings</title>
+      <title> {title} • YourNan</title>
 
-      <meta name="title" content={`${title} • ChessOpenings.co.uk`} />
+      <meta name="title" content={`${title} • YourNan.co.uk`} />
       <meta name="description" content={metaDescription} />
 
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
-      <meta property="og:title" content={`${title} • ChessOpenings.co.uk`} />
+      <meta property="og:title" content={`${title} • YourNan.co.uk`} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:image" content={metaImage} />
 
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:creator" content="ChessOpenings.co.uk" />
-      <meta name="twitter:title" content={`${title} • ChessOpenings.co.uk`} />
+      <meta name="twitter:creator" content="YourNan.co.uk" />
+      <meta name="twitter:title" content={`${title} • YourNan.co.uk`} />
       <meta property="twitter:url" content={url} />
       <meta name="twitter:description" content={metaDescription} />
       <meta property="twitter:image" content={metaImage} />
 
-      <meta name="apple-mobile-web-app-title" content="ChessOpenings.co.uk" />
-      <meta name="application-name" content="ChessOpenings.co.uk" />
+      <meta name="apple-mobile-web-app-title" content="YourNan.co.uk" />
+      <meta name="application-name" content="YourNan.co.uk" />
       <meta name="msapplication-TileColor" content="#000000" />
       <meta name="theme-color" content="#000000" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="description" content="ChessOpenings.co.uk" />
+      <meta name="description" content="YourNan.co.uk" />
       <meta charSet="utf-8" />
 
       <link rel="icon" href="/favicon.ico" />

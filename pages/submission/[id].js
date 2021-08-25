@@ -4,7 +4,7 @@ import SEO from '../../components/SEO';
 export default function Submission() {
   return (
     <div>
-      <SEO description="Community Submission to ChessOpenings.co.uk" title="submission" path="/submission" />
+      <SEO description="Community Submission to YourNan.co.uk" title="submission" path="/submission" />
       <ChessBoard path="/submission" />
     </div>
   );

@@ -12,7 +12,7 @@ export default async (req, res) => {
 
   if (
     req.headers.referer !== 'http://localhost:3000/learn' &&
-    req.headers.referer !== 'https://chessopenings.co.uk/learn'
+    req.headers.referer !== 'https://YourNan.co.uk/learn'
   ) {
     res.statusCode = 401;
     res.json({ error: 'Unauthorized: Unauthorized host' });

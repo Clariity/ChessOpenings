@@ -36,7 +36,7 @@ export default function Navbar() {
                   width={window <= 550 ? 30 : 60}
                   height={window <= 550 ? 30 : 60}
                 />
-                <h1 className="navbar-logo-text">ChessOpenings • {getSubTitle()}</h1>
+                <h1 className="navbar-logo-text">YourNan • {getSubTitle()}</h1>
               </div>
             </Link>
           </div>

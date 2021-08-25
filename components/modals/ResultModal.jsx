@@ -22,7 +22,7 @@ export default function ResultModal({ showResultModal, setShowResultModal, resul
             It will now be reviewed by an admin and either accepted or rejected. Here is a permanent link to your
             submission so you can track its progress:
           </p>
-          <a href={`/submissions/${result.id}`}>{`https://chessopenings.co.uk/submissions/${result.id}`}</a>
+          <a href={`/submissions/${result.id}`}>{`https://YourNan.co.uk/submissions/${result.id}`}</a>
           <Button
             onClick={() => setShowResultModal(false)}
             text="Submit Another"
