@@ -74,7 +74,7 @@ export default async (req, res) => {
               thumbnail: {
                 url: 'https://chessopenings.co.uk/media/images/seo.png'
               },
-              url: `https://chessopenings.co.uk/submission/${JSON.parse(req.body).id}`,
+              url: `https://chessopenings.co.uk/submissions/${JSON.parse(req.body).id}`,
               fields: [
                 {
                   name: 'Opening Name',

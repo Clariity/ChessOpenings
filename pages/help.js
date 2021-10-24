@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import SEO from '../components/SEO';
+import { SEO } from '../components/utils/SEO';
 
 export default function Help() {
   return (

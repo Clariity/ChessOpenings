@@ -1,20 +1,20 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 import TrainSummaryDisplay from './TrainSummaryDisplay';
 import { useWindowSize } from '../../functions/hooks';
 
-export default function TrainDisplay({ openingsCompleted, opening, openingsFailed, selectedOpenings, started }) {
+export default function TrainDisplay({ openingsCompleted, opening, openingsFailed, selectedOpenings }) {
   const window = useWindowSize();
   const endReached = openingsCompleted.length || openingsFailed.length;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (window > 1599 && opening) {
       document.getElementById(`${opening.label}-panel`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else if (opening) {
       document.getElementById('panel-scroll-display').scrollBy({ top: 34, behavior: 'smooth', block: 'center' });
     }
-  }, [opening]);
+  }, [opening, window]);
 
   function getIcon(label) {
     if (openingsCompleted.includes(label)) return <i className="material-icons pad-5-r">done</i>;
@@ -24,15 +24,15 @@ export default function TrainDisplay({ openingsCompleted, opening, openingsFaile
 
   return (
     <>
-      {started ? (
+      {opening ? (
         selectedOpenings.map((o) => (
           <div
             key={o.label}
             id={`${o.label}-panel`}
             className={`
                 panel-scroll-display-opening
-                ${openingsCompleted.includes(o.label) && 'completed'} 
-                ${openingsFailed.includes(o.label) && 'failed'}
+                ${openingsCompleted.find((completed) => completed.label === o.label) && 'completed'} 
+                ${openingsFailed.find((failed) => failed.label === o.label) && 'failed'}
                 ${opening.label === o.label && 'current'}
               `}
           >

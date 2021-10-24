@@ -1,23 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import BoardControls from '../BoardControls';
-import DebugDisplay from '../panel-displays/DebugDisplay';
-import { start } from '../../data/consts';
+import DebugDisplay from '../displays/DebugDisplay';
+import { BoardControls } from './BoardControls';
+import { useChessboard } from '../../context/board-context';
 
-export default function DebugPanel({
-  boardOrientation,
-  game,
-  goBack,
-  goForward,
-  navDisabled,
-  redoStack,
-  reset,
-  setBoardOrientation
-}) {
+export function DebugSidePanel() {
   const router = useRouter();
-  const backDisabled = game?.fen() === start || game?.history().length < 2 || navDisabled;
-  const forwardDisabled = redoStack.length === 0 || navDisabled;
+  const { game } = useChessboard();
 
   function handleSubmit() {
     window.localStorage.setItem('moves', JSON.stringify(game?.history({ verbose: true })));
@@ -43,16 +33,7 @@ export default function DebugPanel({
           </button>
         </div>
       </div>
-      <BoardControls
-        backDisabled={backDisabled}
-        boardOrientation={boardOrientation}
-        forwardDisabled={forwardDisabled}
-        goBack={goBack}
-        goForward={goForward}
-        reset={reset}
-        resetDisabled={false}
-        setBoardOrientation={setBoardOrientation}
-      />
+      <BoardControls resetDisabled={false} />
     </div>
   );
 }

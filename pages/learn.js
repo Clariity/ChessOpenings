@@ -1,5 +1,7 @@
-import ChessBoard from '../components/ChessBoard';
-import SEO from '../components/SEO';
+import { Chessboard } from '../components/chessboard/Chessboard';
+import { ChessboardProvider } from '../context/board-context';
+import { LearnSidePanel } from '../components/sidepanels/LearnSidePanel';
+import { SEO } from '../components/utils/SEO';
 
 export default function Learn() {
   return (
@@ -9,7 +11,12 @@ export default function Learn() {
         title="learn"
         path="/learn"
       />
-      <ChessBoard path="/learn" />
+      <div className="board-panel-container">
+        <ChessboardProvider>
+          <Chessboard id="learnChessboard" />
+          <LearnSidePanel />
+        </ChessboardProvider>
+      </div>
     </>
   );
 }

@@ -1,12 +1,19 @@
-import ChessBoard from '../../../components/ChessBoard';
 import firebase from '../../../firebaseConfig';
-import SEO from '../../../components/SEO';
+import { Chessboard } from '../../../components/chessboard/Chessboard';
+import { ChessboardProvider } from '../../../context/board-context';
+import { SubmissionSidePanel } from '../../../components/sidepanels/SubmissionSidePanel';
+import { SEO } from '../../../components/utils/SEO';
 
 export default function Submission() {
   return (
     <div>
-      <SEO description="Community Submission to ChessOpenings.co.uk" title="submission" path="/submission" />
-      <ChessBoard path="/submission" />
+      <SEO description="Community Submission to ChessOpenings.co.uk" title="submission" path="/submissions" />
+      <div className="board-panel-container">
+        <ChessboardProvider>
+          <Chessboard id="adminSubmissionChessboard" />
+          <SubmissionSidePanel />
+        </ChessboardProvider>
+      </div>
     </div>
   );
 }

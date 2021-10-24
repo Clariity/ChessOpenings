@@ -4,10 +4,11 @@ import Router from 'next/router';
 import Badge from '../utils/Badge';
 import Button from '../utils/Button';
 import Input from '../utils/Input';
-import { ActionType, useStoreContext } from '../../components/Store';
+import { useData } from '../../context/data-context';
 
 export default function AdminSubmissionDisplay({ history, opening, submission }) {
-  const { dispatch } = useStoreContext();
+  const { setSubmissions, setLoadingError } = useData();
+
   const [label, setLabel] = useState(submission.data.label);
   const [description, setDescription] = useState(submission.data.description);
   const [contributor, setContributor] = useState(submission.contributor);
@@ -103,21 +104,12 @@ export default function AdminSubmissionDisplay({ history, opening, submission })
       const response = await fetch('/api/submissions');
       const submissions = await response.json();
       if (response?.status === 200) {
-        dispatch({
-          type: ActionType.SET_SUBMISSIONS,
-          payload: JSON.parse(submissions.body)
-        });
+        setSubmissions(JSON.parse(submissions.body));
       } else {
-        dispatch({
-          type: ActionType.SET_SUBMISSIONS_ERROR,
-          payload: JSON.parse(submissions.error)
-        });
+        setLoadingError(JSON.parse(submissions.error));
       }
     } catch (error) {
-      dispatch({
-        type: ActionType.SET_SUBMISSIONS_ERROR,
-        payload: JSON.parse(error)
-      });
+      setLoadingError(error);
     }
   }
 

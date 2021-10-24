@@ -92,11 +92,12 @@
 }
 .navbar-menu-link:hover,
 .navbar-menu-link-selected {
-  color: #779952;
+  color: var(--secondary-fg);
 }
 
 .navbar-menu-link-text {
   padding-left: 20px;
+  -webkit-text-stroke: 0px;
 }
 
 /* ##### MENU BUTTON ##### */

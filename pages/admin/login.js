@@ -6,7 +6,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import firebase from '../../firebaseConfig';
 import Button from '../../components/utils/Button';
 import Input from '../../components/utils/Input';
-import SEO from '../../components/SEO';
+import { SEO } from '../../components/utils/SEO';
 
 export default function Login() {
   const [password, setPassword] = useState('');

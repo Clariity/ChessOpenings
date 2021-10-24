@@ -18,45 +18,46 @@ export default async (req, res) => {
     const querySnapshot = await firebase.collection('openings').get();
     querySnapshot.forEach((doc) => openings.push(doc.data()));
 
-    const openingGroups = openings.reduce((accumalator, current) => {
+    const openingGroups = openings.reduce((acc, current) => {
       const groupLabel = current.label.split(':')[0];
-      const groupIndex = accumalator.findIndex((group) => group.label === groupLabel);
+      const groupIndex = acc.findIndex((group) => group.label === groupLabel);
       if (groupIndex > -1) {
-        accumalator[groupIndex].options.push(current);
+        acc[groupIndex].options.push(current);
       } else {
-        accumalator.push({
+        acc.push({
           label: groupLabel,
           options: [current]
         });
       }
-      return accumalator;
+      return acc;
     }, []);
 
-    const selectAllOptions = [
-      {
-        label: 'All Openings',
-        value: 'All'
-      }
-    ];
+    const selectAllOptions = [];
+    const sortedOpeningGroups = openingGroups
+      .map((g) => {
+        selectAllOptions.push({
+          label: `All ${g.label}`,
+          value: `${g.label}:`
+        });
+        return {
+          label: g.label,
+          options: g.options.sort((a, b) => (a.label < b.label ? -1 : 1))
+        };
+      })
+      .sort((a, b) => (a.label < b.label ? -1 : 1));
 
-    const sortedOpeningGroups = openingGroups.map((g) => {
-      selectAllOptions.push({
-        label: `All ${g.label}`,
-        value: `${g.label}:`
-      });
-      return {
-        label: g.label,
-        options: g.options.sort((a, b) => (a.label < b.label ? -1 : 1))
-      };
+    const sortedSelectAllOptions = selectAllOptions.sort((a, b) => (a.label < b.label ? -1 : 1));
+    sortedSelectAllOptions.unshift({
+      label: 'All Openings',
+      value: 'All'
     });
-
     sortedOpeningGroups.unshift({
       label: 'Select All',
-      options: selectAllOptions
+      options: sortedSelectAllOptions
     });
 
     statusCode = 200;
-    responseBody = { title: 'Success', body: JSON.stringify(sortedOpeningGroups) };
+    responseBody = { title: 'Success', body: sortedOpeningGroups };
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

@@ -1,50 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import AdminSubmissionDisplay from '../panel-displays/AdminSubmissionDisplay';
-import BoardControls from '../BoardControls';
-import SubmissionDisplay from '../panel-displays/SubmissionDisplay';
-import { start } from '../../data/consts';
-import { useStoreContext } from '../Store';
+import AdminSubmissionDisplay from '../displays/AdminSubmissionDisplay';
+import SubmissionDisplay from '../displays/SubmissionDisplay';
+import { BoardControls } from './BoardControls';
+import { useChessboard } from '../../context/board-context';
 
-export default function SubmissionPanel({
-  boardOrientation,
-  game,
-  goBack,
-  goForward,
-  navDisabled,
-  opening,
-  redoStack,
-  reset,
-  setBoardOrientation,
-  setOpening,
-  userColor
-}) {
-  const { state } = useStoreContext();
+export function SubmissionSidePanel() {
+  const { game, opening, setOpening } = useChessboard();
+  const {
+    pathname,
+    query: { id }
+  } = useRouter();
+
   const [submission, setSubmission] = useState();
   const [submissionNotFound, setSubmissionNotFound] = useState(false);
+  const isAdmin = pathname.includes('/admin/');
 
-  const router = useRouter();
-  const id = router.query.id;
-  const isAdmin = router.pathname.includes('/admin/');
-
-  useEffect(async () => {
-    if (id) {
+  useEffect(() => {
+    async function fetchSubmission() {
       try {
         const response = await fetch(`/api/submission/${id}`);
         const submission = await response.json();
         if (response?.status === 200) {
-          if (!opening) setOpening(JSON.parse(submission.body).data);
-          setSubmission(JSON.parse(submission.body));
+          setOpening(submission.body.data);
+          setSubmission(submission.body);
         } else setSubmissionNotFound(true);
       } catch (error) {
         setSubmissionNotFound(true);
       }
     }
-  }, [id, state.submissions]);
-
-  const backDisabled = game?.fen() === start || (game?.history().length === 1 && userColor === 'black') || navDisabled;
-  const forwardDisabled = redoStack.length === 0 || navDisabled;
+    if (id) fetchSubmission();
+  }, [id, setOpening]);
 
   return (
     <div className="panel">
@@ -74,16 +61,7 @@ export default function SubmissionPanel({
       ) : (
         'Loading'
       )}
-      <BoardControls
-        backDisabled={backDisabled}
-        boardOrientation={boardOrientation}
-        forwardDisabled={forwardDisabled}
-        goBack={goBack}
-        goForward={goForward}
-        reset={reset}
-        resetDisabled={true}
-        setBoardOrientation={setBoardOrientation}
-      />
+      <BoardControls resetDisabled={false} />
     </div>
   );
 }

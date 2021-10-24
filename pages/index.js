@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import SEO from '../components/SEO';
+import { SEO } from '../components/utils/SEO';
 
 export default function Index() {
   return (

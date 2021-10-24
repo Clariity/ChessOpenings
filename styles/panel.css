@@ -24,7 +24,7 @@
 .panel-body {
   padding: 20px;
   flex-grow: 1;
-  max-height: 1080px;
+  /* max-height: 1080px; */
   min-height: 450px;
 
   overflow-y: auto;
@@ -73,10 +73,10 @@
   padding: 20px;
   text-align: center;
   background-color: #0f0f0f;
+  justify-content: space-around;
 }
 
 .panel-board-control {
-  width: 25%;
   margin: 5px;
   cursor: pointer;
   align-items: center;
@@ -95,7 +95,7 @@
   border: none;
   color: white;
   cursor: pointer;
-  margin: auto;
+  margin: 0px 10px;
   padding: 0px;
 }
 

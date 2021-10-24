@@ -32,8 +32,20 @@ export default async (req, res) => {
       return accumalator;
     }, []);
 
+    const sortedTrapGroups = trapGroups
+      .map((g) => {
+        return {
+          label: g.label,
+          options: g.options.sort((a, b) => (a.label < b.label ? -1 : 1))
+        };
+      })
+      .sort((a, b) => (a.label < b.label ? -1 : 1));
+
     statusCode = 200;
-    responseBody = { title: 'Success', body: JSON.stringify(trapGroups.sort((a, b) => (a.label < b.label ? -1 : 1))) };
+    responseBody = {
+      title: 'Success',
+      body: sortedTrapGroups
+    };
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

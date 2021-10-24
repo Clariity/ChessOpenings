@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import CookieWarning from '../components/utils/CookieWarning';
 import Navbar from '../components/navbar/Navbar';
 import { analytics } from '../firebase';
-import { StateProvider } from '../components/Store';
+import { DataProvider } from '../context/data-context';
+import { SettingsProvider } from '../context/settings-context';
 
 import '../styles/globals.css';
 
@@ -24,11 +25,13 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <StateProvider>
+    <SettingsProvider>
       <div className="app">
         <Navbar />
         <div className="main">
-          <Component {...pageProps} />
+          <DataProvider>
+            <Component {...pageProps} />
+          </DataProvider>
         </div>
         {showCookieWarning && (
           <CookieWarning
@@ -39,7 +42,7 @@ function MyApp({ Component, pageProps }) {
           />
         )}
       </div>
-    </StateProvider>
+    </SettingsProvider>
   );
 }
 

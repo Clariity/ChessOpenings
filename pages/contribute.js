@@ -8,9 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../components/utils/Button';
 import Input from '../components/utils/Input';
-import SEO from '../components/SEO';
-import { contributeTypeChoices, colourChoices, openingChoices } from '../data/consts';
 import ResultModal from '../components/modals/ResultModal';
+import { SEO } from '../components/utils/SEO';
+import { contributeTypeChoices, colourChoices, openingChoices } from '../data/consts';
 
 export default function Contribute() {
   const [moves, setMoves] = useState();

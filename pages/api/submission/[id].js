@@ -15,8 +15,6 @@ export default async (req, res) => {
     return res;
   }
 
-  console.log(req.method);
-
   if (req.method === 'PUT') {
     try {
       await firebase
@@ -44,7 +42,7 @@ export default async (req, res) => {
 
     if (doc.exists) {
       statusCode = 200;
-      responseBody = { title: 'Success', body: JSON.stringify(doc.data()) };
+      responseBody = { title: 'Success', body: doc.data() };
     } else {
       statusCode = 404;
       responseBody = { error: 'Not Found: Submission with this ID not found.' };

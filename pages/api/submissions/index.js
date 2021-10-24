@@ -20,7 +20,7 @@ export default async (req, res) => {
 
     const sortedSubmissions = submissions.sort((a, b) => (a.timestamp.toDate() > b.timestamp.toDate() ? -1 : 1));
     statusCode = 200;
-    responseBody = { title: 'Success', body: JSON.stringify(sortedSubmissions) };
+    responseBody = { title: 'Success', body: sortedSubmissions };
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

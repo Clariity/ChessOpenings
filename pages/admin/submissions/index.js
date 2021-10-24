@@ -1,39 +1,62 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import firebase from '../../../firebaseConfig';
-import SEO from '../../../components/SEO';
+import Button from '../../../components/utils/Button';
 import SubmissionCard from '../../../components/submissions/SubmissionCard';
-import { ActionType, useStoreContext } from '../../../components/Store';
+import { SEO } from '../../../components/utils/SEO';
+import { useData } from '../../../context/data-context';
 
 export default function Submissions() {
-  const { dispatch, state } = useStoreContext();
+  const { loadingError, submissions, setSubmissions, setLoadingError } = useData();
+  const [page, setPage] = useState(0);
+  const PAGE_SIZE = 5;
+  const lowerLimit = page * PAGE_SIZE;
+  const higherLimit = page * PAGE_SIZE + PAGE_SIZE;
 
-  useEffect(async () => {
-    if (!state.submissions) {
-      const response = await fetch('/api/submissions');
-      const submissions = await response.json();
-      if (response?.status === 200) {
-        dispatch({
-          type: ActionType.SET_SUBMISSIONS,
-          payload: JSON.parse(submissions.body)
-        });
-      } else {
-        dispatch({
-          type: ActionType.SET_SUBMISSIONS_ERROR,
-          payload: JSON.parse(submissions.error)
-        });
+  useEffect(() => {
+    async function fetchSubmissions() {
+      try {
+        const response = await fetch('/api/submissions');
+        const submissions = await response.json();
+        if (response?.status === 200) {
+          setSubmissions(submissions.body);
+        } else {
+          setLoadingError(submissions.error);
+        }
+      } catch (error) {
+        setLoadingError(error);
       }
     }
-  }, [state.submissions]);
+    if (!submissions) fetchSubmissions();
+  }, [submissions, setLoadingError, setSubmissions]);
+
+  if (loadingError) {
+    return <div>Error</div>;
+  }
 
   return (
     <div className="flex-column" style={{ maxWidth: '1044px', width: '100%' }}>
       <SEO description="Admin Submissions" title="submissions" path="/admin/submissions" />
       <h1 className="page-title">Submissions</h1>
-
-      {state.submissions?.map((s) => (
-        <SubmissionCard key={s.id} submission={s} />
-      ))}
+      {submissions?.map(
+        (s, i) =>
+          lowerLimit <= i &&
+          i < higherLimit && <SubmissionCard index={i + 1 /* submissions.length - i */} key={s.id} submission={s} />
+      )}
+      <div>
+        <Button
+          onClick={() => setPage((oldPage) => oldPage - 1)}
+          text="Prev Page"
+          customStyles={{ marginBottom: '40px', marginTop: '20px' }}
+          disabled={page === 0}
+        />
+        <Button
+          onClick={() => setPage((oldPage) => oldPage + 1)}
+          text="Next Page"
+          customStyles={{ marginBottom: '40px', marginTop: '20px' }}
+          disabled={page === Math.floor(submissions?.length / PAGE_SIZE)}
+        />
+      </div>
     </div>
   );
 }

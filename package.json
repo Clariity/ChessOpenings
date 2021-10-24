@@ -1,6 +1,6 @@
 {
-  "name": "chess-openings-trainer",
-  "version": "0.1.0",
+  "name": "chessopenings.co.uk",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,11 +14,12 @@
     "firebase": "^8.6.8",
     "firebase-admin": "^9.6.0",
     "js-cookie": "^2.2.1",
-    "next": "^10.2.3",
-    "patch-package": "^6.2.2",
-    "react": "17.0.1",
+    "next": "^11.1.2",
+    "patch-package": "^6.4.7",
+    "react": "^17.0.2",
+    "react-chessboard": "0.0.15",
     "react-copy-to-clipboard": "^5.0.3",
-    "react-dom": "17.0.1",
+    "react-dom": "^17.0.2",
     "react-google-recaptcha": "^2.1.0",
     "react-select": "^3.2.0",
     "react-smooth-collapse": "^2.1.0",
@@ -31,6 +32,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.22.0"
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }

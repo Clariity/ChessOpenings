@@ -1,8 +1,8 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function TrainSummaryDisplay({ openingsCompleted, openingsFailed }) {
-  React.useEffect(() => {
+  useEffect(() => {
     document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, []);
 
@@ -12,16 +12,16 @@ export default function TrainSummaryDisplay({ openingsCompleted, openingsFailed 
         Summary
       </h1>
       <h2 className="completed">Openings Completed: {openingsCompleted.length}</h2>
-      {openingsCompleted.map((openingName) => (
-        <div key={openingName} className="panel-scroll-display-opening">
-          {openingName}
+      {openingsCompleted.map((opening) => (
+        <div key={opening.label} className="panel-scroll-display-opening">
+          {opening.label}
         </div>
       ))}
       <h2 className="failed">Openings Failed: {openingsFailed.length}</h2>
-      {openingsFailed.map((openingName) => (
-        <div key={openingName} className="panel-scroll-display-opening">
-          <div className="panel-summary-opening">{openingName}</div>
-          <Link href={{ pathname: '/learn', query: { openingLink: openingName } }}>
+      {openingsFailed.map((opening) => (
+        <div key={opening.label} className="panel-scroll-display-opening">
+          <div className="panel-summary-opening">{opening.label}</div>
+          <Link href={{ pathname: '/learn', query: { openingLink: opening.label } }}>
             <div className="pad-10 flex-row panel-summary-opening-link">
               <i
                 className="las la-graduation-cap navbar-display-link-icon navbar-display-link-selected"

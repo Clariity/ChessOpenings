@@ -4,7 +4,13 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["plugin:react/recommended", "standard"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended"
+  ],
+  "plugins": ["react", "react-hooks", "import"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -12,13 +18,21 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react"],
   "rules": {
     "semi": ["error", "always"],
-    "space-before-function-paren": "off",
+    "multiline-ternary": "off",
     "react/display-name": "off",
     "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "multiline-ternary": "off"
+    "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
   }
 }

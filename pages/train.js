@@ -1,5 +1,7 @@
-import ChessBoard from '../components/ChessBoard';
-import SEO from '../components/SEO';
+import { Chessboard } from '../components/chessboard/Chessboard';
+import { ChessboardProvider } from '../context/board-context';
+import { TrainSidePanel } from '../components/sidepanels/TrainSidePanel';
+import { SEO } from '../components/utils/SEO';
 
 export default function Train() {
   return (
@@ -9,7 +11,12 @@ export default function Train() {
         title="train"
         path="/train"
       />
-      <ChessBoard path="/train" />
+      <div className="board-panel-container">
+        <ChessboardProvider>
+          <Chessboard id="trainChessboard" />
+          <TrainSidePanel />
+        </ChessboardProvider>
+      </div>
     </>
   );
 }

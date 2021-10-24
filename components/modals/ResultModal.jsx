@@ -15,8 +15,8 @@ export default function ResultModal({ setShowResultModal, result }) {
           <p>Here is a permanent link to your submission so you can track its progress:</p>
           <a
             style={{ textAlign: 'center' }}
-            href={`/submission/${result.id}`}
-          >{`https://chessopenings.co.uk/submission/${result.id}`}</a>
+            href={`/submissions/${result.id}`}
+          >{`https://chessopenings.co.uk/submissions/${result.id}`}</a>
           <div className="help-social">
             <p className="text-align-left">
               Keep track of your submissions easier and see Admin comments by joining the ChessOpenings Discord Server.
@@ -38,7 +38,7 @@ export default function ResultModal({ setShowResultModal, result }) {
               text="Submit Another"
               customStyles={{ marginTop: '20px', marginBottom: '10px' }}
             />
-            <Button onClick={() => router.push(`/submission/${result.id}`)} text="View Submission" />
+            <Button onClick={() => router.push(`/submissions/${result.id}`)} text="View Submission" />
           </div>
         </>
       ) : (

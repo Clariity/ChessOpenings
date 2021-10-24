@@ -35,7 +35,7 @@
 .hamburger.is-active .hamburger-inner,
 .hamburger.is-active .hamburger-inner::before,
 .hamburger.is-active .hamburger-inner::after {
-  background-color: #779952;
+  background-color: var(--secondary-fg);
 }
 
 .hamburger-box {

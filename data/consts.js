@@ -5,6 +5,7 @@ export const pieces = ['wP', 'wN', 'wB', 'wR', 'wQ', 'wK', 'bP', 'bN', 'bB', 'bR
 // https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
 export const chessPieces = (theme) => {
   const returnPieces = {};
+  if (theme === undefined || theme === 'lichess') return returnPieces;
   pieces.map((p) => {
     returnPieces[p] = ({ squareWidth }) => (
       <img style={{ width: squareWidth, height: squareWidth }} src={`/media/themes/${theme}/${p}.png`} alt={p} />

@@ -1,58 +1,44 @@
-import React from 'react';
-
 import Select from 'react-select';
 
-import { animationChoices, moveMethodChoices, themeChoices } from '../../data/consts';
-import { ActionType, useStoreContext } from '../Store';
 import Modal from '../utils/Modal';
+import { Radio } from '../utils/Radio';
+import { animationChoices, moveMethodChoices, themeChoices } from '../../data/consts';
+import { useSettings } from '../../context/settings-context';
 
 export default function SettingsModal({ setShowModal }) {
-  const { state, dispatch } = useStoreContext();
-
-  function handleAnimationsOnChange(value) {
-    dispatch({
-      type: ActionType.SET_ANIMATIONS_ON,
-      payload: value
-    });
-  }
-
-  function handleThemeChange(theme) {
-    dispatch({
-      type: ActionType.SET_THEME,
-      payload: theme
-    });
-  }
-
-  function handleMoveMethodChange(moveMethod) {
-    dispatch({
-      type: ActionType.SET_MOVE_METHOD,
-      payload: moveMethod
-    });
-  }
+  const { animationsOn, moveMethod, theme, updateAnimationsOn, updateMoveMethod, updateTheme } = useSettings();
 
   return (
     <Modal title="Settings" onClose={() => setShowModal(false)}>
       <div className="panel-select">
-        <p className="modal-label">Animations:</p>
-        <Select
-          options={animationChoices}
-          value={state.animationsOn}
-          onChange={handleAnimationsOnChange}
-          isSearchable={false}
-        />
+        <p className="modal-label">Theme (Chessboard and Sounds):</p>
+        <Select options={themeChoices} value={theme} onChange={updateTheme} isSearchable={false} />
       </div>
       <div className="panel-select">
-        <p className="modal-label">Theme (Chessboard and Sounds):</p>
-        <Select options={themeChoices} value={state.theme} onChange={handleThemeChange} isSearchable={false} />
+        <p className="modal-label">Animations:</p>
+        {animationChoices.map((a) => (
+          <Radio
+            groupName="animations"
+            key={a.label}
+            id={a.label}
+            label={a.label}
+            defaultChecked={animationsOn.value === a.value}
+            onChange={() => updateAnimationsOn(a)}
+          />
+        ))}
       </div>
       <div className="panel-select">
         <p className="modal-label">Piece Move Method:</p>
-        <Select
-          options={moveMethodChoices}
-          value={state.moveMethod}
-          onChange={handleMoveMethodChange}
-          isSearchable={false}
-        />
+        {moveMethodChoices.map((m) => (
+          <Radio
+            groupName="moveMethod"
+            key={m.value}
+            id={m.value}
+            label={m.label}
+            defaultChecked={moveMethod.value === m.value}
+            onChange={() => updateMoveMethod(m)}
+          />
+        ))}
       </div>
     </Modal>
   );

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-export default function SEO({ description, title, image, path }) {
+export function SEO({ description, title, image, path }) {
   const url = path ? 'https://chessopenings.co.uk' + path : 'https://chessopenings.co.uk';
   const defaultDescription = 'Practise and Learn Chess Openings for Free.';
   const defaultImageURL = 'https://chessopenings.co.uk/media/images/seo.png';
