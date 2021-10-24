@@ -12,7 +12,6 @@ export const ChessboardContext = React.createContext();
 // TODO: add lichess opening explorer
 
 // CONTRIBUTE
-// TODO: move contribute tool to contribute page
 // TODO: store display fen (checkbox to mark position as display for static boards, default to move 5)
 // TODO: Why is debug limited to just dragging?
 
@@ -29,6 +28,8 @@ export const ChessboardContext = React.createContext();
 
 // hovering over piece as computer moves, causes option squares not to show
 // - due to no moves being legal whilst waiting for CPU
+
+// move options not showing on contribute board
 
 export const useChessboard = () => useContext(ChessboardContext);
 
@@ -192,7 +193,7 @@ export const ChessboardProvider = ({ children }) => {
 
   // piece dropped on board by user
   function onPieceDrop(sourceSquare, targetSquare) {
-    if (pathname !== '/debug') {
+    if (pathname !== '/contribute') {
       // no opening has been selected yet so prevent anything happening
       if (!opening) return false;
     }
@@ -209,7 +210,7 @@ export const ChessboardProvider = ({ children }) => {
     // illegal move
     if (move === null) return false;
 
-    if (pathname !== '/debug') {
+    if (pathname !== '/contribute') {
       // move was legal, perform opening logic
       return makeValidMove(sourceSquare, targetSquare);
     } else {
@@ -381,7 +382,7 @@ export const ChessboardProvider = ({ children }) => {
         return;
       }
 
-      if (pathname !== '/debug') {
+      if (pathname !== '/contribute') {
         // if valid, check if allowed in opening and make it or clear options
         makeValidMove(moveFrom, square);
       }
@@ -404,13 +405,13 @@ export const ChessboardProvider = ({ children }) => {
   }
 
   function onMouseOverSquare(square) {
-    if (opening && moveMethod?.value === 'drag') {
+    if (pathname === '/contribute' || (opening && moveMethod?.value === 'drag')) {
       getMoveOptions(square);
     }
   }
 
   function onMouseOutSquare() {
-    if (opening && moveMethod?.value === 'drag') {
+    if (pathname === '/contribute' || (opening && moveMethod?.value === 'drag')) {
       // clear highlighted options if some exist
       if (Object.keys(optionSquares).length !== 0) setOptionSquares({});
     }

@@ -50,9 +50,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/contribute">
           <div
-            className={`navbar-menu-link ${
-              (pathname === '/contribute' || pathname === '/debug') && 'navbar-menu-link-selected'
-            }`}
+            className={`navbar-menu-link ${pathname === '/contribute' && 'navbar-menu-link-selected'}`}
             onClick={() => setMenuOpen(false)}
           >
             <i className="las la-plus navbar-menu-link-icon" />

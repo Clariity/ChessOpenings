@@ -23,9 +23,10 @@ export function Chessboard({ id }) {
   const { chessboardSize } = useChessboardSize();
   const { animationsOn, moveMethod, theme } = useSettings();
   const [showBoard, setShowBoard] = useState(false);
+  const isContributeBoard = id === 'contributeChessboard';
   const customPieces = useMemo(() => chessPieces(theme?.value), [theme]);
   const arePiecesDraggable =
-    !id.includes('Submission') && (id === 'debugChessboard' || (opening && moveMethod?.value === 'drag'));
+    !id.includes('Submission') && (id === 'contributeChessboard' || (!!opening && moveMethod?.value === 'drag'));
 
   // remount new board
   useEffect(() => {
@@ -33,8 +34,8 @@ export function Chessboard({ id }) {
   }, []);
 
   return (
-    <div id="chessboard" className="chessboard">
-      <ChessboardHeader opening={opening} />
+    <div id="chessboard" className={`chessboard ${isContributeBoard ? '' : 'chessboard-pad'}`}>
+      {!isContributeBoard && <ChessboardHeader opening={opening} />}
       {showBoard && (
         <Board
           id={id}
