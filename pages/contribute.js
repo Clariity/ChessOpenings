@@ -11,7 +11,7 @@ export default function Contribute() {
   const [result, setResult] = useState();
 
   return (
-    <div className="flex-column" style={{ maxWidth: '1044px' }}>
+    <div className="flex-column container">
       <SEO
         description="Contribute your opening knowledge and help other ChessOpenings users to learn valuable openings. With a move recording tool and an easy to fill out form, it's very simple to submit your openings. Once reviewed by a site admin it will then be added to the list of openings if approved."
         title="contribute"
@@ -58,7 +58,7 @@ export default function Contribute() {
         </ol>
       </div>
 
-      <h2>Submission Board</h2>
+      <h2>Submission Board - (Drag to Move Pieces)</h2>
       <div className="chessboard-header">
         <ChessboardProvider>
           <Chessboard id="contributeChessboard" />

@@ -23,7 +23,7 @@ export function TrainSidePanel() {
     setOpeningError,
     setUserColor
   } = useChessboard();
-  const { openings, setOpenings, loadingError, setLoadingError } = useData();
+  const { openingGroups, loadingError } = useData();
   const {
     pathname,
     query: { openingLink }
@@ -35,15 +35,15 @@ export function TrainSidePanel() {
   const [openingsFailed, setOpeningsFailed] = useState([]);
   const [canRetry, setCanRetry] = useState(false);
 
-  const flattenedVariations = openings?.flatMap((o) => o.options).filter((o) => !o.label.includes('All '));
+  const flattenedVariations = openingGroups?.flatMap((o) => o.options).filter((o) => !o.label.includes('All '));
   const startDisabled = selectedOpenings.length === 0;
 
   // Scroll panel into view when openings loaded
   useEffect(() => {
-    if (openings) {
+    if (openingGroups) {
       document.getElementById('panel-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [openings, pathname]);
+  }, [openingGroups, pathname]);
 
   // Scroll chessboard into view when train is started
   useEffect(() => {
@@ -51,20 +51,6 @@ export function TrainSidePanel() {
       document.getElementById('chessboard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [opening]);
-
-  // fetch openings
-  useEffect(() => {
-    async function fetchOpenings() {
-      const response = await fetch('/api/openings');
-      const openings = await response.json();
-      if (response?.status === 200) {
-        setOpenings(openings.body);
-      } else {
-        setLoadingError(openings.error);
-      }
-    }
-    if (!openings) fetchOpenings();
-  }, [openings, setOpenings, setLoadingError]);
 
   // Act on opening complete
   useEffect(() => {
@@ -116,11 +102,11 @@ export function TrainSidePanel() {
 
   // Set opening on load with URL param
   useEffect(() => {
-    if (openings && openingLink && !opening) {
-      const o = openings.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
+    if (openingGroups && openingLink && !opening) {
+      const o = openingGroups.flatMap((o) => o.options).filter((o) => o.label === openingLink)[0];
       setOpening(o);
     }
-  }, [opening, openingLink, openings, setOpening]);
+  }, [opening, openingLink, openingGroups, setOpening]);
 
   function handleTrainOpeningChange(change) {
     if (change?.filter((c) => c.label.includes('All ')).length > 0) {
@@ -183,7 +169,7 @@ export function TrainSidePanel() {
     if (label.toLocaleLowerCase().includes(searchLower)) return true;
 
     // check if a group has the filter string as label
-    const groupOptions = openings.filter((group) => group.label.toLocaleLowerCase().includes(searchLower));
+    const groupOptions = openingGroups.filter((group) => group.label.toLocaleLowerCase().includes(searchLower));
 
     if (groupOptions) {
       for (const groupOption of groupOptions) {
@@ -218,8 +204,8 @@ export function TrainSidePanel() {
               isSearchable={window > 850}
               maxMenuHeight={325}
               onChange={handleTrainOpeningChange}
-              options={openings}
-              placeholder={openings ? 'Select Openings to Train' : 'Loading Openings'}
+              options={openingGroups}
+              placeholder={openingGroups ? 'Select Openings to Train' : 'Loading Openings'}
             />
           </div>
         )}

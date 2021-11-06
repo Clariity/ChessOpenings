@@ -77,7 +77,7 @@ export function BoardControls({ resetDisabled }) {
     moveSounds.move.play();
     setResumeDisabled(false);
 
-    if (pathname === '/learn' || pathname === '/traps') {
+    if (pathname.includes('/learn') || pathname.includes('/traps')) {
       // colour move squares of move made 2 moves ago
       const move = opening.value[history.length - 2];
       setMoveSquares({

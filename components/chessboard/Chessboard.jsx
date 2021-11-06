@@ -21,12 +21,11 @@ export function Chessboard({ id }) {
     squareStyles
   } = useChessboard();
   const { chessboardSize } = useChessboardSize();
-  const { animationsOn, moveMethod, theme } = useSettings();
+  const { animationsOn, theme } = useSettings();
   const [showBoard, setShowBoard] = useState(false);
   const isContributeBoard = id === 'contributeChessboard';
   const customPieces = useMemo(() => chessPieces(theme?.value), [theme]);
-  const arePiecesDraggable =
-    !id.includes('Submission') && (id === 'contributeChessboard' || (!!opening && moveMethod?.value === 'drag'));
+  const arePiecesDraggable = !id.includes('Submission') && (id === 'contributeChessboard' || !!opening);
 
   // remount new board
   useEffect(() => {

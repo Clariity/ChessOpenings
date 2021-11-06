@@ -1,6 +1,7 @@
 /* ### Container ### */
 .container {
   max-width: 1044px;
+  width: 100%;
 }
 
 /* ##### Padding ##### */
@@ -19,6 +20,12 @@
 }
 .pad-10-l {
   padding-left: 10px;
+}
+.pad-10-r {
+  padding-right: 10px;
+}
+.pad-10-lr {
+  padding: 0px 10px;
 }
 .pad-10-tb {
   padding: 10px 0px;
@@ -50,6 +57,9 @@
 }
 .margin-20-b {
   margin-bottom: 20px;
+}
+.margin-left-auto {
+  margin-left: auto;
 }
 
 /* ##### Text ##### */
@@ -95,6 +105,10 @@
   display: -webkit-flex;
   align-items: center;
   -webkit-align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 /* ##### Hover ##### */

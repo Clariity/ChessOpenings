@@ -26,6 +26,16 @@
   .help-social-link {
     margin-left: unset;
   }
+
+  .search-input {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .group-section {
+    max-width: 100% !important;
+  }
 }
 
 @media (max-width: 850px) {
@@ -61,6 +71,9 @@
 }
 
 @media (max-width: 1044px) {
+  .group-section {
+    max-width: 50%;
+  }
   .home-card {
     flex-direction: column;
   }

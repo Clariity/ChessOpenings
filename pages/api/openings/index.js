@@ -1,4 +1,5 @@
 import firebase from '../../../firebaseConfig';
+import { sortOpeningsIntoGroups } from '../../../functions/helpers';
 
 export default async (req, res) => {
   let statusCode = 500;
@@ -16,48 +17,15 @@ export default async (req, res) => {
   try {
     const openings = [];
     const querySnapshot = await firebase.collection('openings').get();
-    querySnapshot.forEach((doc) => openings.push(doc.data()));
-
-    const openingGroups = openings.reduce((acc, current) => {
-      const groupLabel = current.label.split(':')[0];
-      const groupIndex = acc.findIndex((group) => group.label === groupLabel);
-      if (groupIndex > -1) {
-        acc[groupIndex].options.push(current);
-      } else {
-        acc.push({
-          label: groupLabel,
-          options: [current]
-        });
-      }
-      return acc;
-    }, []);
-
-    const selectAllOptions = [];
-    const sortedOpeningGroups = openingGroups
-      .map((g) => {
-        selectAllOptions.push({
-          label: `All ${g.label}`,
-          value: `${g.label}:`
-        });
-        return {
-          label: g.label,
-          options: g.options.sort((a, b) => (a.label < b.label ? -1 : 1))
-        };
-      })
-      .sort((a, b) => (a.label < b.label ? -1 : 1));
-
-    const sortedSelectAllOptions = selectAllOptions.sort((a, b) => (a.label < b.label ? -1 : 1));
-    sortedSelectAllOptions.unshift({
-      label: 'All Openings',
-      value: 'All'
+    querySnapshot.forEach((doc) => {
+      const opening = doc.data();
+      openings.push({ ...opening, id: doc.id });
     });
-    sortedOpeningGroups.unshift({
-      label: 'Select All',
-      options: sortedSelectAllOptions
-    });
+
+    const openingGroups = sortOpeningsIntoGroups(openings);
 
     statusCode = 200;
-    responseBody = { title: 'Success', body: sortedOpeningGroups };
+    responseBody = { title: 'Success', body: openingGroups };
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

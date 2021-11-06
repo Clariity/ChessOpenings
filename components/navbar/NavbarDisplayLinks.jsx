@@ -19,7 +19,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/learn">
           <div
-            className={`navbar-display-link ${pathname === '/learn' && 'navbar-display-link-selected'}`}
+            className={`navbar-display-link ${pathname.includes('/learn') && 'navbar-display-link-selected'}`}
             data-tip="Learn"
           >
             <i className="las la-graduation-cap navbar-display-link-icon" />
@@ -28,7 +28,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/train">
           <div
-            className={`navbar-display-link ${pathname === '/train' && 'navbar-display-link-selected'}`}
+            className={`navbar-display-link ${pathname.includes('/train') && 'navbar-display-link-selected'}`}
             data-tip="Train"
           >
             <i className="las la-dumbbell navbar-display-link-icon" />
@@ -37,7 +37,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/traps">
           <div
-            className={`navbar-display-link ${pathname === '/traps' && 'navbar-display-link-selected'}`}
+            className={`navbar-display-link ${pathname.includes('/traps') && 'navbar-display-link-selected'}`}
             data-tip="Traps"
           >
             <i className="las la-compress-arrows-alt navbar-display-link-icon" />
@@ -45,7 +45,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
         </Link>
         <Link href="/contribute">
           <div
-            className={`navbar-display-link ${pathname === '/contribute' && 'navbar-display-link-selected'}`}
+            className={`navbar-display-link ${pathname.includes('/contribute') && 'navbar-display-link-selected'}`}
             data-tip="Contribute"
           >
             <i className="las la-plus navbar-display-link-icon" />
@@ -55,7 +55,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
       <div className="navbar-display-settings">
         <Link href="/help">
           <div
-            className={`navbar-display-link ${pathname === '/help' && 'navbar-display-link-selected'}`}
+            className={`navbar-display-link ${pathname.includes('/help') && 'navbar-display-link-selected'}`}
             style={{ marginRight: '20px' }}
             data-tip="Help & Contact"
           >

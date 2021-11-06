@@ -2,11 +2,11 @@ import Select from 'react-select';
 
 import Modal from '../utils/Modal';
 import { Radio } from '../utils/Radio';
-import { animationChoices, moveMethodChoices, themeChoices } from '../../data/consts';
+import { animationChoices, themeChoices } from '../../data/consts';
 import { useSettings } from '../../context/settings-context';
 
 export default function SettingsModal({ setShowModal }) {
-  const { animationsOn, moveMethod, theme, updateAnimationsOn, updateMoveMethod, updateTheme } = useSettings();
+  const { animationsOn, theme, updateAnimationsOn, updateTheme } = useSettings();
 
   return (
     <Modal title="Settings" onClose={() => setShowModal(false)}>
@@ -27,7 +27,7 @@ export default function SettingsModal({ setShowModal }) {
           />
         ))}
       </div>
-      <div className="panel-select">
+      {/* <div className="panel-select">
         <p className="modal-label">Piece Move Method:</p>
         {moveMethodChoices.map((m) => (
           <Radio
@@ -39,7 +39,7 @@ export default function SettingsModal({ setShowModal }) {
             onChange={() => updateMoveMethod(m)}
           />
         ))}
-      </div>
+      </div> */}
     </Modal>
   );
 }

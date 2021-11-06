@@ -10,7 +10,7 @@ export function ChessboardHeader({ opening }) {
         <p className="chessboard-header">{opening.label}</p>
       ) : (
         <p className="chessboard-header">
-          {pathname === '/train' ? 'Select Opening to Train and Press Start to Begin' : 'Select Opening to Begin'}
+          {pathname.includes('/train') ? 'Select Opening to Train and Press Start to Begin' : 'Select Opening to Begin'}
         </p>
       )}
     </>

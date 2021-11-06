@@ -20,7 +20,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/learn">
           <div
-            className={`navbar-menu-link ${pathname === '/learn' && 'navbar-menu-link-selected'}`}
+            className={`navbar-menu-link ${pathname.includes('/learn') && 'navbar-menu-link-selected'}`}
             onClick={() => setMenuOpen(false)}
           >
             <i className="las la-graduation-cap navbar-menu-link-icon" />
@@ -30,7 +30,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/train">
           <div
-            className={`navbar-menu-link ${pathname === '/train' && 'navbar-menu-link-selected'}`}
+            className={`navbar-menu-link ${pathname.includes('/train') && 'navbar-menu-link-selected'}`}
             onClick={() => setMenuOpen(false)}
           >
             <i className="las la-dumbbell navbar-menu-link-icon" />
@@ -40,7 +40,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/traps">
           <div
-            className={`navbar-menu-link ${pathname === '/traps' && 'navbar-menu-link-selected'}`}
+            className={`navbar-menu-link ${pathname.includes('/traps') && 'navbar-menu-link-selected'}`}
             onClick={() => setMenuOpen(false)}
           >
             <i className="las la-compress-arrows-alt navbar-menu-link-icon" />
@@ -50,7 +50,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/contribute">
           <div
-            className={`navbar-menu-link ${pathname === '/contribute' && 'navbar-menu-link-selected'}`}
+            className={`navbar-menu-link ${pathname.includes('/contribute') && 'navbar-menu-link-selected'}`}
             onClick={() => setMenuOpen(false)}
           >
             <i className="las la-plus navbar-menu-link-icon" />
@@ -60,7 +60,7 @@ export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModa
 
         <Link href="/help">
           <div
-            className={`navbar-menu-link ${pathname === '/help' && 'navbar-menu-link-selected'}`}
+            className={`navbar-menu-link ${pathname.includes('/help') && 'navbar-menu-link-selected'}`}
             onClick={() => setMenuOpen(false)}
           >
             <i className="las la-question-circle navbar-menu-link-icon" />

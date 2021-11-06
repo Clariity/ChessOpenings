@@ -21,7 +21,12 @@ export default function TrainSummaryDisplay({ openingsCompleted, openingsFailed 
       {openingsFailed.map((opening) => (
         <div key={opening.label} className="panel-scroll-display-opening">
           <div className="panel-summary-opening">{opening.label}</div>
-          <Link href={{ pathname: '/learn', query: { openingLink: opening.label } }}>
+          <Link
+            href={{
+              pathname: `/learn/${encodeURIComponent(opening.label.split(':')[0])}`,
+              query: { openingLink: opening.label }
+            }}
+          >
             <div className="pad-10 flex-row panel-summary-opening-link">
               <i
                 className="las la-graduation-cap navbar-display-link-icon navbar-display-link-selected"

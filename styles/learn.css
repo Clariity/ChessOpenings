@@ -1,0 +1,75 @@
+.learn-title-icon {
+  padding-right: 20px;
+  font-size: larger;
+}
+
+.group-heading-container {
+  cursor: pointer;
+  width: 100%;
+  background-color: var(--secondary-bg);
+  padding: 0px 10px;
+}
+
+.group-heading {
+  font-weight: lighter;
+}
+
+.group-section {
+  padding: 0px 10px;
+  margin-bottom: 40px;
+  max-width: 33.3%;
+  width: 100%;
+  transition: transform ease-in-out 0.1s;
+}
+.group-section:hover {
+  transform: scale(1.04);
+}
+
+.group-board {
+  margin: 0px;
+  position: relative;
+  z-index: 1;
+}
+
+.group-board-underlay {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+}
+
+.group-board-overlay {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.opening-tab-group {
+  padding: 10px;
+}
+.opening-tab {
+  width: 25%;
+  height: 40px;
+  background-color: var(--secondary-bg);
+  color: var(--primary-fg);
+  cursor: pointer;
+  font-family: 'Lexend', sans-serif;
+  border: none;
+}
+.opening-tab:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.opening-tab:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.opening-tab:hover {
+  background-color: var(--tertiary-bg-hover);
+}
+.opening-tab.selected {
+  cursor: default;
+  background-color: var(--tertiary-bg);
+  border: none;
+}

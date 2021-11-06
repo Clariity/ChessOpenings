@@ -7,20 +7,21 @@ import { useSettings } from './settings-context';
 
 export const ChessboardContext = React.createContext();
 
+// GENERAL
+// Add version in footer (Add footer), and autoincrement on commit with GitHub actions
+// Update sitemap
+
 // LEARN
-// TODO: on learn pages, have 'Train this opening' option to either redirect to train or to practise without highlights
+// TODO: toggle hints
 // TODO: add lichess opening explorer
 
 // CONTRIBUTE
 // TODO: store display fen (checkbox to mark position as display for static boards, default to move 5)
-// TODO: Why is debug limited to just dragging?
-
-// BOARD
-// TODO: check if click and drag methods can work at same time on mobile (confirmed working on desktop) -> if so then can alter options to default to both
 
 // SETTINGS
 // TODO: add playsounds option and only play sounds if turned on - fine grain sound options -> move sounds, sound on start/end
 // TODO: separate pieces and board colour themes
+// TODO: Shorten all sounds to smallest size to play better on lower end devices
 
 // BUGS
 // TODO: react-tooltip on disabled buttons, need to wrap in div and add tooltip there
@@ -29,14 +30,12 @@ export const ChessboardContext = React.createContext();
 // hovering over piece as computer moves, causes option squares not to show
 // - due to no moves being legal whilst waiting for CPU
 
-// move options not showing on contribute board
-
 export const useChessboard = () => useContext(ChessboardContext);
 
 export const ChessboardProvider = ({ children }) => {
   const chessboardRef = useRef();
   const { pathname } = useRouter();
-  const { animationsOn, moveMethod, theme } = useSettings();
+  const { animationsOn, theme } = useSettings();
 
   // game logic
   const [game, setGame] = useState();
@@ -124,7 +123,7 @@ export const ChessboardProvider = ({ children }) => {
       game?.fen() === start &&
       userColor === 'white' &&
       opening &&
-      (pathname === '/learn' || pathname === '/traps') &&
+      (pathname.includes('/learn') || pathname.includes('/traps')) &&
       !openingError
     ) {
       setMoveSquares({
@@ -193,6 +192,8 @@ export const ChessboardProvider = ({ children }) => {
 
   // piece dropped on board by user
   function onPieceDrop(sourceSquare, targetSquare) {
+    // clear any moveFrom squares that may be clicked
+    setMoveFrom('');
     if (pathname !== '/contribute') {
       // no opening has been selected yet so prevent anything happening
       if (!opening) return false;
@@ -284,7 +285,7 @@ export const ChessboardProvider = ({ children }) => {
       [targetSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' }
     });
     // after 1 second, show the prior move made
-    if (pathname === '/learn' || pathname === '/traps') {
+    if (pathname.includes('/learn') || pathname.includes('/traps')) {
       setTimeout(() => {
         setMoveSquares({
           [opening.value[historyLength - 1].from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
@@ -292,6 +293,8 @@ export const ChessboardProvider = ({ children }) => {
         });
         // TODO: Check if this line affects Train, added to prevent combinedSquares after error move
         setOpeningError(false);
+        // clear any premoves
+        chessboardRef.current.clearPremoves();
       }, 1000);
     }
   }
@@ -334,7 +337,7 @@ export const ChessboardProvider = ({ children }) => {
         }
 
         // show next move to make
-        if (pathname === '/learn' || pathname === '/traps') {
+        if (pathname.includes('/learn') || pathname.includes('/traps')) {
           const nextMove = opening.value[game.history().length];
           setMoveSquares({
             [nextMove?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
@@ -354,42 +357,27 @@ export const ChessboardProvider = ({ children }) => {
     // no opening has been selected yet so prevent anything happening
     if (!opening) return;
 
-    function resetFirstMove(square) {
+    if (!moveFrom && game.get(square)) {
       setMoveFrom(square);
       getMoveOptions(square);
+      return;
     }
 
-    // if click to move, attempt move or register from move
-    if (moveMethod.value === 'click') {
-      // from square
-      if (!moveFrom) {
-        resetFirstMove(square);
-        return;
-      }
+    // attempt to make move
+    const gameCopy = { ...game };
+    const move = gameCopy.move({
+      from: moveFrom,
+      to: square,
+      promotion: 'q' // always promote to a queen for example simplicity
+    });
+    setGame(gameCopy);
 
-      // attempt to make move
-      const gameCopy = { ...game };
-      const move = gameCopy.move({
-        from: moveFrom,
-        to: square,
-        promotion: 'q' // always promote to a queen for example simplicity
-      });
-      setGame(gameCopy);
-
-      // if invalid, setMoveFrom and getMoveOptions
-      if (move === null) {
-        resetFirstMove(square);
-        return;
-      }
-
-      if (pathname !== '/contribute') {
-        // if valid, check if allowed in opening and make it or clear options
-        makeValidMove(moveFrom, square);
-      }
-
-      setMoveFrom('');
-      setOptionSquares({});
+    if (pathname !== '/contribute' && move !== null) {
+      // move was legal, perform opening logic
+      makeValidMove(moveFrom, square);
     }
+    setMoveFrom('');
+    setOptionSquares({});
   }
 
   function onSquareRightClick(square) {
@@ -405,13 +393,13 @@ export const ChessboardProvider = ({ children }) => {
   }
 
   function onMouseOverSquare(square) {
-    if (pathname === '/contribute' || (opening && moveMethod?.value === 'drag')) {
+    if (pathname === '/contribute' || (opening && !moveFrom)) {
       getMoveOptions(square);
     }
   }
 
   function onMouseOutSquare() {
-    if (pathname === '/contribute' || (opening && moveMethod?.value === 'drag')) {
+    if (pathname === '/contribute' || (opening && !moveFrom)) {
       // clear highlighted options if some exist
       if (Object.keys(optionSquares).length !== 0) setOptionSquares({});
     }
@@ -427,12 +415,9 @@ export const ChessboardProvider = ({ children }) => {
       verbose: true
     });
 
-    // TODO: option squares issue - because waiting for CPU, no white moves would be legal?
-
     // no moves found
     if (moves.length === 0) {
-      // TODO: is this line needed?
-      if (moveMethod.value === 'click') setOptionSquares({});
+      setOptionSquares({});
       return;
     }
 
