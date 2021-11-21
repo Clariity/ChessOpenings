@@ -1,8 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Contributing to ChessOpenings.co.uk
 
-## Getting Started
+1. Fork this repository
+2. Clone your forked repository onto your development machine
+   ```bash
+   git clone https://github.com/yourUsernameHereChessOpenings.git
+   cd ChessOpenings
+   ```
+3. Create a branch for your PR
+   ```bash
+   git checkout -b your-branch-name
+   ```
+4. Set upstream remote
+   ```bash
+   git remote add upstream https://github.com/Clariity/ChessOpenings.git
+   ```
+5. Make your changes
+6. Push your changes
+   ```bash
+   git add .
+   git commit -m "feature/cool-new-feature"
+   git push --set-upstream origin your-branch-name
+   ```
+7. Create pull request on GitHub
+8. Contribute again
+   ```bash
+   git checkout main
+   git pull upstream main
+   git checkout -b your-new-branch-name
+   ```
 
-First, run the development server:
+## Setting up Firebase
+
+1. Go to https://console.firebase.google.com/ and `Add Project`
+2. Name it however you wish e.g. `ChessOpenings`
+3. Once the project is created, on the `Project Overview` in the console, register a web app...
+4. Rest to be completed by Powell (include steps for setting up firebase admin too, and populating the firestore)
+
+## Secrets
+
+A file named `.env.local` is required with the following secrets stored in it:
+
+```
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
+RECAPTCHA_SECRET_KEY=
+DISCORD_WEBHOOK_URL=
+
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+
+FIREBASE_ADMIN_TYPE=
+FIREBASE_ADMIN_PROJECT_ID=
+FIREBASE_ADMIN_PRIVATE_KEY_ID=
+FIREBASE_ADMIN_PRIVATE_KEY=
+FIREBASE_ADMIN_CLIENT_EMAIL=
+FIREBASE_ADMIN_CLIENT_ID=
+FIREBASE_ADMIN_AUTH_URI=
+FIREBASE_ADMIN_TOKEN_URI=
+FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL=
+FIREBASE_ADMIN_CLIENT_x509_CERT_URL=
+```
+
+## Running the Development Server
 
 ```bash
 npm run dev
@@ -11,24 +74,3 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

@@ -4,19 +4,26 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 
 import GoogleButton from 'react-google-button';
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithPopup,
+  GoogleAuthProvider
+} from 'firebase/auth';
 
 import Button from '../components/utils/Button';
 import Input from '../components/utils/Input';
 import { auth } from '../firebase';
 import { SEO } from '../components/utils/SEO';
 import { Splitter } from '../components/utils/Splitter';
+import { handleAuthErrorMessage } from '../functions/helpers';
 
 const provider = new GoogleAuthProvider();
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const {
@@ -29,7 +36,7 @@ export default function Register() {
       await signInWithPopup(auth, provider);
       Router.push(redirect || '/');
     } catch (error) {
-      setError(error.message);
+      handleAuthErrorMessage(error.code, setError);
     }
     setLoading(false);
   }
@@ -37,10 +44,11 @@ export default function Register() {
   async function handleEmailAndPasswordRegister() {
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      sendEmailVerification(user);
       Router.push(redirect || '/');
     } catch (error) {
-      setError(error.message);
+      handleAuthErrorMessage(error.code, setError);
     }
     setLoading(false);
   }
@@ -69,6 +77,9 @@ export default function Register() {
             <li>Track pass rate</li>
           </ul>
         </div>
+
+        {error && <p className="text-align-center">Error: {error}</p>}
+
         <Input
           label="Email"
           type="text"
@@ -81,20 +92,25 @@ export default function Register() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          customStyles={{ marginBottom: '10px' }}
+        />
+        <Input
+          label="Confirm Password"
+          type="password"
+          value={passwordConfirm}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
           customStyles={{ marginBottom: '20px' }}
         />
         <Button
           onClick={handleEmailAndPasswordRegister}
           text={loading ? 'Loading' : 'Register'}
           customStyles={{ marginBottom: '40px', marginTop: '20px' }}
-          disabled={!email || !password}
+          disabled={!email || !password || password !== passwordConfirm}
         />
         <Splitter text="or" />
         <div className="flex flex-justify margin-20-tb">
           <GoogleButton className="width-100 border-radius-4" type="light" onClick={handleGoogleSignIn} />
         </div>
-
-        {error && <p>{error}</p>}
 
         <h1 className="margin-40-t">Already have an account?</h1>
         <Link href="/sign-in">

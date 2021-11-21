@@ -11,6 +11,7 @@ import Input from '../components/utils/Input';
 import { auth } from '../firebase';
 import { SEO } from '../components/utils/SEO';
 import { Splitter } from '../components/utils/Splitter';
+import { handleAuthErrorMessage } from '../functions/helpers';
 
 const provider = new GoogleAuthProvider();
 
@@ -29,7 +30,7 @@ export default function SignIn() {
       await signInWithPopup(auth, provider);
       Router.push(redirect || '/');
     } catch (error) {
-      setError(error.message);
+      handleAuthErrorMessage(error.code, setError);
     }
     setLoading(false);
   }
@@ -40,8 +41,7 @@ export default function SignIn() {
       await signInWithEmailAndPassword(auth, email, password);
       Router.push(redirect || '/');
     } catch (error) {
-      // TODO: better error handling and display
-      setError(error.message);
+      handleAuthErrorMessage(error.code, setError);
     }
     setLoading(false);
   }
@@ -62,6 +62,9 @@ export default function SignIn() {
           />
           <h1 className="home-title-text">Sign In to ChessOpenings</h1>
         </div>
+
+        {error && <p className="text-align-center">Error: {error}</p>}
+
         <Input
           label="Email"
           type="text"
@@ -86,8 +89,6 @@ export default function SignIn() {
         <div className="flex flex-justify margin-20-tb">
           <GoogleButton className="width-100 border-radius-4" type="light" onClick={handleGoogleSignIn} />
         </div>
-
-        {error && <p>{error}</p>}
 
         <h1 className="margin-40-t">Don&apos;t have an account yet?</h1>
         <div style={{ textAlign: 'justify' }}>

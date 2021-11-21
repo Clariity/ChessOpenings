@@ -46,3 +46,25 @@ export function prependSelectAllGroup(openingGroups) {
 
   return openingGroups;
 }
+
+export function handleAuthErrorMessage(code, setter) {
+  switch (code) {
+    case 'auth/invalid-email':
+      setter('Invalid Email');
+      break;
+    case 'auth/wrong-password':
+    case 'auth/user-not-found':
+      setter('Incorrect email or password');
+      break;
+    case 'auth/email-already-exists':
+    case 'auth/email-already-in-use':
+      setter('An account already exists with this email address');
+      break;
+    case 'auth/invalid-password':
+    case 'auth/weak-password':
+      setter('Password must be a string with at least six characters');
+      break;
+    default:
+      setter(code);
+  }
+}

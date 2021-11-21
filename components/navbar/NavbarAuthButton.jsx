@@ -14,7 +14,7 @@ export function NavbarAuthButton() {
 
   async function handleSignOut() {
     await signOut(auth);
-    Router.push('/');
+    Router.push('/sign-in');
   }
 
   // currently loading user
@@ -31,7 +31,7 @@ export function NavbarAuthButton() {
           minHeight: 'unset',
           height: '40px',
           width: 'max-content',
-          webkitTextStroke: '0px',
+          WebkitTextStroke: '0px',
           fontSize: '20px',
           padding: '10px'
         }}
@@ -47,7 +47,7 @@ export function NavbarAuthButton() {
               minHeight: 'unset',
               height: '40px',
               width: 'max-content',
-              webkitTextStroke: '0px',
+              WebkitTextStroke: '0px',
               fontSize: '20px',
               padding: '10px'
             }}

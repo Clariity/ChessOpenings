@@ -33,6 +33,14 @@ export const ChessboardContext = React.createContext();
 // hovering over piece as computer moves, causes option squares not to show
 // - due to no moves being legal whilst waiting for CPU
 
+// fix burger menu on non chrome
+// use dev channel for localhost on discord
+// if user email isn't verified then don't let them do user things until it is
+// /verify page with button to send again
+// forgotten password page
+// /auth_action page to take in email actions
+// note to check junk mail
+
 // https://stackoverflow.com/a/57353532
 
 export const useChessboard = () => useContext(ChessboardContext);
