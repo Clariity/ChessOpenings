@@ -19,7 +19,7 @@
    ```bash
    git add .
    git commit -m "feat(cool-new-feature): cool new feature description"
-   git push --set-upstream origin your-branch-name
+   git push --set-upstream origin feat/cool-new-feature
    ```
 7. Create pull request on GitHub
 8. Contribute again
