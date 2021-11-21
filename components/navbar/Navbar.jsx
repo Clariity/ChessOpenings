@@ -6,10 +6,11 @@ import { useRouter } from 'next/router';
 import SmoothCollapse from 'react-smooth-collapse';
 
 import SettingsModal from '../modals/SettingsModal';
+import MenuButton from './MenuButton';
 import NavbarDisplayLinks from './NavbarDisplayLinks';
 import NavbarMenuLinks from './NavbarMenuLinks';
 import { useWindowSize } from '../../functions/hooks';
-import MenuButton from './MenuButton';
+import { NavbarAuthButton } from './NavbarAuthButton';
 
 export default function Navbar() {
   const window = useWindowSize();
@@ -43,7 +44,8 @@ export default function Navbar() {
           </div>
 
           {window <= 1600 ? (
-            <div className="navbar-menu-button">
+            <div className="flex-row navbar-menu-button">
+              {window >= 700 && <NavbarAuthButton />}
               <MenuButton menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             </div>
           ) : (
@@ -53,7 +55,7 @@ export default function Navbar() {
       )}
 
       <SmoothCollapse expanded={menuOpen}>
-        <NavbarMenuLinks setMenuOpen={setMenuOpen} setShowModal={setShowModal} showModal={showModal} />
+        <NavbarMenuLinks setMenuOpen={setMenuOpen} setShowModal={setShowModal} showModal={showModal} window={window} />
       </SmoothCollapse>
 
       {showModal && <SettingsModal setShowModal={setShowModal} />}

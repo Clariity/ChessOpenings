@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import firebase from '../../../firebaseConfig';
+import firebase from '../../../firebaseAdmin';
 import Button from '../../../components/utils/Button';
 import SubmissionCard from '../../../components/submissions/SubmissionCard';
 import { SEO } from '../../../components/utils/SEO';

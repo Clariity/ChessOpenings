@@ -3,6 +3,20 @@
   max-width: 1044px;
   width: 100%;
 }
+.container-sm {
+  max-width: 500px;
+  width: 100%;
+}
+
+/* ### Width ### */
+.width-100 {
+  width: 100% !important;
+}
+
+/* ### Border ### */
+.border-radius-4 {
+  border-radius: 4px !important;
+}
 
 /* ##### Padding ##### */
 .pad-5 {
@@ -55,11 +69,25 @@
 .margin-10-t {
   margin-top: 10px;
 }
+.margin-20-t {
+  margin-top: 20px;
+}
 .margin-20-b {
   margin-bottom: 20px;
 }
+.margin-20-tb {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.margin-40-t {
+  margin-top: 40px;
+}
 .margin-left-auto {
   margin-left: auto;
+}
+.margin-auto-lr {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ##### Text ##### */

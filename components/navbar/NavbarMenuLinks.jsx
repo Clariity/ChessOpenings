@@ -2,12 +2,20 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModal }) {
+import Button from '../utils/Button';
+
+export default function NavbarDisplayLinks({ setMenuOpen, setShowModal, showModal, window }) {
   const { pathname } = useRouter();
 
   return (
     <>
       <div className="navbar-menu-links">
+        {window < 700 && (
+          <Link href="/sign-in">
+            <Button text="Sign In" customStyles={{ marginTop: '10px', width: '90%' }} />
+          </Link>
+        )}
+
         <Link href="/">
           <div
             className={`navbar-menu-link ${pathname === '/' && 'navbar-menu-link-selected'}`}

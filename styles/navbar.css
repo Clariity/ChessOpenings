@@ -41,6 +41,11 @@
 }
 
 /* ##### DISPLAY LINKS ##### */
+.navbar-display-links-wrapper {
+  display: flex;
+  display: -webkit-flex;
+  width: 33.33%;
+}
 .navbar-display-links {
   display: flex;
   display: -webkit-flex;
@@ -49,8 +54,8 @@
   -webkit-justify-content: space-between;
   align-items: center;
   -webkit-align-items: center;
-
-  width: 33.33%;
+  margin: auto;
+  width: 100%;
   max-width: 800px;
 }
 

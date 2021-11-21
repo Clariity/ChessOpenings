@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 import firebase from '../../../firebaseAdmin';
 
 export default async (req, res) => {
-  const { id } = req.query;
+  const { uid } = req.query;
   let statusCode = 500;
   let responseBody = { error: 'Internal Server Error: Encountered an unknown error' };
 
@@ -18,8 +18,8 @@ export default async (req, res) => {
   if (req.method === 'PUT') {
     try {
       await firebase
-        .collection('submissions')
-        .doc(id)
+        .collection('users')
+        .doc(uid)
         .update({
           ...JSON.parse(req.body),
           updated: admin.firestore.FieldValue.serverTimestamp()
@@ -38,14 +38,14 @@ export default async (req, res) => {
   }
 
   try {
-    const doc = await firebase.collection('submissions').doc(id).get();
+    const doc = await firebase.collection('users').doc(uid).get();
 
     if (doc.exists) {
       statusCode = 200;
       responseBody = { title: 'Success', body: doc.data() };
     } else {
       statusCode = 404;
-      responseBody = { error: 'Not Found: Submission with this ID not found.' };
+      responseBody = { error: 'Not Found: User with this UID not found.' };
     }
   } catch (error) {
     statusCode = 500;

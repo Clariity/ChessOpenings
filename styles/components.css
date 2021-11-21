@@ -287,3 +287,22 @@
     transform: rotate(720deg);
   }
 }
+
+.splitter-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.splitter-line {
+  height: 4px;
+  background-color: var(--secondary-fg);
+  border-radius: 2px;
+  margin: 20px;
+  width: 100%;
+}
+.splitter-text {
+  position: absolute;
+  margin: 0px;
+  padding: 0px 20px;
+  background-color: var(--primary-bg);
+}

@@ -1,4 +1,4 @@
-import firebase from '../../../firebaseConfig';
+import firebase from '../../../firebaseAdmin';
 import { Chessboard } from '../../../components/chessboard/Chessboard';
 import { ChessboardProvider } from '../../../context/board-context';
 import { SubmissionSidePanel } from '../../../components/sidepanels/SubmissionSidePanel';

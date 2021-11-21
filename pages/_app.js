@@ -25,24 +25,24 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <SettingsProvider>
-      <div className="app">
-        <Navbar />
-        <div className="main">
-          <DataProvider>
+    <DataProvider>
+      <SettingsProvider>
+        <div className="app">
+          <Navbar />
+          <div className="main">
             <Component {...pageProps} />
-          </DataProvider>
+          </div>
+          {showCookieWarning && (
+            <CookieWarning
+              onConfirm={handleCookieWarning}
+              text="This site uses local storage and cookies to improve the user experience and provide some functionality. By continuing to use the site you agree that you are comfortable with this. Information about what is stored is listed on the help page."
+              buttonText="Got it"
+              customButtonStyles={{ maxWidth: '300px', marginTop: '10px', textAlign: 'center' }}
+            />
+          )}
         </div>
-        {showCookieWarning && (
-          <CookieWarning
-            onConfirm={handleCookieWarning}
-            text="This site uses local storage and cookies to improve the user experience and provide some functionality. By continuing to use the site you agree that you are comfortable with this. Information about what is stored is listed on the help page."
-            buttonText="Got it"
-            customButtonStyles={{ maxWidth: '300px', marginTop: '10px', textAlign: 'center' }}
-          />
-        )}
-      </div>
-    </SettingsProvider>
+      </SettingsProvider>
+    </DataProvider>
   );
 }
 

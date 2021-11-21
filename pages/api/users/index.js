@@ -2,7 +2,6 @@ import admin from 'firebase-admin';
 import firebase from '../../../firebaseAdmin';
 
 export default async (req, res) => {
-  const { id } = req.query;
   let statusCode = 500;
   let responseBody = { error: 'Internal Server Error: Encountered an unknown error' };
 
@@ -15,15 +14,13 @@ export default async (req, res) => {
     return res;
   }
 
-  if (req.method === 'PUT') {
+  if (req.method === 'POST') {
     try {
-      await firebase
-        .collection('submissions')
-        .doc(id)
-        .update({
-          ...JSON.parse(req.body),
-          updated: admin.firestore.FieldValue.serverTimestamp()
-        });
+      await firebase.collection('users').doc(JSON.parse(req.body).uid).set({
+        achievements: [],
+        openings: [],
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
+      });
 
       statusCode = 200;
       responseBody = { title: 'Success' };
@@ -35,21 +32,6 @@ export default async (req, res) => {
     res.statusCode = statusCode;
     res.json(responseBody);
     return;
-  }
-
-  try {
-    const doc = await firebase.collection('submissions').doc(id).get();
-
-    if (doc.exists) {
-      statusCode = 200;
-      responseBody = { title: 'Success', body: doc.data() };
-    } else {
-      statusCode = 404;
-      responseBody = { error: 'Not Found: Submission with this ID not found.' };
-    }
-  } catch (error) {
-    statusCode = 500;
-    responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };
   }
 
   res.statusCode = statusCode;

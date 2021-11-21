@@ -1,4 +1,8 @@
 @media (max-width: 550px) {
+  .button-component {
+    font-size: 24px;
+  }
+
   .home-subtitle-text {
     font-size: 14px !important;
   }

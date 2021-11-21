@@ -9,7 +9,8 @@ export const ChessboardContext = React.createContext();
 
 // GENERAL
 // Add version in footer (Add footer), and autoincrement on commit with GitHub actions
-// Update sitemap
+// Update sitemap dynamically
+// Serve icons from site instead of CDN? Serve consistent icons?
 
 // LEARN
 // TODO: toggle hints
@@ -26,9 +27,13 @@ export const ChessboardContext = React.createContext();
 // BUGS
 // TODO: react-tooltip on disabled buttons, need to wrap in div and add tooltip there
 // TODO: If you complete opening (openingComplete set) and go back, combined squares will no longer be set --> need to setOpeningComplete to false if go back into opening
+// TODO: sounds need more delay as not working on mobile
+// TODO: capture sound not always playing correctly
 
 // hovering over piece as computer moves, causes option squares not to show
 // - due to no moves being legal whilst waiting for CPU
+
+// https://stackoverflow.com/a/57353532
 
 export const useChessboard = () => useContext(ChessboardContext);
 

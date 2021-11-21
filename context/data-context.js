@@ -1,5 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import Cookies from 'js-cookie';
+import { onAuthStateChanged } from 'firebase/auth';
+
+import { auth } from '../firebase';
+
 export const DataContext = React.createContext();
 
 export const useData = () => useContext(DataContext);
@@ -8,8 +13,47 @@ export const DataProvider = ({ children }) => {
   const [openingGroups, setOpeningGroups] = useState();
   const [submissions, setSubmissions] = useState();
   const [traps, setTraps] = useState();
+  const [user, setUser] = useState();
+  const [userData, setUserData] = useState();
 
   const [loadingError, setLoadingError] = useState();
+
+  useEffect(() => {
+    async function createNewUserData(uid) {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({ uid })
+      });
+      const resJson = await response.json();
+      if (!response?.ok) {
+        setLoadingError(resJson.error);
+      }
+    }
+
+    async function fetchUserData(uid) {
+      const response = await fetch(`/api/users/${uid}`);
+      const resJson = await response.json();
+      if (response?.status === 200) {
+        setUserData(resJson.body);
+      } else if (response?.status === 404) {
+        createNewUserData(uid);
+      } else {
+        setLoadingError(resJson.error);
+      }
+    }
+
+    onAuthStateChanged(auth, (u) => {
+      if (u) {
+        Cookies.set('uid', JSON.stringify(u.uid), { expires: 1 });
+        setUser(u);
+        fetchUserData(u.uid);
+      } else {
+        Cookies.remove('uid');
+        setUser(null);
+        setUserData(null);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     async function fetchOpenings() {
@@ -43,6 +87,8 @@ export const DataProvider = ({ children }) => {
         openingGroups,
         submissions,
         traps,
+        user,
+        userData,
         setOpeningGroups,
         setSubmissions,
         setTraps,

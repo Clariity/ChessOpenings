@@ -1,4 +1,4 @@
-import firebase from '../../../firebaseConfig';
+import firebase from '../../../firebaseAdmin';
 import { sortOpeningsIntoGroups } from '../../../functions/helpers';
 
 export default async (req, res) => {

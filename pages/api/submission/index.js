@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import firebase from '../../../firebaseConfig';
+import firebase from '../../../firebaseAdmin';
 
 export default async (req, res) => {
   let statusCode = 500;
