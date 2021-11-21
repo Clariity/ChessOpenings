@@ -8,7 +8,7 @@
    ```
 3. Create a branch for your PR
    ```bash
-   git checkout -b your-branch-name
+   git checkout -b feature/cool-new-feature
    ```
 4. Set upstream remote
    ```bash
@@ -18,7 +18,7 @@
 6. Push your changes
    ```bash
    git add .
-   git commit -m "feature/cool-new-feature"
+   git commit -m "feature(cool-new-feature): cool new feature description"
    git push --set-upstream origin your-branch-name
    ```
 7. Create pull request on GitHub
