@@ -226,7 +226,7 @@ function NavbarAuthButton() {
         >
           <img
             className="rounded-full object-cover border-4 border-darker hover:border-2"
-            src={userData?.displayPictureURL || '/media/images/logo.png'}
+            src={userData?.displayPictureURL || '/media/images/default.png'}
             alt="default user"
             width={40}
             height={40}

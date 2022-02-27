@@ -26,7 +26,7 @@ export function UserProfileHeader({ contributions, loadedUser, setLoadedUser, su
       <div className="flex flex-col items-center sm:flex-row">
         <img
           className="rounded-lg sm:mr-8 object-cover"
-          src={loadedUser.displayPictureURL || '/media/images/logo.png'}
+          src={loadedUser.displayPictureURL || '/media/images/default.png'}
           alt="user profile picture"
           width={200}
           height={200}

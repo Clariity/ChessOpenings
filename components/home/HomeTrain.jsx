@@ -49,7 +49,7 @@ export function HomeTrain() {
       </VisibilitySensor>
       {userData && (
         <div className="flex lg:hidden m-2">
-          <LinkButton link="/user" fill>
+          <LinkButton link={`/user/${userData.uid}`} fill>
             View All Stats
           </LinkButton>
         </div>

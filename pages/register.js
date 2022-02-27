@@ -96,7 +96,7 @@ export default function Register() {
       </div>
 
       <div className="flex my-4">
-        <GoogleButton className="width-100 border-radius-4" type="light" onClick={handleGoogleSignIn} />
+        <GoogleButton className="w-full rounded-md" type="light" onClick={handleGoogleSignIn} />
       </div>
 
       <Splitter text="or" />

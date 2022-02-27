@@ -136,7 +136,7 @@ export function EditUserModal({ loadedUser, setLoadedUser, setShowModal }) {
               <h3 className="text-lg">Current/Preview</h3>
               <img
                 className="rounded-lg object-cover"
-                src={displayPictureURL || '/media/images/logo.png'}
+                src={displayPictureURL || '/media/images/default.png'}
                 alt="selected profile picture"
                 width={200}
                 height={200}
