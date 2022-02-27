@@ -1,6 +1,6 @@
 import { Chessboard } from '../components/chessboard/Chessboard';
-import { ChessboardProvider } from '../context/board-context';
-import { TrainSidePanel } from '../components/sidepanels/TrainSidePanel';
+import { ChessboardWrapper } from '../components/chessboard/ChessboardWrapper';
+import { TrainSidePanel } from '../components/train/TrainSidePanel';
 import { SEO } from '../components/utils/SEO';
 
 export default function Train() {
@@ -11,12 +11,10 @@ export default function Train() {
         title="train"
         path="/train"
       />
-      <div className="board-panel-container">
-        <ChessboardProvider>
-          <Chessboard id="trainChessboard" />
-          <TrainSidePanel />
-        </ChessboardProvider>
-      </div>
+      <ChessboardWrapper>
+        <Chessboard id="trainChessboard" />
+        <TrainSidePanel />
+      </ChessboardWrapper>
     </>
   );
 }

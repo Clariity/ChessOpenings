@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Chessboard as Board } from 'react-chessboard';
 
-import { ChessboardHeader } from './ChessboardHeader';
 import { chessPieces, start } from '../../data/consts';
 import { useChessboard } from '../../context/board-context';
 import { useChessboardSize } from '../../functions/hooks';
 import { useSettings } from '../../context/settings-context';
+import { ChessboardHeader } from './ChessboardHeader';
 
 export function Chessboard({ id }) {
   const {
@@ -23,6 +23,7 @@ export function Chessboard({ id }) {
   const { chessboardSize } = useChessboardSize();
   const { animationsOn, theme } = useSettings();
   const [showBoard, setShowBoard] = useState(false);
+
   const isContributeBoard = id === 'contributeChessboard';
   const customPieces = useMemo(() => chessPieces(theme?.value), [theme]);
   const arePiecesDraggable = !id.includes('Submission') && (id === 'contributeChessboard' || !!opening);
@@ -33,7 +34,11 @@ export function Chessboard({ id }) {
   }, []);
 
   return (
-    <div id="chessboard" className={`chessboard ${isContributeBoard ? '' : 'chessboard-pad'}`}>
+    <div
+      className={`flex flex-col items-center w-full ${
+        !isContributeBoard ? 'xl:w-8/12' : ''
+      } xl:px-4 mb-2 xl:mb-0 max-w-[80vh]`}
+    >
       {!isContributeBoard && <ChessboardHeader opening={opening} />}
       {showBoard && (
         <Board

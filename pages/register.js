@@ -1,52 +1,76 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
-
-import GoogleButton from 'react-google-button';
+import { useCallback, useEffect, useState } from 'react';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth';
+import Filter from 'bad-words';
+import GoogleButton from 'react-google-button';
+import Router from 'next/router';
 
-import Button from '../components/utils/Button';
-import Input from '../components/utils/Input';
 import { auth } from '../firebase';
-import { SEO } from '../components/utils/SEO';
-import { Splitter } from '../components/utils/Splitter';
 import { handleAuthErrorMessage } from '../functions/helpers';
+import { useData } from '../context/data-context';
+import { Button, LinkButton } from '../components/utils/Button';
+import { ErrorMessage } from '../components/utils/ErrorMessage';
+import { Input } from '../components/utils/Input';
+import { Splitter } from '../components/utils/Splitter';
+import { SEO } from '../components/utils/SEO';
 
 const provider = new GoogleAuthProvider();
 
 export default function Register() {
+  const { setTempDisplayName } = useData();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
-  const {
-    query: { redirect }
-  } = useRouter();
+  const wordFilter = new Filter();
+  const isDisabled =
+    !email ||
+    !password ||
+    password !== passwordConfirm ||
+    password.length < 8 ||
+    !displayName ||
+    displayName.length < 3 ||
+    displayName.toLowerCase().includes('admin') ||
+    wordFilter.isProfane(displayName);
+
+  const handleEmailAndPasswordRegister = useCallback(async () => {
+    setLoading(true);
+    setTempDisplayName(displayName);
+    try {
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      sendEmailVerification(user);
+      Router.push('/verify');
+    } catch (error) {
+      handleAuthErrorMessage(error.code, setError);
+    }
+    setLoading(false);
+  }, [displayName, email, password, setTempDisplayName]);
+
+  // Add event listeners
+  useEffect(() => {
+    function upHandler({ key }) {
+      if (key === 'Enter' && !isDisabled) {
+        handleEmailAndPasswordRegister();
+      }
+    }
+
+    window.addEventListener('keyup', upHandler);
+    return () => {
+      window.removeEventListener('keyup', upHandler);
+    };
+  }, [handleEmailAndPasswordRegister, isDisabled]);
 
   async function handleGoogleSignIn() {
     setLoading(true);
     try {
       await signInWithPopup(auth, provider);
-      Router.push(redirect || '/');
-    } catch (error) {
-      handleAuthErrorMessage(error.code, setError);
-    }
-    setLoading(false);
-  }
-
-  async function handleEmailAndPasswordRegister() {
-    setLoading(true);
-    try {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      sendEmailVerification(user);
-      Router.push(redirect || '/');
+      Router.push('/');
     } catch (error) {
       handleAuthErrorMessage(error.code, setError);
     }
@@ -54,78 +78,83 @@ export default function Register() {
   }
 
   return (
-    <div className="flex-column" style={{ maxWidth: '1044px' }}>
+    <div className="flex flex-col max-w-[512px] mb-10">
       <SEO description="Register with ChessOpenings.co.uk" title="register" path="/register" />
 
-      <div className="flex-column container-sm margin-auto-lr">
-        <div className="margin-auto-lr margin-20-t flex-column flex-align">
-          <Image
-            priority={true}
-            className="home-logo"
-            src="/media/images/logo2.png"
-            alt="Chess Openings Logo"
-            width={80}
-            height={80}
-          />
-          <h1 className="home-title-text">Register with ChessOpenings</h1>
-        </div>
-        <div style={{ textAlign: 'justify' }}>
-          <p>Register an account with ChessOpenings to gain access to more features. Such as:</p>
-          <ul>
-            <li>Earn achievements</li>
-            <li>Track learned openings</li>
-            <li>Track pass rate</li>
-          </ul>
-        </div>
+      <div className="flex flex-col items-center my-8">
+        <img className="rounded-lg" src="/media/images/logo.png" alt="Chess Openings Logo" width={80} height={80} />
+        <h1 className="text-xl xs:text-2xl sm:text-3xl mt-4">Register with ChessOpenings.co.uk</h1>
+      </div>
 
-        {error && <p className="text-align-center">Error: {error}</p>}
+      <div className="pb-4">
+        <p className="pb-4">Register an account with ChessOpenings to gain access to more features. Such as:</p>
+        <ul className="list-disc list-inside">
+          <li className="ml-4">Earn achievements</li>
+          <li className="ml-4">Track learned openings and openings statistics</li>
+          <li className="ml-4">Attribution for contributed openings</li>
+        </ul>
+      </div>
 
-        <Input
-          label="Email"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          customStyles={{ marginBottom: '10px' }}
-        />
-        <Input
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          customStyles={{ marginBottom: '10px' }}
-        />
-        <Input
-          label="Confirm Password"
-          type="password"
-          value={passwordConfirm}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-          customStyles={{ marginBottom: '20px' }}
-        />
-        <Button
-          onClick={handleEmailAndPasswordRegister}
-          text={loading ? 'Loading' : 'Register'}
-          customStyles={{ marginBottom: '40px', marginTop: '20px' }}
-          disabled={!email || !password || password !== passwordConfirm}
-        />
-        <Splitter text="or" />
-        <div className="flex flex-justify margin-20-tb">
-          <GoogleButton className="width-100 border-radius-4" type="light" onClick={handleGoogleSignIn} />
-        </div>
+      <div className="flex my-4">
+        <GoogleButton className="width-100 border-radius-4" type="light" onClick={handleGoogleSignIn} />
+      </div>
 
-        <h1 className="margin-40-t">Already have an account?</h1>
-        <Link href="/sign-in">
-          <Button text="Sign In" customStyles={{ marginBottom: '40px', marginTop: '20px' }} />
-        </Link>
+      <Splitter text="or" />
+
+      <div className="mt-4" />
+      {error && <ErrorMessage message={error} />}
+      <Input
+        autoFocus
+        id="email-input"
+        label="Email"
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <Input
+        id="password-input"
+        label="Password (Minimum 8 characters)"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <Input
+        id="confirm-input"
+        label="Confirm Password"
+        type="password"
+        value={passwordConfirm}
+        onChange={(e) => setPasswordConfirm(e.target.value)}
+      />
+      <Input
+        id="name-input"
+        label="Display Name"
+        type="text"
+        value={displayName}
+        onChange={(e) => setDisplayName(e.target.value)}
+      />
+      <div className="my-4">
+        <Button disabled={isDisabled} fill onClick={handleEmailAndPasswordRegister}>
+          {loading ? 'Loading' : 'Register'}
+        </Button>
+      </div>
+
+      <Splitter />
+
+      <h2 className="text-center text-xl my-4">Already have an account?</h2>
+      <div className="mb-8">
+        <LinkButton link="/sign-in" fill>
+          Sign In
+        </LinkButton>
       </div>
     </div>
   );
 }
 
 export async function getServerSideProps(ctx) {
-  const uid = ctx.req.cookies?.uid;
+  const idToken = ctx.req.cookies?.idToken;
 
   // user is already signed in so redirect back to home page
-  if (uid) {
+  if (idToken) {
     return {
       redirect: {
         permanent: false,

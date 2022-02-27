@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-
-import CookieWarning from '../components/utils/CookieWarning';
-import Navbar from '../components/navbar/Navbar';
 import { analytics } from '../firebase';
+
+import { CookieWarning } from '../components/utils/CookieWarning';
 import { DataProvider } from '../context/data-context';
+import { Footer } from '../components/footer/Footer';
+import { Navbar } from '../components/navbar/Navbar';
 import { SettingsProvider } from '../context/settings-context';
 
 import '../styles/globals.css';
@@ -12,11 +13,9 @@ function MyApp({ Component, pageProps }) {
   const [showCookieWarning, setShowCookieWarning] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const showWarning = window.localStorage.getItem('cookieWarning');
-      setShowCookieWarning(showWarning === null);
-      analytics();
-    }
+    const showWarning = window.localStorage.getItem('cookieWarning');
+    setShowCookieWarning(showWarning === null);
+    analytics();
   }, []);
 
   function handleCookieWarning() {
@@ -27,19 +26,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <DataProvider>
       <SettingsProvider>
-        <div className="app">
+        <div className="bg-dark text-primary flex flex-col overflow-x-hidden">
           <Navbar />
-          <div className="main">
+          <div className="flex justify-center px-2 lg:min-h-[80vh]">
             <Component {...pageProps} />
           </div>
-          {showCookieWarning && (
-            <CookieWarning
-              onConfirm={handleCookieWarning}
-              text="This site uses local storage and cookies to improve the user experience and provide some functionality. By continuing to use the site you agree that you are comfortable with this. Information about what is stored is listed on the help page."
-              buttonText="Got it"
-              customButtonStyles={{ maxWidth: '300px', marginTop: '10px', textAlign: 'center' }}
-            />
-          )}
+          <Footer />
+          {showCookieWarning && <CookieWarning onConfirm={handleCookieWarning} />}
         </div>
       </SettingsProvider>
     </DataProvider>

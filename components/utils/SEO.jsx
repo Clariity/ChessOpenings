@@ -39,12 +39,6 @@ export function SEO({ description, title, image, path }) {
 
       <link rel="icon" href="/favicon.ico" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link rel="preconnect" href="https://maxst.icons8.com" />
-      <link
-        rel="stylesheet"
-        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
-      ></link>
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400&display=swap" rel="stylesheet" />
 
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

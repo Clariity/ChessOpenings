@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { OpeningGroup } from '../learn/OpeningGroup';
-import OpeningTabs from '../learn/OpeningTabs';
-import Search from '../utils/Search';
+import { OpeningTabs } from '../learn/OpeningTabs';
+import { Search } from '../utils/Search';
 
-export default function OpeningsList({ groups, type }) {
+export function OpeningsList({ groups, type }) {
   const [searchInput, setSearchInput] = useState('');
   const [tab, setTab] = useState('');
 
@@ -19,17 +19,20 @@ export default function OpeningsList({ groups, type }) {
 
   return (
     <>
-      <OpeningTabs tab={tab} setTab={setTab} />
-      <Search
-        onChange={(e) => setSearchInput(e.target.value)}
-        placeholder={`Search Chess Opening${type === 'learn' ? 's' : ' Traps'} by Name`}
-        value={searchInput}
-      />
-      <div className="flex-row flex-wrap">
-        {filteredOpeningGroups.length > 0 ? (
+      <div className="flex flex-col">
+        <OpeningTabs tab={tab} setTab={setTab} />
+        <Search
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder={`Search Chess Opening${type === 'learn' ? 's' : ' Traps'} by Name`}
+          value={searchInput}
+        />
+      </div>
+
+      <div className="flex flex-wrap mb-4">
+        {filteredOpeningGroups?.length > 0 ? (
           filteredOpeningGroups.map((g) => <OpeningGroup key={g.label} group={g} type={type} />)
         ) : (
-          <div className="pad-10-lr">No results</div>
+          <div className="px-4">No results</div>
         )}
       </div>
     </>

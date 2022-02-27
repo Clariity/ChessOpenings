@@ -1,57 +1,67 @@
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-import Button from '../utils/Button';
-import Modal from '../utils/Modal';
+import { share } from '../../data/icons';
+import { Button, LinkButton } from '../utils/Button';
+import { Modal } from '../utils/Modal';
+import { SVG } from '../utils/SVG';
 
-export default function ResultModal({ setShowResultModal, result }) {
-  const router = useRouter();
+export function ResultModal({ setShowResultModal, result }) {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (copied) {
+      navigator.clipboard.writeText(`https://chessopenings.co.uk/submissions/${result.id}`);
+    }
+  }, [copied, result]);
 
   return (
     <Modal title="Contribute" onClose={() => setShowResultModal(false)}>
-      {result.id ? (
-        <>
-          <h1 style={{ marginTop: '0px' }}>Submission Successful</h1>
-          <p>It will now be reviewed by an admin and either accepted or rejected.</p>
-          <p>Here is a permanent link to your submission so you can track its progress:</p>
+      {result?.id ? (
+        <div className="flex flex-col">
+          <h2 className="text-xl mb-4">Submission Successful</h2>
+          <p className="mb-4">It will now be reviewed by an admin and either accepted or rejected.</p>
+          <p className="mb-4">
+            Here is a permanent link to your submission so you can track its progress. Copy it down somewhere safe:
+          </p>
+
+          <div className="text-center p-2 mb-4 bg-darkest rounded-md">
+            {`https://chessopenings.co.uk/submissions/${result.id}`}
+          </div>
+          <div className="mb-4 mx-auto" onClick={() => setCopied(!copied)}>
+            <Button>
+              <SVG icon={share} marginRight={2} size={24} />
+              {copied ? 'Copied' : 'Click to Copy'}
+            </Button>
+          </div>
+
+          <p className="mb-4">
+            Keep track of your submissions easier and see Admin comments by joining the ChessOpenings Discord Server.
+            Click the Discord logo below to join!
+          </p>
           <a
-            style={{ textAlign: 'center' }}
-            href={`/submissions/${result.id}`}
-          >{`https://chessopenings.co.uk/submissions/${result.id}`}</a>
-          <div className="help-social">
-            <p className="text-align-left">
-              Keep track of your submissions easier and see Admin comments by joining the ChessOpenings Discord Server.
-              Click on the Discord logo to join.
-            </p>
-            <a
-              className="flex-column flex-align flex-justify help-social-link"
-              href="https://discord.gg/xKYtamwV8p"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img className="twitter" src="/media/images/discord.png" alt="Discord" />
-              ChessOpenings Discord Server
-            </a>
+            className="flex flex-col items-center"
+            href="https://discord.gg/xKYtamwV8p"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="mb-4 w-24" src="/media/images/discord.png" alt="Discord" />
+            ChessOpenings Discord Server
+          </a>
+
+          <div className="mt-8 mb-4 flex justify-evenly">
+            <Button onClick={() => setShowResultModal(false)}>Submit Another</Button>
+            <LinkButton link={`/submissions/${result.id}`}>View Submission</LinkButton>
           </div>
-          <div style={{ marginTop: 'auto' }}>
-            <Button
-              onClick={() => setShowResultModal(false)}
-              text="Submit Another"
-              customStyles={{ marginTop: '20px', marginBottom: '10px' }}
-            />
-            <Button onClick={() => router.push(`/submissions/${result.id}`)} text="View Submission" />
-          </div>
-        </>
+        </div>
       ) : (
-        <>
-          <h1 style={{ marginTop: '0px' }}>Submission Failed</h1>
-          <p>Something went wrong with your submission, please try again later:</p>
-          <p>{result.error}</p>
-          <Button
-            onClick={() => setShowResultModal(false)}
-            text="Close"
-            customStyles={{ marginTop: 'auto', marginBottom: '10px' }}
-          />
-        </>
+        <div className="flex flex-col">
+          <h2 className="text-xl mb-4">Submission Failed</h2>
+          <p className="mb-4">Something went wrong with your submission, please try again later:</p>
+          <p className="mb-4">{result?.error}</p>
+          <div className="mt-auto">
+            <Button onClick={() => setShowResultModal(false)}>Close</Button>
+          </div>
+        </div>
       )}
     </Modal>
   );

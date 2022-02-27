@@ -1,4 +1,4 @@
-import firebase from '../../../firebaseAdmin';
+import { storage } from '../../../firebaseAdmin';
 
 export default async (req, res) => {
   let statusCode = 500;
@@ -15,10 +15,9 @@ export default async (req, res) => {
 
   try {
     const submissions = [];
-    const querySnapshot = await firebase.collection('submissions').get();
+    const querySnapshot = await storage.collection('submissions').get();
     querySnapshot.forEach((doc) => submissions.push(doc.data()));
-
-    const sortedSubmissions = submissions.sort((a, b) => (a.timestamp.toDate() > b.timestamp.toDate() ? -1 : 1));
+    const sortedSubmissions = submissions.sort((a, b) => (a.timestamp._seconds > b.timestamp._seconds ? -1 : 1));
     statusCode = 200;
     responseBody = { title: 'Success', body: sortedSubmissions };
   } catch (error) {

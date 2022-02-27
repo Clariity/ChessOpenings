@@ -1,8 +1,8 @@
-export function LoadingSpinner({ customStyles, img, text }) {
+export function LoadingSpinner({ img, text }) {
   return (
-    <div className="loading-spinner-component" style={customStyles}>
-      <div className="loading-spinner">{img}</div>
-      <b className="loading-spinner-text">{text}</b>
+    <div className="flex flex-col items-center my-auto">
+      <div className="animate-spinner">{img}</div>
+      <p className="text-center mt-4">{text}</p>
     </div>
   );
 }

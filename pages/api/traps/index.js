@@ -1,4 +1,4 @@
-import firebase from '../../../firebaseAdmin';
+import { storage } from '../../../firebaseAdmin';
 
 export default async (req, res) => {
   let statusCode = 500;
@@ -15,21 +15,21 @@ export default async (req, res) => {
 
   try {
     const traps = [];
-    const querySnapshot = await firebase.collection('traps').get();
+    const querySnapshot = await storage.collection('traps').get();
     querySnapshot.forEach((doc) => traps.push(doc.data()));
 
-    const trapGroups = traps.reduce((accumalator, current) => {
+    const trapGroups = traps.reduce((accumulator, current) => {
       const groupLabel = current.label.split(':')[0];
-      const groupIndex = accumalator.findIndex((group) => group.label === groupLabel);
+      const groupIndex = accumulator.findIndex((group) => group.label === groupLabel);
       if (groupIndex > -1) {
-        accumalator[groupIndex].options.push(current);
+        accumulator[groupIndex].options.push(current);
       } else {
-        accumalator.push({
+        accumulator.push({
           label: groupLabel,
           options: [current]
         });
       }
-      return accumalator;
+      return accumulator;
     }, []);
 
     const sortedTrapGroups = trapGroups

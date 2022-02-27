@@ -1,93 +1,85 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { auth } from '../../../firebaseAdmin';
 
-import firebase from '../../../firebaseAdmin';
-import Button from '../../../components/utils/Button';
-import SubmissionCard from '../../../components/submissions/SubmissionCard';
-import { SEO } from '../../../components/utils/SEO';
+import { contributeOutlined } from '../../../data/icons';
 import { useData } from '../../../context/data-context';
+import { Button } from '../../../components/utils/Button';
+import { Header } from '../../../components/utils/Header';
+import { SubmissionCard } from '../../../components/submission/SubmissionCard';
+import { SEO } from '../../../components/utils/SEO';
 
 export default function Submissions() {
-  const { loadingError, submissions, setSubmissions, setLoadingError } = useData();
+  const { loadingError, submissions } = useData();
   const [page, setPage] = useState(0);
+
   const PAGE_SIZE = 5;
   const lowerLimit = page * PAGE_SIZE;
   const higherLimit = page * PAGE_SIZE + PAGE_SIZE;
 
-  useEffect(() => {
-    async function fetchSubmissions() {
-      try {
-        const response = await fetch('/api/submissions');
-        const submissions = await response.json();
-        if (response?.status === 200) {
-          setSubmissions(submissions.body);
-        } else {
-          setLoadingError(submissions.error);
-        }
-      } catch (error) {
-        setLoadingError(error);
-      }
-    }
-    if (!submissions) fetchSubmissions();
-  }, [submissions, setLoadingError, setSubmissions]);
+  const totalSubmissions = submissions?.length || 'Loading';
+  const mergedSubmissions = submissions?.filter((s) => s.status === 'MERGED').length || 'Loading';
+  const openSubmissions = submissions?.filter((s) => s.status === 'OPEN').length || 'Loading';
 
   if (loadingError) {
-    return <div>Error</div>;
+    return <div>{JSON.stringify(loadingError)}</div>;
   }
 
   return (
-    <div className="flex-column" style={{ maxWidth: '1044px', width: '100%' }}>
+    <div className="container flex flex-col">
       <SEO description="Admin Submissions" title="submissions" path="/admin/submissions" />
-      <h1 className="page-title">Submissions</h1>
+      <Header icon={contributeOutlined} heading="Submissions" />
+
+      <div className="flex mb-4">
+        <div className="flex justify-center w-1/3 text-xl">Total: {totalSubmissions}</div>
+        <div className="flex justify-center w-1/3 text-xl">Merged: {mergedSubmissions}</div>
+        <div className="flex justify-center w-1/3 text-xl">Open: {openSubmissions}</div>
+      </div>
+
       {submissions?.map(
-        (s, i) =>
-          lowerLimit <= i &&
-          i < higherLimit && <SubmissionCard index={i + 1 /* submissions.length - i */} key={s.id} submission={s} />
+        (s, i) => lowerLimit <= i && i < higherLimit && <SubmissionCard index={i + 1} key={s.id} submission={s} />
       )}
-      <div>
-        <Button
-          onClick={() => setPage((oldPage) => oldPage - 1)}
-          text="Prev Page"
-          customStyles={{ marginBottom: '40px', marginTop: '20px' }}
-          disabled={page === 0}
-        />
-        <Button
-          onClick={() => setPage((oldPage) => oldPage + 1)}
-          text="Next Page"
-          customStyles={{ marginBottom: '40px', marginTop: '20px' }}
-          disabled={page === Math.floor(submissions?.length / PAGE_SIZE)}
-        />
+
+      <div className="flex my-4">
+        <div className="mr-2 w-full">
+          <Button fill onClick={() => setPage((oldPage) => oldPage - 1)} disabled={page === 0}>
+            Prev Page
+          </Button>
+        </div>
+        <div className="mr-l w-full">
+          <Button
+            fill
+            onClick={() => setPage((oldPage) => oldPage + 1)}
+            disabled={page === Math.floor(submissions?.length / PAGE_SIZE)}
+          >
+            Next Page
+          </Button>
+        </div>
       </div>
     </div>
   );
 }
 
 export async function getServerSideProps(ctx) {
-  const adminToken = ctx.req.cookies?.adminToken;
+  const idToken = ctx.req.cookies?.idToken;
+  const redirect = {
+    redirect: {
+      permanent: false,
+      destination: '/404'
+    }
+  };
 
-  // allow session if token provided and update stored tokens
-  if (adminToken) {
-    // get all tokens from firebase
-    const querySnapshot = await firebase.collection('tokens').get();
-    // for each token, if they have expired delete them
-    const validTokens = [];
-    querySnapshot.forEach((doc) => {
-      if (doc.data().expires < Date.now()) {
-        firebase.collection('tokens').doc(doc.id).delete();
-      } else validTokens.push(doc.id);
-    });
-    // check if adminToken remains
-    if (validTokens.includes(JSON.parse(adminToken).id)) {
+  if (!idToken) return redirect;
+  try {
+    const parsedToken = JSON.parse(ctx.req.cookies?.idToken);
+    const decodedToken = await auth.verifyIdToken(parsedToken);
+    const uid = decodedToken.uid;
+    if (uid === process.env.ADMIN_UID) {
       return {
         props: {}
       };
     }
+    return redirect;
+  } catch (error) {
+    return redirect;
   }
-
-  // if no token or invalid token, redirect to login
-  return {
-    redirect: {
-      permanent: false,
-      destination: '/admin/login'
-    }
-  };
 }

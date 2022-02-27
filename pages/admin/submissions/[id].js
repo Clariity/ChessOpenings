@@ -1,50 +1,42 @@
-import firebase from '../../../firebaseAdmin';
+import { auth } from '../../../firebaseAdmin';
 import { Chessboard } from '../../../components/chessboard/Chessboard';
-import { ChessboardProvider } from '../../../context/board-context';
-import { SubmissionSidePanel } from '../../../components/sidepanels/SubmissionSidePanel';
+import { ChessboardWrapper } from '../../../components/chessboard/ChessboardWrapper';
+import { SubmissionSidePanel } from '../../../components/submission/SubmissionSidePanel';
 import { SEO } from '../../../components/utils/SEO';
 
 export default function Submission() {
   return (
-    <div>
+    <>
       <SEO description="Community Submission to ChessOpenings.co.uk" title="submission" path="/submissions" />
-      <div className="board-panel-container">
-        <ChessboardProvider>
-          <Chessboard id="adminSubmissionChessboard" />
-          <SubmissionSidePanel />
-        </ChessboardProvider>
-      </div>
-    </div>
+      <ChessboardWrapper>
+        <Chessboard id="adminSubmissionChessboard" />
+        <SubmissionSidePanel />
+      </ChessboardWrapper>
+    </>
   );
 }
 
 export async function getServerSideProps(ctx) {
-  const adminToken = ctx.req.cookies?.adminToken;
+  const idToken = ctx.req.cookies?.idToken;
   const redirect = {
     redirect: {
       permanent: false,
-      destination: '/admin/login'
+      destination: '/404'
     }
   };
 
-  // allow session if token provided and update stored tokens
-  if (adminToken) {
-    // get all tokens from firebase
-    const querySnapshot = await firebase.collection('tokens').get();
-    // for each token, if they have expired delete them
-    const validTokens = [];
-    querySnapshot.forEach((doc) => {
-      if (doc.data().expires < Date.now()) {
-        firebase.collection('tokens').doc(doc.id).delete();
-      } else validTokens.push(doc.id);
-    });
-    // check if adminToken remains
-    if (validTokens.includes(JSON.parse(adminToken).id)) {
+  if (!idToken) return redirect;
+  try {
+    const parsedToken = JSON.parse(ctx.req.cookies?.idToken);
+    const decodedToken = await auth.verifyIdToken(parsedToken);
+    const uid = decodedToken.uid;
+    if (uid === process.env.ADMIN_UID) {
       return {
         props: {}
       };
     }
+    return redirect;
+  } catch (error) {
+    return redirect;
   }
-
-  return redirect;
 }

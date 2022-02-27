@@ -16,4 +16,5 @@ try {
   }
 }
 
-export default admin.firestore();
+export const auth = admin.auth();
+export const storage = admin.firestore();

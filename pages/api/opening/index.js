@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
-import firebase from '../../../firebaseAdmin';
+
+import { auth, storage } from '../../../firebaseAdmin';
 
 export default async (req, res) => {
   let statusCode = 500;
@@ -15,41 +16,25 @@ export default async (req, res) => {
   }
 
   // check admin token
-  const adminToken = req.cookies?.adminToken;
-  let tokenVerified = false;
-
-  // allow session if token provided and update stored tokens
-  if (adminToken) {
-    // get all tokens from firebase
-    const querySnapshot = await firebase.collection('tokens').get();
-    // for each token, if they have expired delete them
-    const validTokens = [];
-    querySnapshot.forEach((doc) => {
-      if (doc.data().expires < Date.now()) {
-        firebase.collection('tokens').doc(doc.id).delete();
-      } else validTokens.push(doc.id);
-    });
-    // check if adminToken remains
-    if (validTokens.includes(JSON.parse(adminToken).id)) {
-      tokenVerified = true;
-    }
+  const idToken = JSON.parse(req.cookies?.idToken);
+  const decodedToken = await auth.verifyIdToken(idToken);
+  const uid = decodedToken.uid;
+  if (uid !== process.env.ADMIN_UID) {
+    res.statusCode = 401;
+    res.json({ error: 'Unauthorized: Invalid Token.' });
+    return;
   }
 
-  if (tokenVerified) {
-    try {
-      await firebase.collection('openings').add({
-        ...JSON.parse(req.body),
-        timestamp: admin.firestore.FieldValue.serverTimestamp()
-      });
-      statusCode = 200;
-      responseBody = { title: 'Success' };
-    } catch (error) {
-      statusCode = 500;
-      responseBody = { error: `Internal Server Error: Error updating Firestore. ${error.message}` };
-    }
-  } else {
-    statusCode = 401;
-    responseBody = { error: 'Unauthorized: Invalid Token.' };
+  try {
+    await storage.collection('openings').add({
+      ...JSON.parse(req.body),
+      timestamp: admin.firestore.FieldValue.serverTimestamp()
+    });
+    statusCode = 200;
+    responseBody = { title: 'Success' };
+  } catch (error) {
+    statusCode = 500;
+    responseBody = { error: `Internal Server Error: Error updating Firestore. ${error.message}` };
   }
 
   res.statusCode = statusCode;

@@ -1,3 +1,5 @@
+import { OPENING_GRADES } from '../data/consts';
+
 export function sortOpeningsIntoGroups(openings) {
   const openingGroups = openings.reduce((acc, current) => {
     const groupLabel = current.label.split(':')[0];
@@ -64,7 +66,52 @@ export function handleAuthErrorMessage(code, setter) {
     case 'auth/weak-password':
       setter('Password must be a string with at least six characters');
       break;
+    case 'auth/expired-action-code':
+      setter('Action code from email has expired. Please get a new link and try again');
+      break;
+    case 'auth/invalid-action-code':
+      setter('Invalid code supplied');
+      break;
     default:
       setter(code);
+  }
+}
+
+export function getGradeData(successes) {
+  let gradeAchievedIndex = 0;
+  let distanceToNextGrade = 0;
+  const successThresholds = Object.values(OPENING_GRADES);
+
+  for (let i = 0; i < successThresholds.length; i++) {
+    if (successes >= successThresholds[i]) {
+      gradeAchievedIndex = i;
+    } else {
+      distanceToNextGrade = successThresholds[i] - successes;
+      break;
+    }
+  }
+
+  return { gradeAchievedIndex, distanceToNextGrade };
+}
+
+export function scrollIntoView(parent, child, scrollToTop) {
+  const parentRect = parent.getBoundingClientRect();
+  const parentViewableArea = {
+    height: parent.clientHeight,
+    width: parent.clientWidth
+  };
+  const childRect = child.getBoundingClientRect();
+  const scrollTop = childRect.top - parentRect.top;
+  const scrollBot = childRect.bottom - parentRect.bottom;
+
+  if (scrollToTop) {
+    parent.scrollTo({ top: parent.scrollTop + scrollTop - 34, behavior: 'smooth' });
+    return;
+  }
+
+  if (Math.abs(scrollTop) < Math.abs(scrollBot)) {
+    parent.scrollTo({ top: parent.scrollTop + (scrollTop - parentViewableArea.height / 2), behavior: 'smooth' });
+  } else {
+    parent.scrollTo({ top: parent.scrollTop + (scrollBot + parentViewableArea.height / 2), behavior: 'smooth' });
   }
 }

@@ -1,7 +1,9 @@
+import { trapsOutlined } from '../data/icons';
 import { useData } from '../context/data-context';
+import { Header } from '../components/utils/Header';
 import { LoadingSpinner } from '../components/utils/LoadingSpinner';
+import { OpeningsList } from '../components/learn/OpeningsList';
 import { SEO } from '../components/utils/SEO';
-import OpeningsList from '../components/learn/OpeningsList';
 
 export default function Traps() {
   const { traps, loadingError } = useData();
@@ -12,31 +14,30 @@ export default function Traps() {
   }
 
   return (
-    <div className="flex-column container">
+    <div className="container flex flex-col">
       <SEO
         description="Learn tricky opening traps that may catch your opponent off guard if they don't know how to correctly respond. Make sure you don't get caught out by them either."
         title="traps"
         path="/traps"
       />
-      <h1 className="page-title pad-10-lr flex-row flex-align">
-        <i className="las la-compress-arrows-alt learn-title-icon" />
-        Learn Opening Traps
-      </h1>
+      <Header icon={trapsOutlined} heading="Learn Opening Traps" />
       {traps ? (
         <OpeningsList groups={traps} type="traps" />
       ) : (
-        <LoadingSpinner
-          img={
-            <img
-              className="navbar-logo-image"
-              src="/media/images/logo2.png"
-              alt="Chess Openings Logo"
-              width={100}
-              height={100}
-            />
-          }
-          text="Loading..."
-        />
+        <div className="flex justify-center h-full">
+          <LoadingSpinner
+            img={
+              <img
+                className="rounded-md"
+                src="/media/images/logo.png"
+                alt="Chess Openings Logo"
+                width={100}
+                height={100}
+              />
+            }
+            text="Loading..."
+          />
+        </div>
       )}
     </div>
   );
