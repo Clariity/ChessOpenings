@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { sendEmailVerification } from 'firebase/auth';
 
-import { auth } from '../../firebase';
 import { useData } from '../../context/data-context';
 import { Button, WarningButton } from '../utils/Button';
 import { ErrorMessage } from '../utils/ErrorMessage';
@@ -15,7 +14,7 @@ export function VerifyEmailModal({ setShowModal }) {
   async function handleSubmit() {
     try {
       setEmailSent(true);
-      await sendEmailVerification(auth, user?.email);
+      sendEmailVerification(user);
     } catch (error) {
       setRequestError(error.message);
     }
