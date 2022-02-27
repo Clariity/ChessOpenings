@@ -1,14 +1,18 @@
-export default function Search({ customStyles, id, maxLength = 255, onChange, placeholder, value }) {
+import { search } from '../../data/icons';
+import { SVG } from './SVG';
+
+export function Search({ id, maxLength = 255, onChange, placeholder, value }) {
   return (
-    <div className="search-component">
-      <span className="las la-search search-icon"></span>
+    <div className="my-4 relative">
+      <span className="absolute p-2">
+        <SVG icon={search} size={24} />
+      </span>
       <input
         id={id}
-        className="search-input"
+        className=" bg-darker w-full pl-10 rounded-md leading-10"
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        style={customStyles}
         type="text"
         maxLength={maxLength}
       />

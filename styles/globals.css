@@ -1,71 +1,87 @@
-@import './burger.css';
-@import './chessboard.css';
-@import './components.css';
-@import './contribute.css';
-@import './help.css';
-@import './home.css';
-@import './learn.css';
-@import './navbar.css';
-@import './panel.css';
-@import './responsive.css';
-@import './submissions.css';
-@import './utilities.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --primary-bg: #383635;
   --secondary-bg: #2a2a2a;
-  --tertiary-bg: #0f0f0f;
-  --tertiary-bg-hover: #444444;
-
-  --primary-fg: #e0e0e0;
   --secondary-fg: #b58863;
-  --link-fg: #95c068;
 }
 
 html,
 body {
-  margin: 0;
   font-family: 'Lexend', sans-serif;
   font-size: 16px;
-  background-color: var(--primary-bg);
-  color: var(--primary-fg);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.panel-select {
+  color: black;
+  margin-bottom: 10px;
+}
+.panel-select > div > div:nth-of-type(1) > div:nth-of-type(1) {
+  min-height: 50px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-.link {
-  text-decoration: underline;
+/* Hide Default Radio Input */
+[type='radio']:checked,
+[type='radio']:not(:checked) {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+/* Label */
+[type='radio']:checked + label,
+[type='radio']:not(:checked) + label {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+}
+/* Radio Box */
+[type='radio']:checked + label:before,
+[type='radio']:not(:checked) + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ffffff;
+  border-radius: 100%;
+  background: #ffffff;
+}
+/* Selected Radio Box */
+[type='radio']:checked + label:after,
+[type='radio']:not(:checked) + label:after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--secondary-fg);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+/* Hide when not checked */
+[type='radio']:not(:checked) + label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+/* Show when checked */
+[type='radio']:checked + label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
 }
 
 p {
   line-height: 28px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.app {
-  background-color: var(--primary-bg);
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-  overflow-x: hidden;
-}
-
-.main {
-  min-height: calc(100vh - 80px);
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: row;
-  justify-content: center;
-  -webkit-justify-content: center;
-  /* align-items: center;
-  -webkit-align-items: center; */
-  padding: 10px;
 }
 
 *::-webkit-scrollbar {

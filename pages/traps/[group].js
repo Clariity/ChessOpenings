@@ -1,6 +1,6 @@
 import { Chessboard } from '../../components/chessboard/Chessboard';
-import { ChessboardProvider } from '../../context/board-context';
-import { TrapsSidePanel } from '../../components/sidepanels/TrapsSidePanel';
+import { ChessboardWrapper } from '../../components/chessboard/ChessboardWrapper';
+import { TrapsSidePanel } from '../../components/traps/TrapsSidePanel';
 import { SEO } from '../../components/utils/SEO';
 
 // TODO: custom SEO for each group (custom SEO image too?)
@@ -13,12 +13,10 @@ export default function Group() {
         title="traps"
         path="/traps"
       />
-      <div className="board-panel-container">
-        <ChessboardProvider>
-          <Chessboard id="trapsChessboard" />
-          <TrapsSidePanel />
-        </ChessboardProvider>
-      </div>
+      <ChessboardWrapper>
+        <Chessboard id="trapsChessboard" />
+        <TrapsSidePanel />
+      </ChessboardWrapper>
     </>
   );
 }

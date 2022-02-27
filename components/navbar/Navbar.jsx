@@ -1,62 +1,42 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 
-import SmoothCollapse from 'react-smooth-collapse';
+import { NavbarBurgerMenu, NavbarCenterLinks, NavbarEndLinks, NavbarLogo } from './NavbarComponents';
+import { SettingsModal } from '../modals/SettingsModal';
 
-import SettingsModal from '../modals/SettingsModal';
-import NavbarDisplayLinks from './NavbarDisplayLinks';
-import NavbarMenuLinks from './NavbarMenuLinks';
-import { useWindowSize } from '../../functions/hooks';
-import MenuButton from './MenuButton';
-
-export default function Navbar() {
-  const window = useWindowSize();
-  const { pathname } = useRouter();
-
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [showModal, setShowModal] = React.useState(false);
-
-  function getSubTitle() {
-    return <span className="navbar-logo-text-subtitle">{pathname.split('/')?.[1] || 'home'}</span>;
-  }
+export function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   return (
-    <div className="navbar">
-      {window && (
-        <div className="navbar-display">
-          <div className="navbar-logo-container">
-            <Link href="/">
-              <div className="navbar-logo">
-                <Image
-                  priority={true}
-                  className="navbar-logo-image"
-                  src="/media/images/logo2.png"
-                  alt="Chess Openings Logo"
-                  width={window <= 550 ? 30 : 60}
-                  height={window <= 550 ? 30 : 60}
-                />
-                <h1 className="navbar-logo-text">ChessOpenings • {getSubTitle()}</h1>
-              </div>
-            </Link>
-          </div>
-
-          {window <= 1600 ? (
-            <div className="navbar-menu-button">
-              <MenuButton menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-            </div>
-          ) : (
-            <NavbarDisplayLinks setMenuOpen={setMenuOpen} setShowModal={setShowModal} showModal={showModal} />
-          )}
+    <>
+      <div className="flex flex-col items-center bg-darker z-20">
+        <div className="mx-auto container flex items-center w-full">
+          <NavbarLogo />
+          <NavbarCenterLinks />
+          <NavbarEndLinks
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+            setShowSettingsModal={setShowSettingsModal}
+            showSettingsModal={showSettingsModal}
+          />
         </div>
+        <div className="w-full">
+          <NavbarBurgerMenu
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+            setShowSettingsModal={setShowSettingsModal}
+            showSettingsModal={showSettingsModal}
+          />
+        </div>
+
+        {showSettingsModal && <SettingsModal setShowSettingsModal={setShowSettingsModal} />}
+      </div>
+      {menuOpen && (
+        <div
+          className="w-full h-full fixed top-0 left-0 z-10 bg-darkest opacity-90"
+          onClick={() => setMenuOpen(false)}
+        />
       )}
-
-      <SmoothCollapse expanded={menuOpen}>
-        <NavbarMenuLinks setMenuOpen={setMenuOpen} setShowModal={setShowModal} showModal={showModal} />
-      </SmoothCollapse>
-
-      {showModal && <SettingsModal setShowModal={setShowModal} />}
-    </div>
+    </>
   );
 }

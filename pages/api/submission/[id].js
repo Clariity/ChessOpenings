@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
-import firebase from '../../../firebaseConfig';
+
+import { auth, storage } from '../../../firebaseAdmin';
 
 export default async (req, res) => {
   const { id } = req.query;
@@ -16,8 +17,18 @@ export default async (req, res) => {
   }
 
   if (req.method === 'PUT') {
+    // check admin token
+    const idToken = JSON.parse(req.cookies?.idToken);
+    const decodedToken = await auth.verifyIdToken(idToken);
+    const uid = decodedToken.uid;
+    if (uid !== process.env.ADMIN_UID) {
+      res.statusCode = 401;
+      res.json({ error: 'Unauthorized: Invalid Token.' });
+      return;
+    }
+
     try {
-      await firebase
+      await storage
         .collection('submissions')
         .doc(id)
         .update({
@@ -38,7 +49,7 @@ export default async (req, res) => {
   }
 
   try {
-    const doc = await firebase.collection('submissions').doc(id).get();
+    const doc = await storage.collection('submissions').doc(id).get();
 
     if (doc.exists) {
       statusCode = 200;

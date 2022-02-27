@@ -1,5 +1,5 @@
-import firebase from '../../../firebaseConfig';
 import { sortOpeningsIntoGroups } from '../../../functions/helpers';
+import { storage } from '../../../firebaseAdmin';
 
 export default async (req, res) => {
   let statusCode = 500;
@@ -16,7 +16,7 @@ export default async (req, res) => {
 
   try {
     const openings = [];
-    const querySnapshot = await firebase.collection('openings').get();
+    const querySnapshot = await storage.collection('openings').get();
     querySnapshot.forEach((doc) => {
       const opening = doc.data();
       openings.push({ ...opening, id: doc.id });

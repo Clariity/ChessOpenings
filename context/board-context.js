@@ -1,40 +1,96 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Chess from 'chess.js';
 import { useRouter } from 'next/router';
 
-import { start } from '../data/consts';
+import { defaultOpeningStats, start } from '../data/consts';
+import { useData } from './data-context';
 import { useSettings } from './settings-context';
 
-export const ChessboardContext = React.createContext();
+export const ChessboardContext = createContext();
 
-// GENERAL
-// Add version in footer (Add footer), and autoincrement on commit with GitHub actions
-// Update sitemap
+/**
+ * LONG TERM BIG
+ * - add lichess opening explorer
+ * - auto increment version on merge with GitHub actions
+ * - update sitemap dynamically (pre commit hook to run a sitemap script?)
+ * - change fetch requests to use a useFetch wrapper
+ * - loadingError component, utilise loading error and show it where needed
+ * - store own custom openings/traps/mistakes to practise (public/private) --> call it repertoires
+ * - navbar overhaul with all the added content (Learn section, show links to top 3 openings i.e Learn The Italian Game)
+ * - help page overhaul - add 'what is this' question mark to things to reference to help page, or just use tooltips (click for more?)
+ * - admin overhaul (admin ban profile - needs to be on own admin section of the site (which all needs a complete overhaul, needs section to easily edit openings etc too rather than having to find it in firebase, section to view and edit users/their stats)))
+ * - users can upload own themes/pieces
+ * - users can change background on their profile/the site
+ * - mistakes
+ * - copy and update submissions to allow easy move change and small alternate lines
+ * - create submissions from existing line
+ * - Verified accounts in case of famous usernames
+ * - UserData changing needs to be moved to backend for security
+ * - only get openings/traps when we need them (get less data at once instead of front loading)
+ *
+ * LONG TERM SMALL
+ * - fine grain sound options -> move sounds, sound on start/end
+ * - fine grain piece moving options
+ * - shorten all sounds to smallest size to play better on lower end devices
+ * - use dev channel for localhost on discord
+ * - change favicon to new icon colour
+ * - on contribute page, clearly define differences between traps and mistakes etc
+ * - placeholder for when images are loading in -> next/image blur on load etc
+ * - show password option when signing in/registering
+ * - bug reporting channel on discord + revamp
+ * - board display size setting (s, m, l - as its quite big by default)
+ * - change components to named imports
+ * - moving to sign in page needs to give a redirect link to go right back
+ * - separate pieces and board colour themes
+ * - admin submissions need to fetch updated values on change, currently a copy is passed
+ * - hold down arrows to move faster
+ * - send new users discord notification
+ * - clicking sign in button should remember where you were when you clicked it and use it as redirect
+ * - users page (searching other users by name or uid etc)
+ * - follow/unfollow user - say its just for easily finding users so you don't have to search for them, view their contributions/repertoires
+ * - on each opening in learn, show completion percentage towards next achievement as percentage of bar filled
+ * - if user email isn't verified then don't let them do user things until it is (changing name and profile)
+ * */
 
-// LEARN
-// TODO: toggle hints
-// TODO: add lichess opening explorer
-
-// CONTRIBUTE
-// TODO: store display fen (checkbox to mark position as display for static boards, default to move 5)
-
-// SETTINGS
-// TODO: add playsounds option and only play sounds if turned on - fine grain sound options -> move sounds, sound on start/end
-// TODO: separate pieces and board colour themes
-// TODO: Shorten all sounds to smallest size to play better on lower end devices
-
-// BUGS
-// TODO: react-tooltip on disabled buttons, need to wrap in div and add tooltip there
-// TODO: If you complete opening (openingComplete set) and go back, combined squares will no longer be set --> need to setOpeningComplete to false if go back into opening
-
-// hovering over piece as computer moves, causes option squares not to show
-// - due to no moves being legal whilst waiting for CPU
+/**
+ * GENERAL
+ * - user agreement
+ * - privacy policy (remember to update cookie warning)
+ *
+ * LEARN
+ * - need to make it clearer that you need to click on an opening variation for it to start
+ *
+ * USER
+ * - report profile for bad image/name,
+ * - disallow uploading bad image
+ * - uploading photo needs server side checks
+ * - Need to warn users they are not logged in so they don't waste stats playing when they forgot they were logged out (dismissable, and lay over the top, like a lil corner notification)
+ * - Need a loadingUserData flag from userData so we know if we don't have userData or if we are simply waiting for it to be downloaded (replace all userData?.x)
+ * - Pay attention to stats being for Openings OR Variations
+ * - updating display name needs to update all submissions for that user
+ *
+ * SETTINGS
+ * - display move options
+ *
+ * BUGS
+ * - if you complete opening (openingComplete set) and go back, combined squares will no longer be set --> need to setOpeningComplete to false if go back into opening
+ * - hovering over piece as computer moves, causes option squares not to show (due to no moves being legal whilst waiting for CPU)
+ * - Piece moving sound isn't playing on Firefox
+ * - Using arrows on submissions page when focused on input should't progress moves
+ * - MUST enforce that opening name + variation for both openings and traps is unique
+ * - update opening images as they are the wrong positions
+ * - sort white colours css
+ * - moving along Train openings too fast will bug out
+ * - user can keep "completing" learn by going back 1 move and hitting resume
+ * - removing cookies after signing out/deleting account
+ */
 
 export const useChessboard = () => useContext(ChessboardContext);
 
 export const ChessboardProvider = ({ children }) => {
   const chessboardRef = useRef();
   const { pathname } = useRouter();
+  const { updateUserData, user, userData } = useData();
   const { animationsOn, theme } = useSettings();
 
   // game logic
@@ -52,6 +108,7 @@ export const ChessboardProvider = ({ children }) => {
   // board logic
   const [boardOrientation, setBoardOrientation] = useState('white');
   const [moveFrom, setMoveFrom] = useState('');
+  const [showHints, setShowHints] = useState(true);
 
   // square styles
   const [combinedSquares, setCombinedSquares] = useState({});
@@ -103,10 +160,10 @@ export const ChessboardProvider = ({ children }) => {
     });
 
     // only highlight combined squares if opening is not complete
-    if (!openingComplete) {
+    if (!openingComplete && showHints) {
       setCombinedSquares(newCombinedSquares);
     }
-  }, [optionSquares, moveSquares, openingComplete, game, moveFrom]);
+  }, [optionSquares, moveSquares, openingComplete, game, moveFrom, showHints]);
 
   // start opening
   useEffect(() => {
@@ -190,6 +247,87 @@ export const ChessboardProvider = ({ children }) => {
     } else if (move) moveSounds.move.play();
   }
 
+  // handle opening completion stats
+  function handleOpeningComplete() {
+    setOpeningComplete(true);
+    if (userData) {
+      const currentOpeningStats = userData.stats?.openings?.[opening.label];
+      const updateFields = pathname.includes('/train')
+        ? {
+            [`${userColor}Attempts`]: currentOpeningStats?.[`${userColor}Attempts`] + 1 || 1,
+            [`${userColor}Successes`]: currentOpeningStats?.[`${userColor}Successes`] + 1 || 1
+          }
+        : {
+            [`${userColor}Learns`]: currentOpeningStats?.[`${userColor}Learns`] + 1 || 1
+          };
+
+      let newOpeningStats = {};
+      if (currentOpeningStats) {
+        newOpeningStats = {
+          ...currentOpeningStats,
+          ...updateFields
+        };
+      } else {
+        newOpeningStats = {
+          ...defaultOpeningStats,
+          ...updateFields
+        };
+      }
+
+      updateUserData(
+        {
+          ...userData,
+          stats: {
+            ...userData.stats,
+            openings: {
+              ...userData.stats.openings,
+              [opening.label]: newOpeningStats
+            }
+          }
+        },
+        user
+      );
+    }
+  }
+
+  // handle opening failure stats
+  function handleOpeningFailure() {
+    setOpeningError(true);
+    if (userData && pathname.includes('/train')) {
+      const currentOpeningStats = userData.stats?.openings?.[opening.label];
+      const updateFields = {
+        [`${userColor}Attempts`]: currentOpeningStats?.[`${userColor}Attempts`] + 1 || 1
+      };
+
+      let newOpeningStats = {};
+      if (currentOpeningStats) {
+        newOpeningStats = {
+          ...currentOpeningStats,
+          ...updateFields
+        };
+      } else {
+        newOpeningStats = {
+          ...defaultOpeningStats,
+          ...updateFields
+        };
+      }
+
+      updateUserData(
+        {
+          ...userData,
+          stats: {
+            ...userData.stats,
+            openings: {
+              ...userData.stats.openings,
+              [opening.label]: newOpeningStats
+            }
+          }
+        },
+        user
+      );
+    }
+  }
+
   // piece dropped on board by user
   function onPieceDrop(sourceSquare, targetSquare) {
     // clear any moveFrom squares that may be clicked
@@ -256,7 +394,7 @@ export const ChessboardProvider = ({ children }) => {
       makeComputerMove(opening.value[historyLength].from, opening.value[historyLength].to);
     } else {
       // opening completed
-      setOpeningComplete(true);
+      handleOpeningComplete();
       setCombinedSquares({});
       // play end sound to notify end of opening has been reached
       if (pathname !== '/train' && historyLength === opening.value.length) playSound('end');
@@ -274,8 +412,8 @@ export const ChessboardProvider = ({ children }) => {
     // play error sound
     moveSounds.error.play();
 
-    // inform side panel of opening error
-    setOpeningError(true);
+    // inform side panel of opening error and update stats
+    handleOpeningFailure();
 
     // set square styles
     setOptionSquares({});
@@ -323,7 +461,7 @@ export const ChessboardProvider = ({ children }) => {
 
         // identify if opening complete
         if (opening.value[game.history().length] === undefined) {
-          setOpeningComplete(true);
+          handleOpeningComplete();
           if (pathname !== '/train') {
             setTimeout(
               () => {
@@ -464,9 +602,11 @@ export const ChessboardProvider = ({ children }) => {
         setBoardOrientation,
         moveFrom,
         setMoveFrom,
+        showHints,
+        setShowHints,
 
         squareStyles: {
-          ...moveSquares,
+          ...(showHints && moveSquares),
           ...optionSquares,
           ...rightClickedSquares,
           ...combinedSquares

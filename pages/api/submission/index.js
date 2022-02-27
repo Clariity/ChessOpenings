@@ -1,5 +1,16 @@
 import admin from 'firebase-admin';
-import firebase from '../../../firebaseConfig';
+import { storage } from '../../../firebaseAdmin';
+
+function getDisplayMessageFromType(type) {
+  switch (type) {
+    case 'Opening':
+      return 'a new Opening';
+    case 'Trap':
+      return 'a new Opening Trap';
+    default:
+      return 'an Opening';
+  }
+}
 
 export default async (req, res) => {
   let statusCode = 500;
@@ -44,7 +55,7 @@ export default async (req, res) => {
 
   if (captchaVerified) {
     try {
-      await firebase
+      await storage
         .collection('submissions')
         .doc(JSON.parse(req.body).id)
         .set({
@@ -57,8 +68,13 @@ export default async (req, res) => {
       return res;
     }
 
+    let contributorDisplayName = JSON.parse(req.body).contributorDisplayName;
+
     try {
-      const discordURL = process.env.DISCORD_WEBHOOK_URL;
+      const discordURL = req.headers.referer.includes('http://localhost:3000')
+        ? process.env.DISCORD_DEV_WEBHOOK_URL
+        : process.env.DISCORD_WEBHOOK_URL;
+
       await fetch(discordURL, {
         method: 'POST',
         headers: {
@@ -67,7 +83,7 @@ export default async (req, res) => {
         body: JSON.stringify({
           username: 'Submissions Bot',
           avatar_url: 'https://chessopenings.co.uk/media/images/logo.png',
-          content: `${JSON.parse(req.body).contributor} submitted an opening/trap`,
+          content: `${contributorDisplayName} submitted ${getDisplayMessageFromType(JSON.parse(req.body).type)}`,
           embeds: [
             {
               title: 'Chess Openings Submission',

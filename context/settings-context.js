@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-export const SettingsContext = React.createContext();
+export const SettingsContext = createContext();
 
 export const useSettings = () => useContext(SettingsContext);
 
@@ -24,10 +24,14 @@ export const SettingsProvider = ({ children }) => {
       }
     );
     setTheme(
-      (typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('theme'))) || {
-        label: 'Lichess',
-        value: 'lichess'
+      {
+        label: 'Default',
+        value: 'default'
       }
+      // (typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('theme'))) || {
+      //   label: 'Default',
+      //   value: 'default'
+      // }
     );
   }, []);
 

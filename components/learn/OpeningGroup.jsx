@@ -1,45 +1,55 @@
-import { useMemo } from 'react';
+import { useState } from 'react';
 import { Chessboard as Board } from 'react-chessboard';
-import Link from 'next/link';
 import Chess from 'chess.js';
+import Link from 'next/link';
 
-import { chessPieces } from '../../data/consts';
 import { useChessboardSize } from '../../functions/hooks';
-import { useSettings } from '../../context/settings-context';
 
 export function OpeningGroup({ group, type }) {
+  const [error, setError] = useState(false);
   const { chessboardSize } = useChessboardSize();
-  const { theme } = useSettings();
-  const customPieces = useMemo(() => chessPieces(theme?.value), [theme]);
 
   const game = new Chess();
   const opening = group.options[0].value;
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     game.move({ from: opening[i].from, to: opening[i].to });
   }
 
   return (
-    <div className="group-section">
-      <div className="group-heading-container flex-row">
-        <h3 className="group-heading">{group.label}</h3>
-        <h4 className="group-heading margin-left-auto">{group.options.length}</h4>
-      </div>
+    <div className="px-2 lg:px-4 w-full xs:w-1/2 xl:w-1/4 my-4">
       <Link href={`/${type}/${encodeURIComponent(group.label)}`}>
-        <div className="chessboard-header group-board" style={{ height: chessboardSize }}>
-          <div className="group-board-underlay">
-            <Board
-              id={group.label}
-              arePiecesDraggable={false}
-              boardOrientation={'white'}
-              boardWidth={chessboardSize}
-              customDarkSquareStyle={theme?.darkSquareStyle}
-              customLightSquareStyle={theme?.lightSquareStyle}
-              customPieces={customPieces}
-              position={game?.fen()}
-            />
+        <a>
+          <div className="transition duration-100 ease-in-out transform hover:scale-105">
+            <div id="board" className="flex text-sm sm:text-lg bg-darkest p-2">
+              <h3>{group.label}</h3>
+              <h3 className="ml-auto">{group.options.length}</h3>
+            </div>
+            {error ? (
+              <div className="relative z-10" style={{ minHeight: chessboardSize }}>
+                <div className="absolute z-20">
+                  <Board
+                    id={group.label}
+                    arePiecesDraggable={false}
+                    boardOrientation={'white'}
+                    boardWidth={chessboardSize}
+                    position={game?.fen()}
+                  />
+                </div>
+                <div
+                  className="relative z-30 cursor-pointer"
+                  style={{ width: chessboardSize, height: chessboardSize }}
+                />
+              </div>
+            ) : (
+              <img
+                src={`/media/boards/${group.label}.png`}
+                alt={group.label}
+                onError={() => setError(true)}
+                className="w-full"
+              />
+            )}
           </div>
-          <div className="group-board-overlay" style={{ width: chessboardSize, height: chessboardSize }} />
-        </div>
+        </a>
       </Link>
     </div>
   );
