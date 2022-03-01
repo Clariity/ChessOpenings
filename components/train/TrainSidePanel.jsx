@@ -24,6 +24,13 @@ export function TrainSidePanel() {
   const [canRetry, setCanRetry] = useState(false);
   const [canRetryFailed, setCanRetryFailed] = useState(false);
 
+  const handleTrainStart = useCallback(() => {
+    setOpeningsCompleted([]);
+    setOpeningsFailed([]);
+    setOpening(selectedOpenings[0]);
+    reset(true);
+  }, [reset, selectedOpenings, setOpening]);
+
   // Scroll panel into view when openings loaded
   useEffect(() => {
     if (openingGroups) {
@@ -101,13 +108,6 @@ export function TrainSidePanel() {
       setCanRetryFailed(false);
     }
   }, [canRetryFailed, handleTrainStart, selectedOpenings]);
-
-  const handleTrainStart = useCallback(() => {
-    setOpeningsCompleted([]);
-    setOpeningsFailed([]);
-    setOpening(selectedOpenings[0]);
-    reset(true);
-  }, [reset, selectedOpenings, setOpening]);
 
   function handleTrainStop() {
     setOpening();
