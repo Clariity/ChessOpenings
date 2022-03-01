@@ -258,14 +258,10 @@ export function NavbarBurgerMenuButton({ menuOpen, setMenuOpen }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <span
-        className={`top-0 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'top-2 w-0 left-1/2' : ''}`}
-      />
+      <span className={`top-0 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'hidden' : ''}`} />
       <span className={`top-2 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'rotate-45' : ''}`} />
       <span className={`top-2 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? '-rotate-45' : ''}`} />
-      <span
-        className={`top-4 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'top-2 w-0 left-1/2' : ''}`}
-      />
+      <span className={`top-4 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'hidden' : ''}`} />
     </button>
   );
 }

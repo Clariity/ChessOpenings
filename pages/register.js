@@ -16,6 +16,7 @@ import { Button, LinkButton } from '../components/utils/Button';
 import { ErrorMessage } from '../components/utils/ErrorMessage';
 import { Input } from '../components/utils/Input';
 import { Splitter } from '../components/utils/Splitter';
+import { CLEAN_WORDS } from '../data/consts';
 import { SEO } from '../components/utils/SEO';
 
 const provider = new GoogleAuthProvider();
@@ -29,6 +30,7 @@ export default function Register() {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const wordFilter = new Filter();
+  wordFilter.removeWords(...CLEAN_WORDS);
   const isDisabled =
     !email ||
     !password ||

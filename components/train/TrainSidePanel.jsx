@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useChessboard } from '../../context/board-context';
@@ -22,6 +22,7 @@ export function TrainSidePanel() {
   const [openingsCompleted, setOpeningsCompleted] = useState([]);
   const [openingsFailed, setOpeningsFailed] = useState([]);
   const [canRetry, setCanRetry] = useState(false);
+  const [canRetryFailed, setCanRetryFailed] = useState(false);
 
   // Scroll panel into view when openings loaded
   useEffect(() => {
@@ -93,12 +94,20 @@ export function TrainSidePanel() {
     }
   }, [opening, openingLink, openingGroups, setOpening]);
 
-  function handleTrainStart() {
+  // retry failed openings only after selected openings have been set to be the failed openings
+  useEffect(() => {
+    if (canRetryFailed) {
+      handleTrainStart();
+      setCanRetryFailed(false);
+    }
+  }, [canRetryFailed, handleTrainStart, selectedOpenings]);
+
+  const handleTrainStart = useCallback(() => {
     setOpeningsCompleted([]);
     setOpeningsFailed([]);
     setOpening(selectedOpenings[0]);
     reset(true);
-  }
+  }, [reset, selectedOpenings, setOpening]);
 
   function handleTrainStop() {
     setOpening();
@@ -109,7 +118,7 @@ export function TrainSidePanel() {
 
   function handleRetryFailed() {
     setSelectedOpenings([...openingsFailed]);
-    handleTrainStart();
+    setCanRetryFailed(true);
   }
 
   function handleTrainShuffle() {

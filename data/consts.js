@@ -1,6 +1,8 @@
 export const start = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 export const pieces = ['wP', 'wN', 'wB', 'wR', 'wQ', 'wK', 'bP', 'bN', 'bB', 'bR', 'bQ', 'bK'];
 
+export const CLEAN_WORDS = ['pawn', 'Pawn', 'hell'];
+
 export const OPENING_GRADES = { Beginner: 0, Novice: 3, Intermediate: 5, Advanced: 10, Expert: 20, Master: 40 };
 // export const OPENING_GRADES = { Beginner: 0, Novice: 0, Intermediate: 0, Advanced: 0, Expert: 0, Master: 0 };
 

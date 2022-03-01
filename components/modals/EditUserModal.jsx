@@ -12,6 +12,7 @@ import { Input } from '../utils/Input';
 import { Modal } from '../utils/Modal';
 import { SVG } from '../utils/SVG';
 import { UserLoading } from '../user/UserLoading';
+import { CLEAN_WORDS } from '../../data/consts';
 
 export function EditUserModal({ loadedUser, setLoadedUser, setShowModal }) {
   const { setUserData, user, userData } = useData();
@@ -23,6 +24,7 @@ export function EditUserModal({ loadedUser, setLoadedUser, setShowModal }) {
   const MAX_FILE_SIZE = 2621440;
   const MB_IN_BYTES = 1048576;
   const wordFilter = new Filter();
+  wordFilter.removeWords(...CLEAN_WORDS);
   const submitDisabled =
     displayName === loadedUser.displayName ||
     displayName.length < 3 ||

@@ -77,7 +77,7 @@ function TrainRetryButtons({ handleRetryFailed, handleTrainStart, openingsFailed
       </div>
 
       <div className="w-full mx-2" data-tip="Retry All" data-for="panel-buttons">
-        <Button disabled={openingsFailed.length === 0} fill onClick={handleTrainStart}>
+        <Button fill onClick={handleTrainStart}>
           <SVG icon={replayArrow} size={24} />
           All
         </Button>

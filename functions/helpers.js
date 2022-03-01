@@ -95,6 +95,7 @@ export function getGradeData(successes) {
 }
 
 export function scrollIntoView(parent, child, scrollToTop) {
+  if (!parent || !child) return;
   const parentRect = parent.getBoundingClientRect();
   const parentViewableArea = {
     height: parent.clientHeight,

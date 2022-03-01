@@ -5,7 +5,7 @@ import Filter from 'bad-words';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Select from 'react-select';
 
-import { contributeTypeChoices, colourChoices, openingChoices } from '../../data/consts';
+import { contributeTypeChoices, colourChoices, openingChoices, CLEAN_WORDS } from '../../data/consts';
 import { useChessboard } from '../../context/board-context';
 import { useData } from '../../context/data-context';
 import { Button } from '../utils/Button';
@@ -27,6 +27,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
   const [resetCaptcha, setResetCaptcha] = useState(false);
 
   const wordFilter = new Filter();
+  wordFilter.removeWords(...CLEAN_WORDS);
   const submitDisabled =
     game?.history().length < 4 ||
     !name ||
