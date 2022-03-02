@@ -2,7 +2,7 @@ import { BoardControls } from './BoardControls';
 
 export function SidePanel({ children, showBoardControls = true, title }) {
   return (
-    <div className="flex flex-col bg-darker w-full xl:w-4/12 xl:h-full max-h-screen max-w-[80vh] min-h-[50vh]">
+    <div className="flex flex-col bg-darker w-full xl:w-4/12 max-h-[80vh] max-w-[80vh] min-h-[50vh]">
       <div className="hidden xl:block bg-darkest text-center">
         <h1 className="text-2xl py-4">{title}</h1>
       </div>
