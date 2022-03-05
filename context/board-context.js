@@ -27,6 +27,7 @@ export const ChessboardContext = createContext();
  * - Verified accounts in case of famous usernames
  * - UserData changing needs to be moved to backend for security
  * - only get openings/traps when we need them (get less data at once instead of front loading)
+ * - Lighthouse optimizations
  *
  * LONG TERM SMALL
  * - fine grain sound options -> move sounds, sound on start/end
@@ -50,6 +51,7 @@ export const ChessboardContext = createContext();
  * - follow/unfollow user - say its just for easily finding users so you don't have to search for them, view their contributions/repertoires
  * - on each opening in learn, show completion percentage towards next achievement as percentage of bar filled
  * - if user email isn't verified then don't let them do user things until it is (changing name and profile)
+ * - save a training set of openings, so you don't have to select them all again when you come back tomorrow
  * */
 
 /**

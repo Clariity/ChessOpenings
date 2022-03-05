@@ -8,7 +8,7 @@ import { useWindowSize } from '../../functions/hooks';
 export function TrainSelectOptions({ selectedOpenings, setCanRetry, setSelectedOpenings }) {
   const { windowSize } = useWindowSize();
   const { openingGroups } = useData();
-  const { setBoardOrientation, reset, setUserColor } = useChessboard();
+  const { setBoardOrientation, reset, setUserColor, userColor } = useChessboard();
 
   function filterOptions({ label, value }, searchInput) {
     const searchLower = searchInput.toLocaleLowerCase();
@@ -62,7 +62,7 @@ export function TrainSelectOptions({ selectedOpenings, setCanRetry, setSelectedO
       <div className="panel-select">
         <Select
           options={colourChoices}
-          defaultValue={colourChoices[0]}
+          defaultValue={colourChoices.find((c) => c.value === userColor)}
           onChange={handleUserColorChange}
           isSearchable={false}
         />

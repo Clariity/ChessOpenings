@@ -50,8 +50,8 @@ export default function Contribute() {
       <p className="mb-4">The following criteria must be met for an opening to be accepted:</p>
       <ol className="list-decimal list-inside mb-4">
         <li className="ml-4">
-          The opening must be equal for both Black and White. If you know an opening where you gain an advantage when
-          the opponent makes a mistake, submit it as a trap.
+          The opening must be equal in terms of advantage for both Black and White. If you know an opening where you
+          gain an advantage when the opponent makes a mistake, submit it as a trap.
         </li>
         <br />
         <li className="ml-4">

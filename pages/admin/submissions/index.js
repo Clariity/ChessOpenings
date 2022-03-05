@@ -18,7 +18,7 @@ export default function Submissions() {
 
   const totalSubmissions = submissions?.length || 'Loading';
   const mergedSubmissions = submissions?.filter((s) => s.status === 'MERGED').length || 'Loading';
-  const openSubmissions = submissions?.filter((s) => s.status === 'OPEN').length || 'Loading';
+  const openSubmissions = submissions?.filter((s) => s.status === 'OPEN').length || '0';
 
   if (loadingError) {
     return <div>{JSON.stringify(loadingError)}</div>;
