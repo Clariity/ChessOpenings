@@ -70,6 +70,7 @@ export default function Register() {
 
   async function handleGoogleSignIn() {
     setLoading(true);
+    setTempDisplayName('User');
     try {
       await signInWithPopup(auth, provider);
       Router.push('/');

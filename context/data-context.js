@@ -28,7 +28,7 @@ export const DataProvider = ({ children }) => {
         method: 'POST',
         body: JSON.stringify({
           ...u,
-          displayName: tempDisplayName
+          displayName: u.displayName || tempDisplayName
         })
       });
       const resJson = await response.json();
