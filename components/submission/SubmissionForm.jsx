@@ -15,7 +15,7 @@ import { LoadingSpinner } from '../utils/LoadingSpinner';
 
 export function SubmissionForm({ setResult, setShowResultModal }) {
   const { game, reset } = useChessboard();
-  const { openingGroups, traps, user, userData } = useData();
+  const { openingGroups, setSubmissions, traps, user, userData } = useData();
 
   const [contributionType, setContributionType] = useState(contributeTypeChoices[0]);
   const [colour, setColour] = useState(colourChoices[0]);
@@ -104,6 +104,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
           ...responseJSON,
           id
         });
+        setSubmissions((oldSubmissions) => [...oldSubmissions, submission]);
       } else {
         setResult(responseJSON);
       }

@@ -69,7 +69,9 @@ export function UserStats({ stats }) {
             {trainStats.length === 0 && (
               <p className="text-center">Train some opening variations for your milestones to show here.</p>
             )}
-            {trainStats?.map((t, i) => i < 3 && <ProgressBar key={i} isVisible={isVisible} stats={t} />)}
+            {trainStats
+              ?.filter((t) => t.distanceToNextGrade > 0)
+              ?.map((t, i) => i < 3 && <ProgressBar key={i} isVisible={isVisible} stats={t} />)}
           </>
         )}
       </VisibilitySensor>

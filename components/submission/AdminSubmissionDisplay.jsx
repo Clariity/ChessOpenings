@@ -9,7 +9,7 @@ import { Input } from '../utils/Input';
 import { SubmissionData } from './SubmissionData';
 
 export function AdminSubmissionDisplay({ history, opening, submission }) {
-  const { setSubmissions, setLoadingError, user } = useData();
+  const { setSubmissions, setLoadingError, submissions, user } = useData();
   const [comment, setComment] = useState('');
   const [description, setDescription] = useState(submission.data.description);
   const [label, setLabel] = useState(submission.data.label);
@@ -17,11 +17,15 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
 
   async function handleCommentSubmit() {
     try {
+      const newSubmission = { ...submission };
+      newSubmission.comments = [...submission.comments, comment];
+      const newSubmissions = submissions.map((s) => (s.id === newSubmission.id ? newSubmission : s));
+
       const token = await user.getIdToken();
       Cookies.set('idToken', JSON.stringify(token));
-      const response = await fetch(`/api/comment/${submission.id}`, {
-        method: 'POST',
-        body: JSON.stringify(comment)
+      const response = await fetch(`/api/submission/${submission.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(newSubmissions)
       });
       const responseJSON = await response.json();
       if (response?.status !== 200) {
@@ -44,6 +48,7 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
         method: 'POST',
         body: JSON.stringify({
           ...submission.data,
+          id: submission.id,
           description,
           label
         })
@@ -70,22 +75,21 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
 
   async function updateSubmission(status) {
     try {
-      const newSubmission = submission;
-      delete newSubmission.timestamp;
+      const newSubmission = { ...submission };
+      newSubmission.status = status;
       newSubmission.data = {
         ...submission.data,
         description,
         label
       };
 
+      const newSubmissions = submissions.map((s) => (s.id === newSubmission.id ? newSubmission : s));
+
       const token = await user.getIdToken();
       Cookies.set('idToken', JSON.stringify(token));
       const response = await fetch(`/api/submission/${submission.id}`, {
         method: 'PUT',
-        body: JSON.stringify({
-          ...newSubmission,
-          status
-        })
+        body: JSON.stringify(newSubmissions)
       });
       const responseJSON = await response.json();
       if (response?.status !== 200) {

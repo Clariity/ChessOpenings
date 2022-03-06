@@ -48,11 +48,11 @@ export default function User() {
     }
 
     // only fetch user if we don't already have that data
-    if (!loadedUser && uid) {
+    if (uid) {
       if (userData?.uid === uid) setLoadedUser(userData);
       else fetchUserData();
     }
-  }, [loadedUser, setLoadingError, uid, userData]);
+  }, [setLoadingError, uid, userData]);
 
   async function handleSignOut() {
     await signOut(auth);

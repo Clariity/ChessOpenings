@@ -26,10 +26,19 @@ export default async (req, res) => {
   }
 
   try {
-    await storage.collection('openings').add({
-      ...JSON.parse(req.body),
-      timestamp: admin.firestore.FieldValue.serverTimestamp()
-    });
+    await storage
+      .collection('data')
+      .doc('openings')
+      .update({
+        data: admin.firestore.FieldValue.arrayUnion(
+          ...[
+            {
+              ...JSON.parse(req.body),
+              timestamp: admin.firestore.Timestamp.now()
+            }
+          ]
+        )
+      });
     statusCode = 200;
     responseBody = { title: 'Success' };
   } catch (error) {

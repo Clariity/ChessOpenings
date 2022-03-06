@@ -15,17 +15,16 @@ export default async (req, res) => {
   }
 
   try {
-    const openings = [];
-    const querySnapshot = await storage.collection('openings').get();
-    querySnapshot.forEach((doc) => {
-      const opening = doc.data();
-      openings.push({ ...opening, id: doc.id });
-    });
+    const doc = await storage.collection('data').doc('openings').get();
 
-    const openingGroups = sortOpeningsIntoGroups(openings);
-
-    statusCode = 200;
-    responseBody = { title: 'Success', body: openingGroups };
+    if (doc.exists) {
+      const openingGroups = sortOpeningsIntoGroups(doc.data().data);
+      statusCode = 200;
+      responseBody = { title: 'Success', body: openingGroups };
+    } else {
+      statusCode = 404;
+      responseBody = { error: 'Not Found: Cannot find openings in Firestore.' };
+    }
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

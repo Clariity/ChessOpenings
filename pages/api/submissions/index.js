@@ -14,12 +14,16 @@ export default async (req, res) => {
   }
 
   try {
-    const submissions = [];
-    const querySnapshot = await storage.collection('submissions').get();
-    querySnapshot.forEach((doc) => submissions.push(doc.data()));
-    const sortedSubmissions = submissions.sort((a, b) => (a.timestamp._seconds > b.timestamp._seconds ? -1 : 1));
-    statusCode = 200;
-    responseBody = { title: 'Success', body: sortedSubmissions };
+    const doc = await storage.collection('data').doc('submissions').get();
+
+    if (doc.exists) {
+      const sortedSubmissions = doc.data().data.sort((a, b) => (a.timestamp._seconds > b.timestamp._seconds ? -1 : 1));
+      statusCode = 200;
+      responseBody = { title: 'Success', body: sortedSubmissions };
+    } else {
+      statusCode = 404;
+      responseBody = { error: 'Not Found: Cannot find submissions in Firestore.' };
+    }
   } catch (error) {
     statusCode = 500;
     responseBody = { error: `Internal Server Error: Error fetching from Firestore. ${error.message}` };

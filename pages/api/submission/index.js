@@ -56,11 +56,17 @@ export default async (req, res) => {
   if (captchaVerified) {
     try {
       await storage
-        .collection('submissions')
-        .doc(JSON.parse(req.body).id)
-        .set({
-          ...JSON.parse(req.body),
-          timestamp: admin.firestore.FieldValue.serverTimestamp()
+        .collection('data')
+        .doc('submissions')
+        .update({
+          data: admin.firestore.FieldValue.arrayUnion(
+            ...[
+              {
+                ...JSON.parse(req.body),
+                timestamp: admin.firestore.Timestamp.now()
+              }
+            ]
+          )
         });
     } catch (error) {
       res.statusCode = 500;
