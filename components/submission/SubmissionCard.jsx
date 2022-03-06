@@ -29,7 +29,6 @@ export function SubmissionCard({ submission, index }) {
           <h2 className="text-xl">{submission.data.label}</h2>
           <p>Type: {submission.type}</p>
           <p>Submitted: {new Date(submission.timestamp._seconds * 1000).toDateString()}</p>
-          {submission.updated && <p>Updated: {new Date(submission.updated._seconds * 1000).toDateString()}</p>}
           <p className="mt-auto">Contributor: {submission.contributorDisplayName}</p>
         </div>
         <div id="board" className="w-1/4">

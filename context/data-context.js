@@ -167,7 +167,7 @@ export const DataProvider = ({ children }) => {
     async function getNamedContributors() {
       const contributors = submissions
         .filter((s) => s.status === 'MERGED')
-        .sort((a, b) => (new Date(a.updated._seconds * 1000) > new Date(b.updated._seconds * 1000) ? -1 : 1))
+        .sort((a, b) => (new Date(a.timestamp._seconds * 1000) > new Date(b.timestamp._seconds * 1000) ? -1 : 1))
         .reduce((acc, current) => {
           acc[current.contributor] = acc[current.contributor]
             ? { displayName: current.contributorDisplayName, data: [...acc[current.contributor].data, current.data] }

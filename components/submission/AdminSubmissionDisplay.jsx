@@ -9,7 +9,7 @@ import { Input } from '../utils/Input';
 import { SubmissionData } from './SubmissionData';
 
 export function AdminSubmissionDisplay({ history, opening, submission }) {
-  const { setSubmissions, setLoadingError, submissions, user } = useData();
+  const { setSubmissions, submissions, user } = useData();
   const [comment, setComment] = useState('');
   const [description, setDescription] = useState(submission.data.description);
   const [label, setLabel] = useState(submission.data.label);
@@ -23,7 +23,7 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
 
       const token = await user.getIdToken();
       Cookies.set('idToken', JSON.stringify(token));
-      const response = await fetch(`/api/submission/${submission.id}`, {
+      const response = await fetch(`/api/submission`, {
         method: 'PUT',
         body: JSON.stringify(newSubmissions)
       });
@@ -31,13 +31,14 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
       if (response?.status !== 200) {
         setResult(responseJSON);
         return;
+      } else {
+        setSubmissions(newSubmissions);
       }
     } catch (error) {
       setResult(error);
       return;
     }
     setComment('');
-    fetchUpdatedSubmissions();
   }
 
   async function handleMerge() {
@@ -57,19 +58,18 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
       if (response?.status !== 200) {
         setResult(responseJSON);
         return;
+      } else {
+        await updateSubmission('MERGED');
+        Router.push('/admin/submissions');
       }
     } catch (error) {
       setResult(error);
       return;
     }
-    await updateSubmission('MERGED');
-    await fetchUpdatedSubmissions();
-    Router.push('/admin/submissions');
   }
 
   async function handleClose() {
     await updateSubmission('CLOSED');
-    await fetchUpdatedSubmissions();
     Router.push('/admin/submissions');
   }
 
@@ -95,25 +95,12 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
       if (response?.status !== 200) {
         setResult(responseJSON);
         return;
+      } else {
+        setSubmissions(newSubmissions);
       }
     } catch (error) {
       setResult(error);
       return;
-    }
-    fetchUpdatedSubmissions();
-  }
-
-  async function fetchUpdatedSubmissions() {
-    try {
-      const response = await fetch('/api/submissions');
-      const submissions = await response.json();
-      if (response?.status === 200) {
-        setSubmissions(submissions.body);
-      } else {
-        setLoadingError(submissions.error);
-      }
-    } catch (error) {
-      setLoadingError(error);
     }
   }
 
