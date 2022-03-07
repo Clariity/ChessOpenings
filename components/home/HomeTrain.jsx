@@ -74,7 +74,7 @@ function HomeTrainMastery({ isVisible, userData }) {
       <div className="flex flex-col items-center w-full xs:w-1/2">
         <h4 className="text-md md:text-xl my-4">Openings Mastered</h4>
         <ProgressCircle
-          progress={isVisible ? noOfOpeningsMastered / noOfOpenings : 0}
+          progress={isVisible ? (noOfOpeningsMastered / noOfOpenings) * 100 : 0}
           showMastery
           strokeWidth={8}
           text={`${noOfOpeningsMastered} / ${noOfOpenings}`}
@@ -85,7 +85,7 @@ function HomeTrainMastery({ isVisible, userData }) {
       <div className="flex flex-col items-center w-full xs:w-1/2">
         <h4 className="text-md md:text-xl my-4">Variations Mastered</h4>
         <ProgressCircle
-          progress={isVisible ? noOfOpeningVariationsMastered / noOfVariations : 0}
+          progress={isVisible ? (noOfOpeningVariationsMastered / noOfVariations) * 100 : 0}
           showMastery
           strokeWidth={8}
           text={`${noOfOpeningVariationsMastered} / ${noOfVariations}`}
