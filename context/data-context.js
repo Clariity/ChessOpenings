@@ -28,7 +28,7 @@ export const DataProvider = ({ children }) => {
         method: 'POST',
         body: JSON.stringify({
           ...u,
-          displayName: u.displayName || tempDisplayName
+          displayName: u.displayName || tempDisplayName || 'User'
         })
       });
       const resJson = await response.json();
@@ -41,7 +41,7 @@ export const DataProvider = ({ children }) => {
       setCanCreateNewUserData(null);
       setTempDisplayName('');
     }
-    if (canCreateNewUserData && tempDisplayName) createNewUserData(canCreateNewUserData);
+    if (canCreateNewUserData) createNewUserData(canCreateNewUserData);
   }, [canCreateNewUserData, tempDisplayName]);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export const DataProvider = ({ children }) => {
         setUserData(null);
       }
     });
-  }, [tempDisplayName]);
+  }, []);
 
   async function updateUserData(updatedUserObject, user) {
     // TODO: handle achievements here
@@ -199,6 +199,7 @@ export const DataProvider = ({ children }) => {
         contributorData,
         openingGroups,
         submissions,
+        tempDisplayName,
         traps,
         user,
         userData,

@@ -22,11 +22,10 @@ import { SEO } from '../components/utils/SEO';
 const provider = new GoogleAuthProvider();
 
 export default function Register() {
-  const { setTempDisplayName } = useData();
+  const { tempDisplayName, setTempDisplayName } = useData();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const wordFilter = new Filter();
@@ -36,14 +35,13 @@ export default function Register() {
     !password ||
     password !== passwordConfirm ||
     password.length < 8 ||
-    !displayName ||
-    displayName.length < 3 ||
-    displayName.toLowerCase().includes('admin') ||
-    wordFilter.isProfane(displayName);
+    !tempDisplayName ||
+    tempDisplayName.length < 3 ||
+    tempDisplayName.toLowerCase().includes('admin') ||
+    wordFilter.isProfane(tempDisplayName);
 
   const handleEmailAndPasswordRegister = useCallback(async () => {
     setLoading(true);
-    setTempDisplayName(displayName);
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       sendEmailVerification(user);
@@ -52,7 +50,7 @@ export default function Register() {
       handleAuthErrorMessage(error.code, setError);
     }
     setLoading(false);
-  }, [displayName, email, password, setTempDisplayName]);
+  }, [email, password]);
 
   // Add event listeners
   useEffect(() => {
@@ -70,7 +68,6 @@ export default function Register() {
 
   async function handleGoogleSignIn() {
     setLoading(true);
-    setTempDisplayName('User');
     try {
       await signInWithPopup(auth, provider);
       Router.push('/');
@@ -132,8 +129,8 @@ export default function Register() {
         id="name-input"
         label="Display Name"
         type="text"
-        value={displayName}
-        onChange={(e) => setDisplayName(e.target.value)}
+        value={tempDisplayName}
+        onChange={(e) => setTempDisplayName(e.target.value)}
       />
       <div className="my-4">
         <Button disabled={isDisabled} fill onClick={handleEmailAndPasswordRegister}>
