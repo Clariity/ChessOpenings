@@ -133,20 +133,20 @@ export default function SignIn() {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const idToken = ctx.req.cookies?.idToken;
+// export async function getServerSideProps(ctx) {
+//   const idToken = ctx.req.cookies?.idToken;
 
-  // user is already signed in so redirect back to home page
-  if (idToken) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/'
-      }
-    };
-  }
+//   // user is already signed in so redirect back to home page
+//   if (idToken) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: '/'
+//       }
+//     };
+//   }
 
-  return {
-    props: {}
-  };
-}
+//   return {
+//     props: {}
+//   };
+// }
