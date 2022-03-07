@@ -1,11 +1,13 @@
 import VisibilitySensor from 'react-visibility-sensor';
 
+import { useData } from '../../context/data-context';
 import { useStats, useWindowSize } from '../../functions/hooks';
 import { CountUp } from '../utils/CountUp';
 import { ProgressBar } from '../utils/ProgressBar';
 import { ProgressCircle } from '../utils/ProgressCircle';
 
 export function UserStats({ stats }) {
+  const { openingGroups } = useData();
   const {
     noOfOpenings,
     noOfOpeningsMastered,
@@ -32,7 +34,7 @@ export function UserStats({ stats }) {
             <div className="flex flex-col items-center w-full xs:w-1/2">
               <h4 className="text-md md:text-xl my-4">Openings Mastered</h4>
               <ProgressCircle
-                progress={isVisible ? (noOfOpeningsMastered / noOfOpenings) * 100 : 0}
+                progress={isVisible && openingGroups ? (noOfOpeningsMastered / noOfOpenings) * 100 : 0}
                 showMastery
                 strokeWidth={8}
                 text={`${noOfOpeningsMastered} / ${noOfOpenings}`}
@@ -42,7 +44,7 @@ export function UserStats({ stats }) {
             <div className="flex flex-col items-center w-full xs:w-1/2">
               <h4 className="text-md md:text-xl my-4">Variations Mastered</h4>
               <ProgressCircle
-                progress={isVisible ? (noOfOpeningVariationsMastered / noOfVariations) * 100 : 0}
+                progress={isVisible && openingGroups ? (noOfOpeningVariationsMastered / noOfVariations) * 100 : 0}
                 showMastery
                 strokeWidth={8}
                 text={`${noOfOpeningVariationsMastered} / ${noOfVariations}`}
