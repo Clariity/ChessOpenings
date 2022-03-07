@@ -87,7 +87,7 @@ export function AdminSubmissionDisplay({ history, opening, submission }) {
 
       const token = await user.getIdToken();
       Cookies.set('idToken', JSON.stringify(token));
-      const response = await fetch(`/api/submission/${submission.id}`, {
+      const response = await fetch(`/api/submission`, {
         method: 'PUT',
         body: JSON.stringify(newSubmissions)
       });
