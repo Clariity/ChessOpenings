@@ -127,7 +127,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <div className="my-4">
         <Button fill onClick={reset} disabled={!game?.history().length}>
           Reset Board
@@ -200,7 +200,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
 
       <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={setCaptchaToken} />
 
-      <div className="my-4">
+      <div className="mt-auto">
         <Button fill onClick={handleSubmit} disabled={submitDisabled}>
           {submitting ? 'Loading...' : 'Submit'}
         </Button>

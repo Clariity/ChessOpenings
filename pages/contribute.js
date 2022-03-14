@@ -61,13 +61,20 @@ export default function Contribute() {
       </ol>
 
       <div className="flex flex-col items-center">
-        <div className="max-w-5xl w-full">
-          <h2 id="board" className="text-2xl mt-4 mb-2 w-full">
-            Submission Board - (Drag to Move Pieces)
-          </h2>
+        <div className="w-full">
           <ChessboardProvider>
-            <Chessboard id="contributeChessboard" />
-            <SubmissionForm setResult={setResult} setShowResultModal={setShowResultModal} />
+            <div className="flex flex-col mb-8 xl:flex-row">
+              <div className="w-full xl:w-1/2">
+                <h2 id="board" className="text-2xl mt-4 mb-2 w-full">
+                  Submission Board - (Drag to Move Pieces)
+                </h2>
+                <Chessboard id="contributeChessboard" />
+              </div>
+
+              <div className="w-full xl:w-1/2 xl:pl-4 xl:mt-10">
+                <SubmissionForm setResult={setResult} setShowResultModal={setShowResultModal} />
+              </div>
+            </div>
           </ChessboardProvider>
         </div>
       </div>

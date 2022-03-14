@@ -36,8 +36,8 @@ export function Chessboard({ id }) {
   return (
     <div
       className={`flex flex-col items-center w-full ${
-        !isContributeBoard ? 'xl:w-8/12' : ''
-      } xl:px-4 mb-2 xl:mb-0 max-w-[80vh]`}
+        !isContributeBoard ? 'xl:w-8/12 max-w-[80vh]' : ''
+      } xl:px-4 mb-2 xl:mb-0`}
     >
       {!isContributeBoard && <ChessboardHeader opening={opening} />}
       {showBoard && (
