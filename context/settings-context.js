@@ -8,7 +8,7 @@ export const useSettings = () => useContext(SettingsContext);
 export const SettingsProvider = ({ children }) => {
   const [animationsOn, setAnimationsOn] = useState();
   const [moveMethod, setMoveMethod] = useState();
-  const [theme, setTheme] = useLocalStorage('theme', null);
+  const [theme, setTheme] = useLocalStorage('theme-mode', null);
 
   const themes = ['dark', 'light'];
 

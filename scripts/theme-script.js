@@ -4,7 +4,7 @@
 function setColorsByTheme(defaultDarkTheme, defaultLightTheme) {
   var mql = window.matchMedia('(prefers-color-scheme: dark)');
   var prefersDarkFromMQ = mql.matches;
-  var persistedPreference = localStorage.getItem('theme');
+  var persistedPreference = localStorage.getItem('theme-mode');
   var root = document.body;
   var colorMode = '';
   var hasUsedToggle = typeof persistedPreference === 'string';
@@ -13,7 +13,7 @@ function setColorsByTheme(defaultDarkTheme, defaultLightTheme) {
     colorMode = JSON.parse(persistedPreference);
   } else {
     colorMode = prefersDarkFromMQ ? defaultDarkTheme : defaultLightTheme;
-    localStorage.setItem('theme', JSON.stringify(colorMode));
+    localStorage.setItem('theme-mode', JSON.stringify(colorMode));
   }
 
   root.classList.add(colorMode);
