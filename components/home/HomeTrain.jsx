@@ -129,7 +129,7 @@ function HomeTrainBlurred() {
   return (
     <div className="relative">
       <img className="blur-md" src="/media/images/stats.png" alt="Chess Openings Logo" />
-      <div className="flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
+      <div className="flex flex-col justify-center items-center absolute text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
         <div className="hidden xs:flex items-center">
           <h1 className="text-xl sm:text-4xl md:text-5xl">Want to track your stats?</h1>
         </div>

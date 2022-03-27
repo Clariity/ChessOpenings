@@ -51,7 +51,7 @@ export default async (req, res) => {
         following: [
           // list of uids, potential way to follow other users progress and achievements
         ],
-        accountCreatedDate: admin.firestore.FieldValue.serverTimestamp(),
+        accountCreatedDate: admin.firestore.Timestamp.now(),
         lastDayLoggedIn: fullDaysSinceEpoch
       };
       await storage.collection('users').doc(uid).set(newUser);

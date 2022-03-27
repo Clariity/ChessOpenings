@@ -5,23 +5,30 @@ import Filter from 'bad-words';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Select from 'react-select';
 
-import { contributeTypeChoices, colourChoices, openingChoices, CLEAN_WORDS } from '../../data/consts';
+import { contributeTypeChoices, colourChoices, openingChoices, CLEAN_WORDS, start } from '../../data/consts';
 import { useChessboard } from '../../context/board-context';
 import { useData } from '../../context/data-context';
-import { Button } from '../utils/Button';
+import { Button, LinkButton } from '../utils/Button';
 import { ErrorMessage } from '../utils/ErrorMessage';
 import { Input } from '../utils/Input';
 import { LoadingSpinner } from '../utils/LoadingSpinner';
+import { useLocalStorage } from '../../functions/hooks';
+import { Logo } from '../utils/Logo';
 
 export function SubmissionForm({ setResult, setShowResultModal }) {
-  const { game, reset } = useChessboard();
+  const { game, reset, loadGame } = useChessboard();
   const { openingGroups, setSubmissions, traps, user, userData } = useData();
 
-  const [contributionType, setContributionType] = useState(contributeTypeChoices[0]);
-  const [colour, setColour] = useState(colourChoices[0]);
-  const [name, setName] = useState('');
-  const [variation, setVariation] = useState('');
-  const [description, setDescription] = useState('');
+  const [submission, setSubmission] = useLocalStorage('submission', null);
+  const [loadedGameFromMemory, setLoadedGameFromMemory] = useState(false);
+  const [contributionType, setContributionType] = useState(
+    contributeTypeChoices.find((c) => c.value === submission?.type) || contributeTypeChoices[0]
+  );
+  const [colour, setColour] = useState(colourChoices.find((c) => c.value === submission?.colour) || colourChoices[0]);
+  const [name, setName] = useState(submission?.name ? { value: submission.name, label: submission.name } : '');
+  const [variation, setVariation] = useState(submission?.variation || '');
+  const [description, setDescription] = useState(submission?.description || '');
+
   const [captchaToken, setCaptchaToken] = useState();
   const [submitting, setSubmitting] = useState(false);
   const [resetCaptcha, setResetCaptcha] = useState(false);
@@ -45,18 +52,34 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
     }
   }, [resetCaptcha]);
 
+  useEffect(() => {
+    if (submission.game && game && !loadedGameFromMemory) {
+      loadGame(submission.game);
+      setLoadedGameFromMemory(true);
+    }
+  }, [submission, game, loadedGameFromMemory, loadGame]);
+
+  useEffect(() => {
+    if (loadedGameFromMemory)
+      setSubmission({
+        type: contributionType.value,
+        name: name?.value,
+        variation,
+        description,
+        game: game?.fen(),
+        colour: colour.value
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [colour, contributionType, description, game, name, variation, loadedGameFromMemory]);
+
   if (!openingGroups || !traps)
     return (
       <div className="my-8">
         <LoadingSpinner
           img={
-            <img
-              className="navbar-logo-image"
-              src="/media/images/logo.png"
-              alt="Chess Openings Logo"
-              width={100}
-              height={100}
-            />
+            <div className="w-24">
+              <Logo />
+            </div>
           }
           text={'Loading Opening Data...'}
         />
@@ -129,7 +152,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
   return (
     <div className="flex flex-col h-full">
       <div className="my-4">
-        <Button fill onClick={reset} disabled={!game?.history().length}>
+        <Button fill onClick={() => reset()} disabled={game?.fen() === start}>
           Reset Board
         </Button>
       </div>
@@ -137,11 +160,11 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
       <label className="mb-2" htmlFor="type-form-input">
         Contribution Type
       </label>
-      <div className="mb-4 text-darkest panel-select">
+      <div className="mb-4 text-black panel-select">
         <Select
           id="type-form-input"
           options={contributeTypeChoices}
-          defaultValue={contributeTypeChoices[0]}
+          defaultValue={contributionType}
           onChange={setContributionType}
           isSearchable={false}
         />
@@ -152,7 +175,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
           <label className="mb-2" htmlFor="type-form-input">
             Play as Colour
           </label>
-          <div className="text-darkest panel-select">
+          <div className="text-black panel-select">
             <Select
               id="type-form-input"
               options={colourChoices}
@@ -167,8 +190,9 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
       <label className="mb-2" htmlFor="opening-name">
         Opening Name
       </label>
-      <div className="mb-4 text-darkest panel-select">
+      <div className="mb-4 text-black panel-select">
         <CreatableSelect
+          defaultValue={name}
           id="opening-name"
           isClearable
           placeholder="e.g. Italian Game"
@@ -194,13 +218,25 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
         onChange={(e) => setDescription(e.target.value)}
       />
 
-      {!user && (
-        <ErrorMessage message="Note: Submitting without being logged in means your contribution will be submitted anonymously and you will not get credit for your contribution." />
-      )}
-
       <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={setCaptchaToken} />
 
       <div className="mt-auto">
+        {!user && (
+          <ErrorMessage>
+            <div className="flex flex-wrap items-center">
+              <div className="w-full sm:w-3/4">
+                Note: Submitting without being logged in means your contribution will be submitted anonymously and you
+                will not get credit for your contribution. Your submission is automatically saved for when you come
+                back.
+              </div>
+              <div className="w-full mt-4 sm:w-1/4 sm:pl-4 sm:mt-0">
+                <LinkButton fill link="sign-in">
+                  Sign In
+                </LinkButton>
+              </div>
+            </div>
+          </ErrorMessage>
+        )}
         <Button fill onClick={handleSubmit} disabled={submitDisabled}>
           {submitting ? 'Loading...' : 'Submit'}
         </Button>

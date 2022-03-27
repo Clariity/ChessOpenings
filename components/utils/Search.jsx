@@ -9,7 +9,7 @@ export function Search({ id, maxLength = 255, onChange, placeholder, value }) {
       </span>
       <input
         id={id}
-        className=" bg-darker w-full pl-10 rounded-md leading-10"
+        className=" bg-secondary w-full pl-10 rounded-md leading-10"
         value={value}
         onChange={onChange}
         placeholder={placeholder}

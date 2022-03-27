@@ -93,7 +93,7 @@ export const ChessboardProvider = ({ children }) => {
   const chessboardRef = useRef();
   const { pathname } = useRouter();
   const { updateUserData, user, userData } = useData();
-  const { animationsOn, theme } = useSettings();
+  const { animationsOn } = useSettings();
 
   // game logic
   const [game, setGame] = useState();
@@ -125,18 +125,16 @@ export const ChessboardProvider = ({ children }) => {
 
   // initialise new sounds on theme change
   useEffect(() => {
-    if (theme?.value) {
-      setMoveSounds({
-        move: new Audio(`/media/themes/${theme.value}/move.mp3`),
-        capture: new Audio(`/media/themes/${theme.value}/capture.mp3`),
-        check: new Audio(`/media/themes/${theme.value}/check.mp3`),
-        castle: new Audio(`/media/themes/${theme.value}/castle.mp3`),
-        error: new Audio(`/media/themes/${theme.value}/error.mp3`),
-        start: new Audio(`/media/themes/${theme.value}/start.mp3`),
-        end: new Audio(`/media/themes/${theme.value}/end.mp3`)
-      });
-    }
-  }, [theme]);
+    setMoveSounds({
+      move: new Audio(`/media/themes/default/move.mp3`),
+      capture: new Audio(`/media/themes/default/capture.mp3`),
+      check: new Audio(`/media/themes/default/check.mp3`),
+      castle: new Audio(`/media/themes/default/castle.mp3`),
+      error: new Audio(`/media/themes/default/error.mp3`),
+      start: new Audio(`/media/themes/default/start.mp3`),
+      end: new Audio(`/media/themes/default/end.mp3`)
+    });
+  }, []);
 
   // fill redo stack on submission pages
   useEffect(() => {
@@ -154,8 +152,8 @@ export const ChessboardProvider = ({ children }) => {
         newCombinedSquares[s] = {
           background:
             game.get(s) && game.get(s).color !== game.get(moveFrom)?.color
-              ? 'radial-gradient(circle, rgba(255, 255, 0, .5) 85%, transparent 85%)'
-              : 'radial-gradient(circle, rgba(255, 255, 0, .5) 25%, transparent 25%)',
+              ? 'radial-gradient(circle, rgba(255, 255, 0, .8) 85%, transparent 85%)'
+              : 'radial-gradient(circle, rgba(255, 255, 0, .8) 25%, transparent 25%)',
           borderRadius: '50%'
         };
       }
@@ -186,8 +184,8 @@ export const ChessboardProvider = ({ children }) => {
       !openingError
     ) {
       setMoveSquares({
-        [opening.value[0].from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-        [opening.value[0].to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+        [opening.value[0].from]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' },
+        [opening.value[0].to]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' }
       });
     }
 
@@ -206,6 +204,7 @@ export const ChessboardProvider = ({ children }) => {
   function reset(withSound = false) {
     chessboardRef.current.clearPremoves();
     clearTimeout(currentTimeout);
+    console.log(withSound);
     withSound && playSound('start');
     safeGameMutate((game) => {
       game.reset();
@@ -227,8 +226,8 @@ export const ChessboardProvider = ({ children }) => {
     } else {
       const nextMove = opening.value[game.history().length];
       setMoveSquares({
-        [nextMove?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-        [nextMove?.to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+        [nextMove?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' },
+        [nextMove?.to]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' }
       });
     }
   }
@@ -357,8 +356,8 @@ export const ChessboardProvider = ({ children }) => {
     } else {
       playSound();
       setMoveSquares({
-        [sourceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-        [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+        [sourceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' },
+        [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' }
       });
     }
     return true;
@@ -387,8 +386,8 @@ export const ChessboardProvider = ({ children }) => {
     // correct move made
     playSound();
     setMoveSquares({
-      [sourceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-      [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+      [sourceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' },
+      [targetSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' }
     });
 
     // if there are more moves in the opening, continue
@@ -421,15 +420,15 @@ export const ChessboardProvider = ({ children }) => {
     setOptionSquares({});
     // set error squares
     setMoveSquares({
-      [sourceSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' },
-      [targetSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.4)' }
+      [sourceSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.8)' },
+      [targetSquare]: { backgroundColor: 'rgba(255, 0, 0, 0.8)' }
     });
     // after 1 second, show the prior move made
     if (pathname.includes('/learn') || pathname.includes('/traps')) {
       setTimeout(() => {
         setMoveSquares({
-          [opening.value[historyLength - 1].from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-          [opening.value[historyLength - 1].to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+          [opening.value[historyLength - 1].from]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' },
+          [opening.value[historyLength - 1].to]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' }
         });
         // TODO: Check if this line affects Train, added to prevent combinedSquares after error move
         setOpeningError(false);
@@ -457,8 +456,8 @@ export const ChessboardProvider = ({ children }) => {
 
         // show move made
         setMoveSquares({
-          [from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-          [to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+          [from]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' },
+          [to]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' }
         });
 
         // identify if opening complete
@@ -480,8 +479,8 @@ export const ChessboardProvider = ({ children }) => {
         if (pathname.includes('/learn') || pathname.includes('/traps')) {
           const nextMove = opening.value[game.history().length];
           setMoveSquares({
-            [nextMove?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-            [nextMove?.to]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' }
+            [nextMove?.from]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' },
+            [nextMove?.to]: { backgroundColor: 'rgba(255, 255, 0, 0.8)' }
           });
         }
       },
@@ -522,7 +521,7 @@ export const ChessboardProvider = ({ children }) => {
 
   function onSquareRightClick(square) {
     // TODO: put all colours in consts.js
-    const colour = 'rgba(0, 0, 255, 0.4)';
+    const colour = 'rgba(0, 0, 255, 0.8)';
     setRightClickedSquares({
       ...rightClickedSquares,
       [square]:
@@ -576,9 +575,13 @@ export const ChessboardProvider = ({ children }) => {
 
     // highlight current square
     // newSquares[square] = {
-    //   background: 'rgba(255, 255, 0, 0.4)'
+    //   background: 'rgba(255, 255, 0, 0.8)'
     // };
     setOptionSquares(newSquares);
+  }
+
+  function loadGame(fen) {
+    game.load(fen);
   }
 
   return (
@@ -618,6 +621,7 @@ export const ChessboardProvider = ({ children }) => {
         setOptionSquares,
         setRightClickedSquares,
 
+        loadGame,
         onMouseOutSquare,
         onMouseOverSquare,
         onPieceDrop,

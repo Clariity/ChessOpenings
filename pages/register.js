@@ -18,6 +18,7 @@ import { Input } from '../components/utils/Input';
 import { Splitter } from '../components/utils/Splitter';
 import { CLEAN_WORDS } from '../data/consts';
 import { SEO } from '../components/utils/SEO';
+import { Logo } from '../components/utils/Logo';
 
 const provider = new GoogleAuthProvider();
 
@@ -82,7 +83,9 @@ export default function Register() {
       <SEO description="Register with ChessOpenings.co.uk" title="register" path="/register" />
 
       <div className="flex flex-col items-center my-8">
-        <img className="rounded-lg" src="/media/images/logo.png" alt="Chess Openings Logo" width={80} height={80} />
+        <div className="w-20">
+          <Logo />
+        </div>
         <h1 className="text-xl xs:text-2xl sm:text-3xl mt-4">Register with ChessOpenings.co.uk</h1>
       </div>
 
@@ -102,7 +105,7 @@ export default function Register() {
       <Splitter text="or" />
 
       <div className="mt-4" />
-      {error && <ErrorMessage message={error} />}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <Input
         autoFocus
         id="email-input"

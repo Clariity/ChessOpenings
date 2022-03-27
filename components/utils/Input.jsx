@@ -18,7 +18,7 @@ export function Input({
       )}
       <input
         id={id}
-        className={`rounded-md indent-2 min-h-[50px] text-darkest`}
+        className={`rounded-md indent-2 min-h-[50px] text-black`}
         disabled={disabled}
         value={value}
         onChange={onChange}

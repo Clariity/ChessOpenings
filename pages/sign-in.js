@@ -12,6 +12,7 @@ import { ErrorMessage } from '../components/utils/ErrorMessage';
 import { Input } from '../components/utils/Input';
 import { Splitter } from '../components/utils/Splitter';
 import { SEO } from '../components/utils/SEO';
+import { Logo } from '../components/utils/Logo';
 
 const provider = new GoogleAuthProvider();
 
@@ -70,11 +71,13 @@ export default function SignIn() {
       <SEO description="Sign in to ChessOpenings.co.uk" title="sign in" path="/sign-in" />
 
       <div className="flex flex-col items-center  my-8">
-        <img className="rounded-lg" src="/media/images/logo.png" alt="Chess Openings Logo" width={80} height={80} />
+        <div className="w-20">
+          <Logo />
+        </div>
         <h1 className="text-xl xs:text-2xl sm:text-3xl mt-4">Sign In to ChessOpenings.co.uk</h1>
       </div>
 
-      {error && <ErrorMessage message={error} />}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       {/* // TODO - info warning component instead or error warning */}
       {reset && <p className="text-center">Password successfully reset. Please sign in with new password</p>}
 

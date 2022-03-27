@@ -9,7 +9,7 @@ export function Navbar() {
 
   return (
     <>
-      <div className="flex flex-col items-center bg-darker z-20">
+      <div className="flex flex-col items-center bg-secondary z-20 shadow-md">
         <div className="mx-auto container flex items-center w-full">
           <NavbarLogo />
           <NavbarCenterLinks />
@@ -33,7 +33,7 @@ export function Navbar() {
       </div>
       {menuOpen && (
         <div
-          className="w-full h-full fixed top-0 left-0 z-10 bg-darkest opacity-90"
+          className="w-full h-full fixed top-0 left-0 z-10 bg-tertiary opacity-90"
           onClick={() => setMenuOpen(false)}
         />
       )}

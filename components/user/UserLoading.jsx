@@ -1,5 +1,6 @@
 import { LoadingSpinner } from '../../components/utils/LoadingSpinner';
 import { SEO } from '../../components/utils/SEO';
+import { Logo } from '../utils/Logo';
 
 export function UserLoading({ text }) {
   return (
@@ -11,13 +12,9 @@ export function UserLoading({ text }) {
       />
       <LoadingSpinner
         img={
-          <img
-            className="navbar-logo-image"
-            src="/media/images/logo.png"
-            alt="Chess Openings Logo"
-            width={100}
-            height={100}
-          />
+          <div className="w-24">
+            <Logo />
+          </div>
         }
         text={text || 'Loading User Data...'}
       />

@@ -131,7 +131,7 @@ export function EditUserModal({ loadedUser, setLoadedUser, setShowModal }) {
         <>
           <h2 className="text-xl mb-4">Change Display Picture</h2>
 
-          {uploadError && <ErrorMessage message={uploadError} />}
+          {uploadError && <ErrorMessage>{uploadError}</ErrorMessage>}
 
           <div className="flex flex-col sm:flex-row">
             <div className="flex flex-col items-center mb-4 w-full">

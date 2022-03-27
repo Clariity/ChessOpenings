@@ -18,6 +18,7 @@
     "postcss": "^8.4.5",
     "react": "^17.0.2",
     "react-chessboard": "^1.1.0",
+    "react-chessboard-svg": "^1.1.1",
     "react-countup": "^6.1.1",
     "react-dom": "^17.0.2",
     "react-google-button": "^0.7.2",

@@ -4,6 +4,7 @@ import { Header } from '../components/utils/Header';
 import { LoadingSpinner } from '../components/utils/LoadingSpinner';
 import { OpeningsList } from '../components/learn/OpeningsList';
 import { SEO } from '../components/utils/SEO';
+import { Logo } from '../components/utils/Logo';
 
 export default function Learn() {
   const { openingGroups, loadingError } = useData();
@@ -27,13 +28,9 @@ export default function Learn() {
         <div className="flex justify-center h-full">
           <LoadingSpinner
             img={
-              <img
-                className="rounded-md"
-                src="/media/images/logo.png"
-                alt="Chess Openings Logo"
-                width={100}
-                height={100}
-              />
+              <div className="w-24">
+                <Logo />
+              </div>
             }
             text="Loading..."
           />

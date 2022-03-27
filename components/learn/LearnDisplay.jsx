@@ -97,7 +97,7 @@ export function LearnDisplay({ openings }) {
           <PGN opening={o} history={history} />
           <div className="my-4 text-lg">{o.description}</div>
           <div
-            className="my-2 py-2 flex justify-center rounded-md cursor-pointer hover:bg-darkest"
+            className="my-2 py-2 flex justify-center rounded-md cursor-pointer hover:bg-tertiary"
             onClick={() => setOpeningLabelToCopy(o.label)}
           >
             <SVG icon={share} marginRight={2} size={24} />
@@ -105,7 +105,7 @@ export function LearnDisplay({ openings }) {
           </div>
 
           <div
-            className="my-2 py-2 flex justify-center rounded-md cursor-pointer hover:bg-darkest"
+            className="my-2 py-2 flex justify-center rounded-md cursor-pointer hover:bg-tertiary"
             onClick={() => setOpeningPGNToCopy(true)}
           >
             <SVG icon={download} marginRight={2} size={24} />

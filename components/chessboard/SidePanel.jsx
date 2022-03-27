@@ -2,8 +2,8 @@ import { BoardControls } from './BoardControls';
 
 export function SidePanel({ children, showBoardControls = true, title }) {
   return (
-    <div className="flex flex-col bg-darker w-full xl:w-4/12 max-h-[80vh] max-w-[80vh] min-h-[50vh]">
-      <div className="hidden xl:block bg-darkest text-center">
+    <div className="flex flex-col bg-secondary w-full xl:w-4/12 max-h-[80vh] max-w-[80vh] min-h-[50vh] shadow-md">
+      <div className="hidden xl:block bg-tertiary text-center">
         <h1 className="text-2xl py-4">{title}</h1>
       </div>
       <div
@@ -13,7 +13,7 @@ export function SidePanel({ children, showBoardControls = true, title }) {
         {children}
       </div>
       {showBoardControls && <BoardControls resetDisabled={false} />}
-      <div className="order-2 xl:hidden bg-darkest text-center">
+      <div className="order-2 xl:hidden bg-tertiary text-center">
         <h1 className="text-2xl py-4">{title}</h1>
       </div>
     </div>

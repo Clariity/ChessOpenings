@@ -1,4 +1,5 @@
 import { LinkButton } from '../components/utils/Button';
+import { Logo } from '../components/utils/Logo';
 import { SEO } from '../components/utils/SEO';
 
 export default function NotFound() {
@@ -7,7 +8,9 @@ export default function NotFound() {
       <SEO description="Page Not Found" title="404" path="/" />
 
       <div className="flex flex-col items-center my-8">
-        <img className="rounded-lg" src="/media/images/logo.png" alt="Chess Openings Logo" width={80} height={80} />
+        <div className="w-20">
+          <Logo />
+        </div>
         <h1 className="text-xl xs:text-2xl sm:text-3xl mt-4">404</h1>
       </div>
 

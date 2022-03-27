@@ -21,6 +21,7 @@ export const TROPHY_COLOURS = {
 };
 
 export const DISCORD_LINK = 'https://discord.gg/xKYtamwV8p';
+export const KOFI_LINK = 'https://ko-fi.com/chessopenings';
 export const TWITTER_LINK = 'https://twitter.com/chessopeningsuk';
 export const PAYPAL_LINK = 'https://paypal.me/chessopenings?locale.x=en_GB';
 export const RYAN_TWITTER_LINK = 'https://twitter.com/ryangregorydev';
@@ -45,21 +46,6 @@ export const colourChoices = [
   { label: 'Play as Black', value: 'black' }
 ];
 
-export const themeChoices = [
-  {
-    label: 'Default',
-    value: 'default',
-    darkSquareStyle: { backgroundColor: '#B58863' },
-    lightSquareStyle: { backgroundColor: '#F0D9B5' }
-  }
-  // {
-  //   label: 'Chess.com',
-  //   value: 'chesscom',
-  //   darkSquareStyle: { backgroundColor: '#779952' },
-  //   lightSquareStyle: { backgroundColor: '#edeed1' }
-  // }
-];
-
 export const moveMethodChoices = [
   {
     label: 'Click',
@@ -68,17 +54,6 @@ export const moveMethodChoices = [
   {
     label: 'Drag and Drop',
     value: 'drag'
-  }
-];
-
-export const animationChoices = [
-  {
-    label: 'On',
-    value: true
-  },
-  {
-    label: 'Off',
-    value: false
   }
 ];
 

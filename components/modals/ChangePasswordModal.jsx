@@ -24,7 +24,7 @@ export function ChangePasswordModal({ setShowModal }) {
   return (
     <Modal title="Request Password Reset" onClose={() => setShowModal(false)}>
       <>
-        {requestError && <ErrorMessage message={requestError} />}
+        {requestError && <ErrorMessage>{requestError}</ErrorMessage>}
 
         <p>
           {emailSent

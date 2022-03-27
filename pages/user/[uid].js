@@ -38,7 +38,7 @@ export default function User() {
           setLoadedUser(resJson.body);
         } else {
           // can't find user
-          Router.push('/404');
+          Router.push('/');
         }
       } catch (error) {
         setLoadingError(
@@ -75,7 +75,7 @@ export default function User() {
         path="/user"
       />
 
-      <div className="my-8 bg-darker rounded-lg p-4 md:p-8">
+      <div className="my-8 bg-secondary rounded-lg p-4 md:p-8">
         <UserProfileHeader
           contributions={contributions}
           loadedUser={loadedUser}
@@ -84,7 +84,7 @@ export default function User() {
         />
       </div>
 
-      <div className="mb-8 bg-darker rounded-lg p-4 md:hidden">
+      <div className="mb-8 bg-secondary rounded-lg p-4 md:hidden">
         <UserBaseStats contributions={contributions} loadedUser={loadedUser} submissionsByUser={submissionsByUser} />
       </div>
 
@@ -95,18 +95,18 @@ export default function User() {
       )} */}
 
       {contributions.length > 0 && (
-        <div className="mb-8 bg-darker rounded-lg p-4 md:p-8">
+        <div className="mb-8 bg-secondary rounded-lg p-4 md:p-8">
           <h3 className="text-lg sm:text-xl md:text-2xl my-2">Latest Contributions</h3>
           <UserContributions contributions={contributions} />
         </div>
       )}
 
-      <div className="mb-8 bg-darker rounded-lg p-4 md:p-8">
+      <div className="mb-8 bg-secondary rounded-lg p-4 md:p-8">
         <h3 className="text-lg sm:text-xl md:text-2xl my-2">Statistics</h3>
         <UserStats stats={loadedUser.stats} />
       </div>
 
-      <div className="mb-8 bg-darker rounded-lg p-4 md:p-8">
+      <div className="mb-8 bg-secondary rounded-lg p-4 md:p-8">
         <h3 className="text-lg sm:text-xl md:text-2xl my-2">Achievements</h3>
         <p>
           Coming Soon - Don&apos;t worry, you won&apos;t miss any achievements as they will be automatically added when
@@ -157,13 +157,13 @@ export default function User() {
         - successfully have content merged
       */}
 
-      <div className="mb-8 bg-darker rounded-lg p-4 md:p-8">
+      <div className="mb-8 bg-secondary rounded-lg p-4 md:p-8">
         <h3 className="text-lg sm:text-xl md:text-2xl my-2">Following</h3>
         <p>Coming Soon - Follow Users to see their repertoires.</p>
       </div>
 
       {user?.uid === uid && (
-        <div className="mb-8 bg-darker rounded-lg p-4 md:p-8">
+        <div className="mb-8 bg-secondary rounded-lg p-4 md:p-8">
           <h3 className="text-lg sm:text-xl md:text-2xl my-2">Account Management</h3>
           <div className="flex flex-wrap">
             <div className="mb-4 md:pr-2 w-full md:w-1/2 xl:w-1/4">

@@ -1,6 +1,5 @@
-import Image from 'next/image';
-
-import { ExternalLinkButton } from '../utils/Button';
+import { LinkButton } from '../utils/Button';
+import { Logo } from '../utils/Logo';
 import {
   FooterColumn,
   FooterCopyright,
@@ -12,11 +11,10 @@ import {
   FooterSubHeading,
   FooterTwitterLink
 } from './FooterComponents';
-import { PAYPAL_LINK } from '../../data/consts';
 
 export function Footer() {
   return (
-    <div className="bg-darker p-4 flex justify-center">
+    <div className="bg-secondary p-4 flex justify-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
       <div className="container">
         <div className="flex flex-wrap justify-between">
           <div className="my-4 w-full xl:w-2/5">
@@ -26,7 +24,7 @@ export function Footer() {
               consider donating to support the site and keep it running.
             </p>
             <div className="my-4">
-              <ExternalLinkButton link={PAYPAL_LINK}>Donate</ExternalLinkButton>
+              <LinkButton link="/support">Support The Site</LinkButton>
             </div>
           </div>
 
@@ -34,18 +32,19 @@ export function Footer() {
             <FooterHeading>Site Content</FooterHeading>
             <FooterLink link="/learn" text="Learn Openings" />
             <FooterLink link="/train" text="Train Openings" />
-            <FooterLink link="/mistakes" text="Take Advantage of Opening Mistakes" />
+            {/* <FooterLink link="/mistakes" text="Take Advantage of Opening Mistakes" /> */}
             <FooterLink link="/traps" text="Learn Opening Traps" />
             <FooterLink link="/contribute" text="Contribute Openings to the Site" />
           </FooterColumn>
 
           <FooterColumn>
             <FooterHeading>Site Information</FooterHeading>
-            <FooterLink link="/about" text="About" />
-            <FooterLink link="/credits" text="Credits" />
+            {/* <FooterLink link="/about" text="About" /> */}
+            <FooterLink link="/register" text="Create Account" />
             <FooterLink link="/help" text="Help" />
-            <FooterLink link="/privacy" text="Privacy Policy" />
-            <FooterLink link="/user-agreement" text="User Agreement" />
+            {/* <FooterLink link="/privacy" text="Privacy Policy" /> */}
+            {/* <FooterLink link="/user-agreement" text="User Agreement" /> */}
+            <FooterLink link="/support" text="Support" />
           </FooterColumn>
 
           <FooterColumn>
@@ -66,14 +65,9 @@ export function Footer() {
         <div className="mt-8 lg:my-4 flex flex-wrap justify-between items-center">
           <FooterCopyright />
           <div className="flex m-auto my-8 lg:m-0">
-            <Image
-              priority={true}
-              className="rounded-md"
-              src="/media/images/logo.png"
-              alt="Chess Openings Logo"
-              width={30}
-              height={30}
-            />
+            <div className="w-8">
+              <Logo />
+            </div>
             <p className="pl-2">ChessOpenings.co.uk</p>
           </div>
         </div>

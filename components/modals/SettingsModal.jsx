@@ -1,21 +1,46 @@
 import Select from 'react-select';
 
-import { animationChoices, themeChoices } from '../../data/consts';
 import { useSettings } from '../../context/settings-context';
 import { Modal } from '../utils/Modal';
 import { Radio } from '../utils/Radio';
 
 export function SettingsModal({ setShowSettingsModal }) {
-  const { animationsOn, theme, updateAnimationsOn, updateTheme } = useSettings();
+  const { animationsOn, theme, themes, updateAnimationsOn, updateTheme } = useSettings();
+
+  const animationChoices = [
+    {
+      label: 'On',
+      value: true
+    },
+    {
+      label: 'Off',
+      value: false
+    }
+  ];
+
+  const currentTheme = {
+    label: theme,
+    value: theme
+  };
+  const themeChoices = themes.map((t) => ({
+    label: t,
+    value: t
+  }));
 
   return (
     <Modal title="Settings" onClose={() => setShowSettingsModal(false)}>
       <div className="flex flex-col">
         <label className="mb-2" htmlFor="theme-select">
-          Theme (Chessboard and Sounds):
+          Site Theme:
         </label>
         <div className="panel-select">
-          <Select id="theme-select" options={themeChoices} value={theme} onChange={updateTheme} isSearchable={false} />
+          <Select
+            id="theme-select"
+            options={themeChoices}
+            value={currentTheme}
+            onChange={(newTheme) => updateTheme(newTheme.value)}
+            isSearchable={false}
+          />
         </div>
 
         <p className="mb-2">Animations:</p>

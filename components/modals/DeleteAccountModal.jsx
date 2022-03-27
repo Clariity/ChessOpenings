@@ -47,7 +47,7 @@ export function DeleteAccountModal({ setShowModal }) {
   return (
     <Modal title="Delete Account" onClose={() => setShowModal(false)}>
       <>
-        {requestError && <ErrorMessage message={requestError} />}
+        {requestError && <ErrorMessage>{requestError}</ErrorMessage>}
 
         <h2 className="text-xl mb-2">Warning - This action is irreversible.</h2>
         <p className="mb-2">

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { analytics } from '../firebase';
-
 import { CookieWarning } from '../components/utils/CookieWarning';
 import { DataProvider } from '../context/data-context';
 import { Footer } from '../components/footer/Footer';
@@ -26,7 +25,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <DataProvider>
       <SettingsProvider>
-        <div className="bg-dark text-primary flex flex-col overflow-x-hidden">
+        <div className="bg-primary text-fg-primary flex flex-col overflow-x-hidden">
           <Navbar />
           <div className="flex justify-center px-2 lg:min-h-[80vh]">
             <Component {...pageProps} />

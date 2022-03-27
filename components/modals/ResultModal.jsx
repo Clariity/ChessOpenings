@@ -24,7 +24,7 @@ export function ResultModal({ setShowResultModal, result }) {
             Here is a permanent link to your submission so you can track its progress. Copy it down somewhere safe:
           </p>
 
-          <div className="text-center p-2 mb-4 bg-darkest rounded-md">
+          <div className="text-center p-2 mb-4 bg-tertiary rounded-md">
             {`https://chessopenings.co.uk/submissions/${result.id}`}
           </div>
           <div className="mb-4 mx-auto" onClick={() => setCopied(!copied)}>

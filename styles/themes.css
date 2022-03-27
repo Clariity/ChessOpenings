@@ -1,0 +1,31 @@
+.dark {
+  --theme: #b58863;
+  --theme-hover: #9c683e;
+  --theme-secondary: #f0d9b5;
+
+  --primary: #383635;
+  --secondary: #2a2a2a;
+  --tertiary: #000000;
+
+  --fg-primary: #ffffff;
+  --fg-secondary: #bdbdbd;
+
+  --primary-faded-lg: #383635aa;
+  --primary-faded-sm: #383635e0;
+}
+
+.light {
+  --theme: #007d81;
+  --theme-hover: #00696d;
+  --theme-secondary: #daf7f8;
+
+  --primary: #ebebeb;
+  --secondary: #ffffff;
+  --tertiary: #c2c2c2;
+
+  --fg-primary: #000000;
+  --fg-secondary: #303030;
+
+  --primary-faded-lg: #ffffffaa;
+  --primary-faded-sm: #ffffffe0;
+}

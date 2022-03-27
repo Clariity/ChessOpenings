@@ -5,7 +5,7 @@ import { contributeOutlined } from '../../../data/icons';
 import { useData } from '../../../context/data-context';
 import { Button } from '../../../components/utils/Button';
 import { Header } from '../../../components/utils/Header';
-import { SubmissionCard } from '../../../components/submission/SubmissionCard';
+import { AdminSubmissionCard } from '../../../components/submission/AdminSubmissionCard';
 import { SEO } from '../../../components/utils/SEO';
 
 export default function Submissions() {
@@ -36,7 +36,7 @@ export default function Submissions() {
       </div>
 
       {submissions?.map(
-        (s, i) => lowerLimit <= i && i < higherLimit && <SubmissionCard index={i + 1} key={s.id} submission={s} />
+        (s, i) => lowerLimit <= i && i < higherLimit && <AdminSubmissionCard index={i + 1} key={s.id} submission={s} />
       )}
 
       <div className="flex my-4">

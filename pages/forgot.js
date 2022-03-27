@@ -6,6 +6,7 @@ import { handleAuthErrorMessage } from '../functions/helpers';
 import { Button } from '../components/utils/Button';
 import { Input } from '../components/utils/Input';
 import { SEO } from '../components/utils/SEO';
+import { Logo } from '../components/utils/Logo';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -43,7 +44,9 @@ export default function SignIn() {
       <SEO description="Password reset request" title="forgot" path="/forgot" />
 
       <div className="flex flex-col items-center my-8">
-        <img className="rounded-lg" src="/media/images/logo.png" alt="Chess Openings Logo" width={80} height={80} />
+        <div className="w-20">
+          <Logo />
+        </div>
         <h1 className="text-xl xs:text-2xl sm:text-3xl mt-4">Forgot Password?</h1>
       </div>
 

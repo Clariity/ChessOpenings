@@ -23,7 +23,7 @@ export function VerifyEmailModal({ setShowModal }) {
   return (
     <Modal title="Verify Email Address" onClose={() => setShowModal(false)}>
       <>
-        {requestError && <ErrorMessage message={requestError} />}
+        {requestError && <ErrorMessage>{requestError}</ErrorMessage>}
 
         <p>
           {emailSent

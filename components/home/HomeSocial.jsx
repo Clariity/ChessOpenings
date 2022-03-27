@@ -10,7 +10,7 @@ export function HomeSocial() {
           on the ChessOpenings.co.uk Discord server. Click the Discord logo below to join!
         </p>
         <a
-          className="flex flex-col items-center"
+          className="flex flex-col items-center hover:scale-105 transition-all duration-100"
           href="https://discord.gg/xKYtamwV8p"
           target="_blank"
           rel="noopener noreferrer"

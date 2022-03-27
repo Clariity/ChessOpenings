@@ -32,7 +32,7 @@ export function FooterDiscordLink() {
   return (
     <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
       <svg
-        className="fill-secondary hover:fill-theme mr-2"
+        className="fill-fg-secondary hover:fill-theme mr-2"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -49,7 +49,7 @@ export function FooterLinkedInLink() {
   return (
     <a href={RYAN_LINKEDIN_LINK} target="_blank" rel="noopener noreferrer">
       <svg
-        className="fill-secondary hover:fill-theme mr-2"
+        className="fill-fg-secondary hover:fill-theme mr-2"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -65,7 +65,7 @@ export function FooterTwitterLink({ isPersonal }) {
   return (
     <a href={isPersonal ? RYAN_TWITTER_LINK : TWITTER_LINK} target="_blank" rel="noopener noreferrer">
       <svg
-        className="fill-secondary hover:fill-theme mr-2"
+        className="fill-fg-secondary hover:fill-theme mr-2"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"

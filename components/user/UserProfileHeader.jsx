@@ -37,13 +37,13 @@ export function UserProfileHeader({ contributions, loadedUser, setLoadedUser, su
             {user?.uid === uid && (
               <div data-tip="Edit Profile" data-for="user-tooltip">
                 <Button onClick={() => setShowEditUserModal(true)}>
-                  <SVG icon={edit} size={24} />
+                  <SVG fill="white" icon={edit} size={24} />
                 </Button>
               </div>
             )}
           </div>
 
-          <h2 className="text-lg xs:text-xl md:text-2xl mb-4 text-secondary">User ID: {uid}</h2>
+          <h2 className="text-lg xs:text-xl md:text-2xl mb-4 text-fg-secondary">User ID: {uid}</h2>
           <div className="hidden md:block">
             <UserBaseStats
               contributions={contributions}

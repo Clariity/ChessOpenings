@@ -127,7 +127,7 @@ export function BoardControls({ resetDisabled }) {
   }
 
   return (
-    <div className="order-1 xl:order-2 bg-darkest">
+    <div className="order-1 xl:order-2 bg-tertiary">
       <div className="flex p-4">
         <button
           className={`flex flex-col items-center w-1/3 cursor-pointer hover:opacity-50 disabled:cursor-not-allowed disabled:opacity-50`}
@@ -159,7 +159,7 @@ export function BoardControls({ resetDisabled }) {
 
       <div className="flex p-4 ">
         <button
-          className="flex justify-center items-center w-1/3 cursor-pointer hover:opacity-50"
+          className="flex flex-col sm:flex-row justify-center items-center w-1/3 cursor-pointer hover:opacity-50"
           onClick={() => setBoardOrientation(boardOrientation === 'white' ? 'black' : 'white')}
         >
           <SVG icon={flipArrow} marginRight={2} />
@@ -167,7 +167,7 @@ export function BoardControls({ resetDisabled }) {
         </button>
 
         <button
-          className="flex justify-center items-center w-1/3 cursor-pointer hover:opacity-50"
+          className="flex flex-col sm:flex-row justify-center items-center w-1/3 cursor-pointer hover:opacity-50"
           onClick={() => setShowHints(!showHints)}
         >
           <SVG icon={showHints ? hintsFilled : hintsOutlined} marginRight={2} />
@@ -175,7 +175,7 @@ export function BoardControls({ resetDisabled }) {
         </button>
 
         <button
-          className={`flex justify-center items-center w-1/3 cursor-pointer hover:opacity-50 disabled:cursor-not-allowed disabled:opacity-50`}
+          className={`flex flex-col sm:flex-row justify-center items-center w-1/3 cursor-pointer hover:opacity-50 disabled:cursor-not-allowed disabled:opacity-50`}
           onClick={reset}
           disabled={resetDisabled}
         >

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import Link from 'next/link';
 import ReactTooltip from 'react-tooltip';
 
@@ -22,6 +21,7 @@ import {
 import { useData } from '../../context/data-context';
 import { useWindowSize } from '../../functions/hooks';
 import { Button } from '../utils/Button';
+import { Logo } from '../utils/Logo';
 
 export function NavbarLogo() {
   const { pathname } = useRouter();
@@ -30,35 +30,20 @@ export function NavbarLogo() {
   return (
     <div className="flex p-2 pr-0 sm:p-2 w-1/2 md:w-1/3">
       <Link href="/">
-        <a className="flex hover:text-theme">
-          <div className="hidden lg:flex justify-center">
-            <Image
-              priority={true}
-              className="rounded-xl"
-              src="/media/images/logo.png"
-              alt="Chess Openings Logo"
-              width={60}
-              height={60}
-            />
-          </div>
-          <div className="flex lg:hidden justify-center">
-            <Image
-              priority={true}
-              className="rounded-md"
-              src="/media/images/logo.png"
-              alt="Chess Openings Logo"
-              width={30}
-              height={30}
-            />
+        <a className="flex text-fg-primary hover:text-theme">
+          <div className="flex justify-center">
+            <div className="w-8 sm:w-14">
+              <Logo />
+            </div>
           </div>
           <h1 className="text-md xl:text-2xl my-auto ml-2 sm:mx-2">ChessOpenings</h1>
         </a>
       </Link>
       {pathname !== '/' && (
         <div className="hidden lg:flex ">
-          <span className="text-md xl:text-3xl my-auto ">•</span>
+          <span className="text-md xl:text-3xl my-auto text-fg-primary">•</span>
           <Link href={`/${path}`}>
-            <a className="flex justify-center hover:text-theme">
+            <a className="flex justify-center text-fg-primary hover:text-theme">
               <h2 className="text-md xl:text-2xl my-auto mx-2">{path}</h2>
             </a>
           </Link>
@@ -77,7 +62,10 @@ function NavbarLink({ icon, path, tooltip, isEndLink }) {
 
   return (
     <Link href={path}>
-      <a className={`${onPage ? 'fill-theme' : 'fill-primary'} hover:fill-theme mx-2 ${isEndLink ? '' : 'w-1/5'}`}>
+      <a
+        aria-label={`Link to ${tooltip}`}
+        className={`${onPage ? 'fill-theme' : 'fill-fg-primary'} hover:fill-theme mx-2 ${isEndLink ? '' : 'w-1/5'}`}
+      >
         <ReactTooltip
           id={`navbar-link-${tooltip}`}
           place="bottom"
@@ -86,8 +74,8 @@ function NavbarLink({ icon, path, tooltip, isEndLink }) {
           offset={{ top: 20 }}
         />
         <div
-          className={`mx-auto h-14 md:h-20 border-t-4 border-b-4 border-t-darker ${
-            onPage ? 'border-b-theme' : 'border-b-darker'
+          className={`mx-auto h-14 md:h-20 border-t-4 border-b-4 border-t-secondary ${
+            onPage ? 'border-b-theme' : 'border-b-secondary'
           }`}
           data-for={`navbar-link-${tooltip}`}
           data-tip={tooltip}
@@ -118,7 +106,7 @@ function NavbarBurgerLink({ icon, label, onClick, path }) {
     <Link href={path}>
       <a
         className={`flex justify-center items-center hover:fill-theme hover:text-theme py-4 ${
-          onPage ? 'fill-theme text-theme' : 'fill-primary text-primary'
+          onPage ? 'fill-theme text-theme' : 'fill-fg-primary text-fg-primary'
         } `}
         onClick={onClick}
       >
@@ -173,7 +161,7 @@ export function NavbarEndLinks({ menuOpen, setMenuOpen, setShowSettingsModal }) 
           offset={{ top: 20 }}
         />
         <div
-          className="fill-primary hover:fill-theme cursor-pointer mx-2 h-14 md:h-20"
+          className="fill-fg-primary hover:fill-theme cursor-pointer mx-2 h-14 md:h-20"
           data-tip="Settings"
           data-for="navbar-link-settings"
           onClick={() => {
@@ -218,14 +206,14 @@ function NavbarAuthButton() {
           offset={{ top: 20 }}
         />
         <div
-          className={`flex items-center mx-auto h-14 md:h-20 border-t-4 border-b-4 border-t-darker ${
-            onPage ? 'border-b-theme' : 'border-b-darker'
+          className={`flex items-center mx-auto h-14 md:h-20 border-t-4 border-b-4 border-t-secondary ${
+            onPage ? 'border-b-theme' : 'border-b-secondary'
           }`}
           data-for="navbar-link-profile"
           data-tip="Profile"
         >
           <img
-            className="rounded-full object-cover border-4 border-darker hover:border-2"
+            className="rounded-full object-cover border-4 border-secondary hover:border-2"
             src={userData?.displayPictureURL || '/media/images/default.png'}
             alt="default user"
             width={40}
@@ -258,10 +246,18 @@ export function NavbarBurgerMenuButton({ menuOpen, setMenuOpen }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <span className={`top-0 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'hidden' : ''}`} />
-      <span className={`top-2 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'rotate-45' : ''}`} />
-      <span className={`top-2 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? '-rotate-45' : ''}`} />
-      <span className={`top-4 ${baseClasses} ${hover ? 'bg-theme' : 'bg-primary'} ${menuOpen ? 'hidden' : ''}`} />
+      <span
+        className={`top-0 ${baseClasses} ${hover ? 'bg-theme-hover' : 'bg-fg-primary'} ${menuOpen ? 'hidden' : ''}`}
+      />
+      <span
+        className={`top-2 ${baseClasses} ${hover ? 'bg-theme-hover' : 'bg-fg-primary'} ${menuOpen ? 'rotate-45' : ''}`}
+      />
+      <span
+        className={`top-2 ${baseClasses} ${hover ? 'bg-theme-hover' : 'bg-fg-primary'} ${menuOpen ? '-rotate-45' : ''}`}
+      />
+      <span
+        className={`top-4 ${baseClasses} ${hover ? 'bg-theme-hover' : 'bg-fg-primary'} ${menuOpen ? 'hidden' : ''}`}
+      />
     </button>
   );
 }
@@ -276,7 +272,7 @@ export function NavbarBurgerMenu({ menuOpen, setMenuOpen, setShowSettingsModal }
   return (
     <>
       <div
-        className={`overflow-hidden absolute w-full bg-darker transition-[max-height] ${
+        className={`overflow-hidden absolute w-full bg-secondary transition-[max-height] ${
           menuOpen ? 'duration-500 max-h-full' : 'duration-200 max-h-0'
         }`}
       >
@@ -317,7 +313,7 @@ export function NavbarBurgerMenu({ menuOpen, setMenuOpen, setShowSettingsModal }
           onClick={() => setMenuOpen(false)}
         />
         <div
-          className="flex justify-center items-center fill-primary hover:fill-theme hover:text-theme cursor-pointer py-4"
+          className="flex justify-center items-center fill-fg-primary hover:fill-theme hover:text-theme cursor-pointer py-4"
           onClick={() => {
             setShowSettingsModal(true);
             setMenuOpen(false);

@@ -120,7 +120,7 @@ export default async (req, res) => {
           },
           body: JSON.stringify({
             username: 'Submissions Bot',
-            avatar_url: 'https://chessopenings.co.uk/media/images/logo.png',
+            avatar_url: 'https://chessopenings.co.uk/media/images/logo.svg',
             content: `${contributorDisplayName} submitted ${getDisplayMessageFromType(JSON.parse(req.body).type)}`,
             embeds: [
               {

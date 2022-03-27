@@ -30,7 +30,7 @@ export function TrainSummary({ openingsCompleted, openingsFailed }) {
               query: { openingLink: opening.label }
             }}
           >
-            <a className="p-2 rounded-md hover:bg-darkest flex items-center">
+            <a className="p-2 rounded-md hover:bg-tertiary flex items-center">
               <SVG icon={learnOutlined} size={24} />
             </a>
           </Link>

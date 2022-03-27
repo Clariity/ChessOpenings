@@ -1,5 +1,5 @@
 import { trainFilled } from '../../data/icons';
-import { OPENING_GRADES } from '../../data/consts';
+import { OPENING_GRADES, TROPHY_COLOURS } from '../../data/consts';
 
 export function ProgressBar({ isVisible, stats }) {
   return (
@@ -11,7 +11,7 @@ export function ProgressBar({ isVisible, stats }) {
             stats.distanceToNextGrade === 1 ? 'pass' : 'passes'
           } until ${Object.keys(OPENING_GRADES)[stats.gradeAchievedIndex + 1]}`}</p>
           <svg
-            fill={'#b58863'}
+            fill={Object.values(TROPHY_COLOURS)[stats.gradeAchievedIndex + 1].colour}
             className="h-full mx-1"
             xmlns="http://www.w3.org/2000/svg"
             width={24}
@@ -24,7 +24,7 @@ export function ProgressBar({ isVisible, stats }) {
       </div>
       <div className="flex h-6 bg-primaryhover rounded-md">
         <div
-          className="bg-theme h-full mr-auto px-4 rounded-md transition-all duration-1000 flex justify-end"
+          className="bg-theme text-white h-full mr-auto px-4 rounded-md transition-all duration-1000 flex justify-end"
           style={{
             width: isVisible
               ? `${

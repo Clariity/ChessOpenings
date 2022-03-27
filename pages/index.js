@@ -18,10 +18,12 @@ export default function Index() {
 
       <HomeTitle />
       <HomeLearn />
-      <HomeSupport />
+      <div className="flex flex-wrap">
+        <HomeSupport />
+        <HomeSocial />
+      </div>
       <HomeTrain />
       <HomeTraps />
-      <HomeSocial />
       <HomeContribute />
     </div>
   );

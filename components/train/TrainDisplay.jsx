@@ -40,7 +40,7 @@ export function TrainDisplay({ openingsCompleted, opening, openingsFailed, selec
             className={`flex px-1 py-1 my-1 rounded-md
                 ${openingsCompleted.find((completed) => completed.label === o.label) && 'border-2 border-success'} 
                 ${openingsFailed.find((failed) => failed.label === o.label) && 'border-2 border-error'}
-                ${opening?.label === o.label && 'bg-darkest'}
+                ${opening?.label === o.label && 'bg-tertiary'}
               `}
           >
             <div className="w-1/12 flex justify-center">{getIcon(o.label)}</div>

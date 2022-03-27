@@ -7,20 +7,22 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      dark: '#383635',
-      darker: '#2a2a2a',
-      darkest: '#0f0f0f',
-      primary: '#ffffff',
-      primaryhover: '#cccccc',
-      secondary: '#bdbdbd',
-      theme: '#b58863',
-      themehover: '#997353',
+      theme: 'var(--theme)',
+      'theme-hover': 'var(--theme-hover)',
+      'theme-secondary': 'var(--theme-secondary)',
+      primary: 'var(--primary)',
+      secondary: 'var(--secondary)',
+      tertiary: 'var(--tertiary)',
+      'fg-primary': 'var(--fg-primary)',
+      'fg-secondary': 'var(--fg-secondary)',
       error: '#ee4242',
-      success: '#539b3d'
+      success: '#539b3d',
+      black: '#000000',
+      white: '#ffffff'
     },
     extend: {
       backgroundImage: {
-        hero: "radial-gradient(circle at center, #383635aa, #383635e0 50%, #383635 80%, #383635), url('/media/images/hero.png')",
+        hero: "radial-gradient(circle at center, var(--primary-faded-lg), var(--primary-faded-sm) 50%, var(--primary) 80%, var(--primary)), url('/media/images/hero.png')",
         stats: "url('/media/images/stats.png')"
       },
       animation: {
