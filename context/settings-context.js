@@ -8,6 +8,7 @@ export const useSettings = () => useContext(SettingsContext);
 export const SettingsProvider = ({ children }) => {
   const [animationsOn, setAnimationsOn] = useState();
   const [moveMethod, setMoveMethod] = useState();
+  const [soundsOn, setSoundsOn] = useState();
   const [theme, setTheme] = useLocalStorage('theme-mode', null);
 
   const themes = ['dark', 'light'];
@@ -26,6 +27,12 @@ export const SettingsProvider = ({ children }) => {
         value: 'drag'
       }
     );
+    setSoundsOn(
+      (typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('soundsOn'))) || {
+        label: 'On',
+        value: true
+      }
+    );
   }, []);
 
   function updateAnimationsOn(newAnimationsOn) {
@@ -42,6 +49,13 @@ export const SettingsProvider = ({ children }) => {
     }
   }
 
+  function updateSoundsOn(newSoundsOn) {
+    setSoundsOn(newSoundsOn);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('soundsOn', JSON.stringify(newSoundsOn));
+    }
+  }
+
   function updateTheme(newTheme) {
     const root = document.body;
     root.classList.remove(theme);
@@ -54,10 +68,12 @@ export const SettingsProvider = ({ children }) => {
       value={{
         animationsOn,
         moveMethod,
+        soundsOn,
         theme,
         themes,
         updateAnimationsOn,
         updateMoveMethod,
+        updateSoundsOn,
         updateTheme
       }}
     >

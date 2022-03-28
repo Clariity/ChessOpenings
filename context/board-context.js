@@ -93,7 +93,7 @@ export const ChessboardProvider = ({ children }) => {
   const chessboardRef = useRef();
   const { pathname } = useRouter();
   const { updateUserData, user, userData } = useData();
-  const { animationsOn } = useSettings();
+  const { animationsOn, soundsOn } = useSettings();
 
   // game logic
   const [game, setGame] = useState();
@@ -126,15 +126,15 @@ export const ChessboardProvider = ({ children }) => {
   // initialise new sounds on theme change
   useEffect(() => {
     setMoveSounds({
-      move: new Audio(`/media/themes/default/move.mp3`),
-      capture: new Audio(`/media/themes/default/capture.mp3`),
-      check: new Audio(`/media/themes/default/check.mp3`),
-      castle: new Audio(`/media/themes/default/castle.mp3`),
-      error: new Audio(`/media/themes/default/error.mp3`),
-      start: new Audio(`/media/themes/default/start.mp3`),
-      end: new Audio(`/media/themes/default/end.mp3`)
+      move: soundsOn?.value ? new Audio(`/media/themes/default/move.mp3`) : { play: () => null },
+      capture: soundsOn?.value ? new Audio(`/media/themes/default/capture.mp3`) : { play: () => null },
+      check: soundsOn?.value ? new Audio(`/media/themes/default/check.mp3`) : { play: () => null },
+      castle: soundsOn?.value ? new Audio(`/media/themes/default/castle.mp3`) : { play: () => null },
+      error: soundsOn?.value ? new Audio(`/media/themes/default/error.mp3`) : { play: () => null },
+      start: soundsOn?.value ? new Audio(`/media/themes/default/start.mp3`) : { play: () => null },
+      end: soundsOn?.value ? new Audio(`/media/themes/default/end.mp3`) : { play: () => null }
     });
-  }, []);
+  }, [soundsOn]);
 
   // fill redo stack on submission pages
   useEffect(() => {
@@ -204,7 +204,6 @@ export const ChessboardProvider = ({ children }) => {
   function reset(withSound = false) {
     chessboardRef.current.clearPremoves();
     clearTimeout(currentTimeout);
-    console.log(withSound);
     withSound && playSound('start');
     safeGameMutate((game) => {
       game.reset();

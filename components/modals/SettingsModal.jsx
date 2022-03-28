@@ -5,9 +5,9 @@ import { Modal } from '../utils/Modal';
 import { Radio } from '../utils/Radio';
 
 export function SettingsModal({ setShowSettingsModal }) {
-  const { animationsOn, theme, themes, updateAnimationsOn, updateTheme } = useSettings();
+  const { animationsOn, soundsOn, theme, themes, updateAnimationsOn, updateSoundsOn, updateTheme } = useSettings();
 
-  const animationChoices = [
+  const onOffChoices = [
     {
       label: 'On',
       value: true
@@ -44,14 +44,26 @@ export function SettingsModal({ setShowSettingsModal }) {
         </div>
 
         <p className="mb-2">Animations:</p>
-        {animationChoices.map((a) => (
+        {onOffChoices.map((a) => (
           <Radio
             groupName="animations"
-            key={a.label}
-            id={a.label}
+            key={`${a.label}-animations`}
+            id={`${a.label}-animations`}
             label={a.label}
             defaultChecked={animationsOn.value === a.value}
             onChange={() => updateAnimationsOn(a)}
+          />
+        ))}
+
+        <p className="mb-2">Board Sounds:</p>
+        {onOffChoices.map((a) => (
+          <Radio
+            groupName="sounds"
+            key={`${a.label}-sounds`}
+            id={`${a.label}-sounds`}
+            label={a.label}
+            defaultChecked={soundsOn.value === a.value}
+            onChange={() => updateSoundsOn(a)}
           />
         ))}
       </div>
