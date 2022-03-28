@@ -53,7 +53,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
   }, [resetCaptcha]);
 
   useEffect(() => {
-    if (submission.game && game && !loadedGameFromMemory) {
+    if (submission?.game && game && !loadedGameFromMemory) {
       loadGame(submission.game);
       setLoadedGameFromMemory(true);
     }
@@ -96,7 +96,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
 
   async function handleSubmit() {
     const id = uuidv4();
-    const submission = {
+    const newSubmission = {
       id,
       status: 'OPEN',
       type: contributionType.value,
@@ -109,7 +109,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
         value: game?.history({ verbose: true })
       }
     };
-    if (contributionType?.value.includes('Trap')) submission.data.colour = colour.value;
+    if (contributionType?.value.includes('Trap')) newSubmission.data.colour = colour.value;
 
     try {
       setSubmitting(true);
@@ -118,7 +118,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
         headers: {
           Authorization: captchaToken
         },
-        body: JSON.stringify(submission)
+        body: JSON.stringify(newSubmission)
       });
       const responseJSON = await response.json();
 
@@ -127,7 +127,7 @@ export function SubmissionForm({ setResult, setShowResultModal }) {
           ...responseJSON,
           id
         });
-        setSubmissions((oldSubmissions) => [...oldSubmissions, submission]);
+        setSubmissions((oldSubmissions) => [...oldSubmissions, newSubmission]);
       } else {
         setResult(responseJSON);
       }
